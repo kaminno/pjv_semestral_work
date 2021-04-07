@@ -3,6 +3,7 @@ package game.gameengine;
 import Exceptions.ItemEquipedYetException;
 import Exceptions.ItemNotEquipedException;
 import Exceptions.ItemNotStoredException;
+import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import Model.Figures.Player;
 import Model.Items.Bag;
@@ -14,7 +15,7 @@ import Model.Items.Weapon;
 
 public class NewMain {
 
-    public static void main(String[] args) throws NotEnoughInventoryFreeSpaceException, ItemNotStoredException, ItemEquipedYetException, ItemNotEquipedException {
+    public static void main(String[] args) throws NotEnoughInventoryFreeSpaceException, ItemNotStoredException, ItemEquipedYetException, ItemNotEquipedException, ItemStoredYetException {
 	
 	Item i = new Item("huh", 3);
 	Weapon w = new Weapon("Meč", 7, 3, 0, 5, EquipmentType.MAIN_HAND);

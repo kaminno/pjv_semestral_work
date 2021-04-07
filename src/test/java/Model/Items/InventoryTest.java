@@ -5,6 +5,7 @@
  */
 package Model.Items;
 
+import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
@@ -43,12 +44,6 @@ public class InventoryTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
-    
     @Test
     public void updateCapacity() throws NotEnoughInventoryFreeSpaceException{
 	assertEquals(2, inventory.getCurrentCapacity());
@@ -62,7 +57,6 @@ public class InventoryTest {
 	inventory.updateCapacity(-2);
 	assertEquals(3, inventory.getCurrentCapacity());
 	assertEquals(3, inventory.getFreeSpace());
-	
     }
     
     @Test
@@ -95,7 +89,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void updateCapacityWithNegativeNumberInFullInventory() throws NotEnoughInventoryFreeSpaceException {
+    public void updateCapacityWithNegativeNumberInFullInventory() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException {
 	inventory.updateCapacity(2);
 	Item i1 = new Item("", 2);
 	Item i2 = new Item("", 2);
@@ -116,6 +110,18 @@ public class InventoryTest {
 	String actualMessage = exception.getMessage();
 
 	assertTrue(actualMessage.contains(expectedMessage));
+    }
+    
+    @Test
+    public void storeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
+	Item item = new Item("", 3);
+	Weapon w = new Weapon("", 2, 2, 2, 3, EquipmentType.SECOND_HAND);
+	inventory.storeItem(item);
+	assertEquals(1, inventory.getFreeSpace());
+	inventory.storeItem(w);
+	assertEquals(0, inventory.getFreeSpace());
+	assertEquals(inventory.getItems().get(0), item);
+	assertEquals(inventory.getItems().get(1), w);
     }
 
     /**

@@ -1,6 +1,7 @@
 package Model.Items;
 
 import Exceptions.ItemNotStoredException;
+import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import java.util.ArrayList;
 
@@ -38,9 +39,12 @@ public class Inventory {
     }
     
     // look after storing item with stored==true
-    public void storeItem(Item item) throws NotEnoughInventoryFreeSpaceException{
+    public void storeItem(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
 	if (freeSpace == 0){
 	    throw new NotEnoughInventoryFreeSpaceException("Inventory is full");
+	}
+	if (item.isStored()){
+	    throw new ItemStoredYetException("Item stored yet!");
 	}
 	items.add(item);
 	item.setStored(true);

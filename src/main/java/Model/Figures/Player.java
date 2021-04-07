@@ -4,6 +4,7 @@ package Model.Figures;
 import Exceptions.ItemEquipedYetException;
 import Exceptions.ItemNotEquipedException;
 import Exceptions.ItemNotStoredException;
+import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import Model.Items.Equipment;
 import Model.Items.EquipmentType;
@@ -62,7 +63,7 @@ public class Player extends Figure{
 	return equipment.getEquipment();
     }
     
-    public void equip(WearableItem item) throws ItemNotStoredException, ItemEquipedYetException, NotEnoughInventoryFreeSpaceException, ItemNotEquipedException{
+    public void equip(WearableItem item) throws ItemNotStoredException, ItemEquipedYetException, NotEnoughInventoryFreeSpaceException, ItemNotEquipedException, ItemStoredYetException{
 	if (item.isStored()){
 	    if (equipment.getPieceOfEquipment(item.getType()) == null){
 		this.removeFromInventory(item);
@@ -83,7 +84,7 @@ public class Player extends Figure{
 	}
     }
     
-    public void unequip(WearableItem item) throws ItemNotEquipedException, NotEnoughInventoryFreeSpaceException{
+    public void unequip(WearableItem item) throws ItemNotEquipedException, NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
 	if(item.isEquiped()){
 	    this.storeToInventory(item);
 	    equipment.remove(item);
@@ -94,7 +95,7 @@ public class Player extends Figure{
 	}
     }
     
-    public void storeToInventory(Item item) throws NotEnoughInventoryFreeSpaceException{
+    public void storeToInventory(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
 	inventory.storeItem(item);
 	loadWeight += item.getWeight();
     }
