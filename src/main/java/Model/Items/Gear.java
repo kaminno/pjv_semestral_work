@@ -1,12 +1,15 @@
 package Model.Items;
 
+import Exceptions.WrongEquipmentTypeForWearableItemException;
+
 public class Gear extends WearableItem{
     private int armor;
     private int durability;
     private boolean broken;
     
-    public Gear(String name, int weight, int armor, int durability, EquipmentType type){
+    public Gear(String name, int weight, int armor, int durability, EquipmentType type) throws WrongEquipmentTypeForWearableItemException{
 	super(name, weight, type);
+	boolean ok = false;
 	for (GearType g : GearType.values()){
 	    if (g.label.equals(type.label)){
 		if (armor > 0 && durability >= 0){
@@ -20,8 +23,12 @@ public class Gear extends WearableItem{
 		else{
 		    throw new IllegalArgumentException("Armor and durability must be a positive number!");
 		}
+		ok = true;
 		break;
 	    }
+	}
+	if (!ok){
+	    throw new WrongEquipmentTypeForWearableItemException("Wrong equipment type: expect GearType-like, but get another!");
 	}
     }
 

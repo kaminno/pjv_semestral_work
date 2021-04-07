@@ -6,10 +6,13 @@ import Exceptions.ItemNotEquipedException;
 import Exceptions.ItemNotStoredException;
 import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
+import Model.Items.Bag;
 import Model.Items.Equipment;
 import Model.Items.EquipmentType;
+import Model.Items.Gear;
 import Model.Items.Inventory;
 import Model.Items.Item;
+import Model.Items.Weapon;
 import Model.Items.WearableItem;
 import java.util.EnumMap;
 
@@ -26,6 +29,10 @@ public class Player extends Figure{
     private int currentArmor;
     private int currentMoves;
     private int currentSpeed;
+    private int bonusDamage = 0;
+    private int bonusArmor = 0;
+    private int bonusMoves = 0;
+    private int bonusSpeed = 0;
     private int loadWeight = 0;
     private Equipment equipment;
     private Inventory inventory;
@@ -66,6 +73,9 @@ public class Player extends Figure{
     public void equip(WearableItem item) throws ItemNotStoredException, ItemEquipedYetException, NotEnoughInventoryFreeSpaceException, ItemNotEquipedException, ItemStoredYetException{
 	if (item.isStored()){
 	    if (equipment.getPieceOfEquipment(item.getType()) == null){
+		if (item instanceof Bag){
+		    inventory.updateCapacity(((Bag) item).getSize());
+		}
 		this.removeFromInventory(item);
 		equipment.add(item);
 		loadWeight += item.getWeight();
@@ -73,11 +83,16 @@ public class Player extends Figure{
 	    else{
 		this.removeFromInventory(item);
 		WearableItem newItem = equipment.getPieceOfEquipment(item.getType());
+		if (item instanceof Bag){
+		    inventory.updateCapacity(-((Bag) item).getSize());
+		    inventory.updateCapacity(((Bag) item).getSize());
+		}
 		this.storeToInventory(newItem);
 		this.unequip(newItem);
 		equipment.add(item);
 		loadWeight += item.getWeight();
 	    }
+	    updateStats();
 	}
 	else{
 	    throw new ItemNotStoredException("Can not equip item that is not in inventory!");
@@ -86,9 +101,13 @@ public class Player extends Figure{
     
     public void unequip(WearableItem item) throws ItemNotEquipedException, NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
 	if(item.isEquiped()){
+	    if (item instanceof Bag){
+		inventory.updateCapacity(-((Bag) item).getSize());
+	    }
 	    this.storeToInventory(item);
 	    equipment.remove(item);
 	    loadWeight -= item.getWeight();
+	    updateStats();
 	}
 	else{
 	    throw new ItemNotEquipedException("Can not unequip item that is not equiped!");
@@ -103,5 +122,21 @@ public class Player extends Figure{
     public void removeFromInventory(Item item) throws ItemNotStoredException {
 	inventory.removeItem(item);
         loadWeight -= item.getWeight();
+    }
+    
+    private void updateStats(){
+	currentArmor = baseArmor + bonusArmor;
+	currentDamage = baseDamage + bonusDamage;
+	currentMoves = baseMoves + bonusMoves;
+	currentSpeed = baseSpeed + bonusSpeed;
+	for (WearableItem i : equipment.getEquipment().values()){
+	    if (i instanceof Gear){
+		currentArmor += ((Gear) i).getArmor();
+	    }
+	    else if (i instanceof Weapon){
+		currentDamage += ((Weapon) i).getDamage();
+		currentMoves += ((Weapon) i).getBonusMoves();
+	    }
+	}
     }
 }

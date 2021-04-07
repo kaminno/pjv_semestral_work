@@ -38,7 +38,6 @@ public class Inventory {
 	return items;
     }
     
-    // look after storing item with stored==true
     public void storeItem(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
 	if (freeSpace == 0){
 	    throw new NotEnoughInventoryFreeSpaceException("Inventory is full");
