@@ -15,19 +15,19 @@ public class Weapon extends WearableItem{
 	for (WeaponType w : WeaponType.values()){
 	    if (w.label.equals(type.label)){
 		if (damage > 0 && durability >= 0){
-		this.damage = damage;
-		this.broken = false;
-		this.durability = durability;
-		if (this.durability == 0){
-		    this.broken = true;
+		    this.damage = damage;
+		    this.broken = false;
+		    this.durability = durability;
+		    if (this.durability == 0){
+			this.broken = true;
+		    }
 		}
-	    }
-	    else{
-		throw new IllegalArgumentException("Armor and durability must be a positive number!");
-	    }
-	    this.bonusMoves = bonusMoves;
-	    ok = true;
-	    break;
+		else{
+		    throw new IllegalArgumentException("Damage and durability must be a positive number!");
+		}
+		this.bonusMoves = bonusMoves;
+		ok = true;
+		break;
 	    }
 	}
 	if (!ok){
@@ -52,9 +52,9 @@ public class Weapon extends WearableItem{
     }
     
     public void setDurability(int durability){
-	try{
+	//try{
 	    if (durability < 0){
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("Durability must be positive");
 	    }
 	    else{
 		this.broken = false;
@@ -63,10 +63,10 @@ public class Weapon extends WearableItem{
 		}
 		this.durability = durability;
 	    }
-	}
-	catch (IllegalArgumentException e){
-	    System.out.println("Durability must be a positive number!");
-	}
+//	}
+//	catch (IllegalArgumentException e){
+//	    System.out.println("Durability must be a positive number!");
+//	}
     }
     
     

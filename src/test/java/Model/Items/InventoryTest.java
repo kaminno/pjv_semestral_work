@@ -93,10 +93,10 @@ public class InventoryTest {
     @Test
     public void updateCapacityWithNegativeNumberInFullInventory() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException {
 	inventory.updateCapacity(2);
-	Item i1 = new Item("", 2);
-	Item i2 = new Item("", 2);
-	Item i3 = new Item("", 2);
-	Item i4 = new Item("", 2);
+	Item i1 = new Item("1", 2);
+	Item i2 = new Item("+", 2);
+	Item i3 = new Item("ě", 2);
+	Item i4 = new Item("q", 2);
 	inventory.storeItem(i1);
 	inventory.storeItem(i2);
 	inventory.storeItem(i3);
@@ -116,8 +116,8 @@ public class InventoryTest {
     
     @Test
     public void storeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException, WrongEquipmentTypeForWearableItemException{
-	Item item = new Item("", 3);
-	Weapon w = new Weapon("", 2, 2, 2, 3, EquipmentType.SECOND_HAND);
+	Item item = new Item("dsf", 3);
+	Weapon w = new Weapon("sdf", 2, 2, 2, 3, EquipmentType.SECOND_HAND);
 	inventory.storeItem(item);
 	assertEquals(1, inventory.getFreeSpace());
 	inventory.storeItem(w);
@@ -128,9 +128,9 @@ public class InventoryTest {
     
     @Test
     public void storeItemWithNoInventoryFreeSpace(){
-	Item i1 = new Item("", 2);
-	Item i2 = new Item("", 2);
-	Item i3 = new Item("", 2);
+	Item i1 = new Item("d", 2);
+	Item i2 = new Item("d", 2);
+	Item i3 = new Item("f", 2);
 	Exception exception = assertThrows(NotEnoughInventoryFreeSpaceException.class, () -> {
 	    inventory.storeItem(i1);
 	    inventory.storeItem(i2);
@@ -148,7 +148,7 @@ public class InventoryTest {
     
     @Test
     public void storeStoredItem(){
-	Item i1 = new Item("", 2);
+	Item i1 = new Item("sdf", 2);
 	Exception exception = assertThrows(ItemStoredYetException.class, () -> {
 	    inventory.storeItem(i1);
 	    inventory.storeItem(i1);
@@ -165,7 +165,7 @@ public class InventoryTest {
     
     @Test
     public void removeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException, ItemNotStoredException{
-	Item i1 = new Item("", 1);
+	Item i1 = new Item("fsd", 1);
 	inventory.storeItem(i1);
 	assertEquals(2, inventory.getCurrentCapacity());
 	assertEquals(1, inventory.getFreeSpace());
@@ -178,7 +178,7 @@ public class InventoryTest {
 
     @Test
     public void removeNotStoredItem(){
-	Item i1 = new Item("", 1);
+	Item i1 = new Item("s", 1);
 	Exception exception = assertThrows(ItemNotStoredException.class, () -> {
 	    inventory.removeItem(i1);
 	});

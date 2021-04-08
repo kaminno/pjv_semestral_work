@@ -45,20 +45,15 @@ public class Gear extends WearableItem{
     }
 
     public void setDurability(int durability){
-	try{
-	    if (durability < 0){
-		throw new IllegalArgumentException();
-	    }
-	    else{
-		this.broken = false;
-		if(durability == 0){
-		    this.broken = true;
-		}
-		this.durability = durability;
-	    }
+	if (durability < 0){
+	    throw new IllegalArgumentException("Negative durability");
 	}
-	catch (IllegalArgumentException e){
-	    System.out.println("Durability must be a positive number!");
+	else{
+	    this.broken = false;
+	    if(durability == 0){
+	        this.broken = true;
+	    }
+	    this.durability = durability;
 	}
     }
 }
