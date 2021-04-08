@@ -76,5 +76,4 @@ public class Inventory {
     public int getFreeSpace() {
 	return freeSpace;
     }
-    
 }
