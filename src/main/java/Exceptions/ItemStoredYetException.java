@@ -6,6 +6,6 @@ public class ItemStoredYetException extends Exception {
     }
 
     public ItemStoredYetException(String msg) {
-	super(msg);
+	super("Item stored yet: " + msg);
     }
 }

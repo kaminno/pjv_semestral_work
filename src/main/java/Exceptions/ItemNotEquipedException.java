@@ -3,6 +3,6 @@ package Exceptions;
 public class ItemNotEquipedException extends Exception{
 
     public ItemNotEquipedException(String message) {
-	super(message);
+	super("Item is not equiped yet: " + message);
     }
 }

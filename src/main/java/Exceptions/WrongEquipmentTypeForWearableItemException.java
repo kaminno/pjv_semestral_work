@@ -6,6 +6,6 @@ public class WrongEquipmentTypeForWearableItemException extends Exception {
     }
 
     public WrongEquipmentTypeForWearableItemException(String msg) {
-	super(msg);
+	super("Wrong EquipmentType: " + msg);
     }
 }

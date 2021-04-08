@@ -5,8 +5,10 @@
  */
 package Model.Items;
 
+import Exceptions.ItemNotStoredException;
 import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
+import Exceptions.WrongEquipmentTypeForWearableItemException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -106,14 +108,14 @@ public class InventoryTest {
 	assertEquals(4, inventory.getCurrentCapacity());
 	assertEquals(0, inventory.getFreeSpace());
 	
-	String expectedMessage = "Remove some items";
+	String expectedMessage = "Inventory is full";
 	String actualMessage = exception.getMessage();
 
 	assertTrue(actualMessage.contains(expectedMessage));
     }
     
     @Test
-    public void storeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
+    public void storeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException, WrongEquipmentTypeForWearableItemException{
 	Item item = new Item("", 3);
 	Weapon w = new Weapon("", 2, 2, 2, 3, EquipmentType.SECOND_HAND);
 	inventory.storeItem(item);
@@ -123,7 +125,74 @@ public class InventoryTest {
 	assertEquals(inventory.getItems().get(0), item);
 	assertEquals(inventory.getItems().get(1), w);
     }
+    
+    @Test
+    public void storeItemWithNoInventoryFreeSpace(){
+	Item i1 = new Item("", 2);
+	Item i2 = new Item("", 2);
+	Item i3 = new Item("", 2);
+	Exception exception = assertThrows(NotEnoughInventoryFreeSpaceException.class, () -> {
+	    inventory.storeItem(i1);
+	    inventory.storeItem(i2);
+	    inventory.storeItem(i3);
+	});
+	
+	assertEquals(2, inventory.getCurrentCapacity());
+	assertEquals(0, inventory.getFreeSpace());
+	
+	String expectedMessage = "Inventory is full";
+	String actualMessage = exception.getMessage();
 
+	assertTrue(actualMessage.contains(expectedMessage));
+    }
+    
+    @Test
+    public void storeStoredItem(){
+	Item i1 = new Item("", 2);
+	Exception exception = assertThrows(ItemStoredYetException.class, () -> {
+	    inventory.storeItem(i1);
+	    inventory.storeItem(i1);
+	});
+	
+	assertEquals(2, inventory.getCurrentCapacity());
+	assertEquals(1, inventory.getFreeSpace());
+	
+	String expectedMessage = "Item stored yet";
+	String actualMessage = exception.getMessage();
+
+	assertTrue(actualMessage.contains(expectedMessage));
+    }
+    
+    @Test
+    public void removeItem() throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException, ItemNotStoredException{
+	Item i1 = new Item("", 1);
+	inventory.storeItem(i1);
+	assertEquals(2, inventory.getCurrentCapacity());
+	assertEquals(1, inventory.getFreeSpace());
+	inventory.removeItem(i1);
+	assertEquals(2, inventory.getCurrentCapacity());
+	assertEquals(2, inventory.getFreeSpace());
+	assertFalse(i1.isStored());
+	assertTrue(inventory.getItems().isEmpty());
+    }
+
+    @Test
+    public void removeNotStoredItem(){
+	Item i1 = new Item("", 1);
+	Exception exception = assertThrows(ItemNotStoredException.class, () -> {
+	    inventory.removeItem(i1);
+	});
+	
+	assertEquals(2, inventory.getCurrentCapacity());
+	assertEquals(2, inventory.getFreeSpace());
+	
+	String expectedMessage = "Item is not stored";
+	String actualMessage = exception.getMessage();
+
+	assertTrue(actualMessage.contains(expectedMessage));
+    }
+    
+    
     /**
      * Test of updateCapacity method, of class Inventory.
      */
