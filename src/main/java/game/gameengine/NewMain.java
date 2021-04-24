@@ -17,6 +17,10 @@ import Model.Items.Weapon;
 import Model.Map.Map;
 import Model.Terrains.Ground;
 import Model.Terrains.TerrainType;
+import View.Engine.EngineMainWindow;
+import View.MainWindow;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class NewMain {
@@ -77,5 +81,13 @@ public class NewMain {
 //	    }
 //	    
 //	}
+
+	//MainWindow mw = new MainWindow("Main window");
+	EngineMainWindow emw = new EngineMainWindow("Titulek");
+	emw.getM().getMenuFile().getMenuItemNewGame().addActionListener(new ActionListener(){  
+	    public void actionPerformed(ActionEvent e){  
+			emw.getTf().setText("Welcome to Javatpoint.");  
+		    }  
+		});
     }
 }
