@@ -84,7 +84,7 @@ public class NewMain {
 
 	//MainWindow mw = new MainWindow("Main window");
 	EngineMainWindow emw = new EngineMainWindow("Titulek");
-	emw.getM().getMenuFile().getMenuItemNewGame().addActionListener(new ActionListener(){  
+	emw.getMenu().getMenuFile().getMenuItemNewGame().addActionListener(new ActionListener(){  
 	    public void actionPerformed(ActionEvent e){  
 			emw.getTf().setText("Welcome to Javatpoint.");  
 		    }  

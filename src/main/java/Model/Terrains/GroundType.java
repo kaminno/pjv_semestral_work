@@ -4,7 +4,8 @@ public enum GroundType {
     GRASS("grass"),
     LOAM("loam"),
     SAND("sand"),
-    WATER("water");
+    WATER("water"),
+    BLANC("blanc");
     
     private final String name;
 

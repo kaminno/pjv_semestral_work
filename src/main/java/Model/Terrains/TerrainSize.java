@@ -1,8 +1,8 @@
 package Model.Terrains;
 
 public enum TerrainSize {
-    WIDTH(20),
-    HEIGHT(20);
+    WIDTH(40),
+    HEIGHT(40);
     
     private final int size;
 
