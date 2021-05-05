@@ -2,10 +2,12 @@ package View.Engine;
 
 import Exceptions.WrongTerrainType;
 import Model.Map.Map;
+import Model.Terrains.TerrainSize;
 import Model.Terrains.TerrainType;
 import View.Engine.EngineMenu;
 import View.GameIcons;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -165,8 +167,10 @@ public class EngineMainWindow extends JFrame{
 	
 	toolPane.getTerrainTab().getPanelNewMap().getLabelNewMap().addMouseListener(new MouseAdapter(){
 	    public void mouseClicked(MouseEvent e) {
+		// set number of icons/game fields as height and width
 		int height = 10;
 		int width = 15;
+		// create the "fill" dialog
 		Object[] possibilities = {"blanc", "grass", "sand", "loam", "water"};
 		String s = (String)JOptionPane.showInputDialog(
                     mainPanel,
@@ -177,6 +181,7 @@ public class EngineMainWindow extends JFrame{
                     possibilities,
                     "blanc");
 		
+		// set the type variable to the chosen type from dialog above
 		TerrainType type = null;
 		for(TerrainType t : TerrainType.values()){
 		    if(t.getName() == s){
@@ -184,12 +189,18 @@ public class EngineMainWindow extends JFrame{
 			break;
 		    }
 		}
+		
+		
+		
 		//JLabel terrain = new JLabel(GameIcons.GRASS.getIcon());
 		if(type != null){
 		    if(mainPanel.getCurrentMap() != null){
+			// if there is a map, delete it
 			mainPanel.removeMap(mainPanel.getCurrentMap().getId());
 		    }
+		    // create new map panel (view)
 		    EngineMapPanel newMap = new EngineMapPanel(width, height);
+		    // create new map class (in model)
 		    Map map = new Map(height, width);
 		    try {
 			map.fillTheMapWithGround(type.getName(), type, 0, 0);
@@ -199,8 +210,45 @@ public class EngineMainWindow extends JFrame{
 			System.out.println("catch");
 		    }
 		    map.printMapTerrain();
+		    // fill the (view) map with icons of specific type from "fill" dialog
 		    newMap.fillTheMapWithGround(type);
+		    
+		//
+//		ImageIcon i = null;
+//		for(GameIcons gi : GameIcons.values()){
+//		    if(type.getName() == gi.getLabel()){
+//			System.out.println("adding icon");
+//			i = gi.getIcon();
+//			break;
+//		    }
+//		}
+//		    JPanel panel1 = new JPanel();
+//		panel1.setSize(new Dimension(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize()));
+//		panel1.setLayout(new GridLayout(height, width));
+//		for (int h = 0; h < height; h++){
+//		    for (int w = 0; w < width; w++){
+//			JLabel terrain = new JLabel(i);
+//			System.out.println("jl: " + terrain.getSize());
+//			panel1.add(terrain);
+//		    }
+//		}
+//		panel1.revalidate();
+//		panel1.repaint();
+//		mainPanel.add(panel1);
+//		mainPanel.revalidate();
+//		mainPanel.repaint();
+		//
+		    // add new map
 		    mainPanel.addNewMap(newMap);
+		    mainPanel.revalidate();
+		    mainPanel.repaint();
+		    // print the components in new map - JLabels
+		    for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+			    System.out.println("ij: " + mainPanel.getCurrentMap().getComponent(i*width + j));			    
+			}
+		    }
+		    //System.out.println(mainPanel.getCurrentMap().getComponents());
 		    
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
@@ -208,10 +256,11 @@ public class EngineMainWindow extends JFrame{
 			    int y = e.getY();
 			    System.out.println("x:" + x);
 			    System.out.println("Y:" + y);
-			    System.out.println("sx:"+(x - x%40)/40);
-			    System.out.println("sy:"+(y - y%40)/40);
-			    System.out.println("idx:" + ((mainPanel.getWidth()*((y - y%40)/40) + (x - x%40)/40)));
+			    System.out.println("sx:"+(x - x%TerrainSize.WIDTH.getSize())/TerrainSize.WIDTH.getSize());
+			    System.out.println("sy:"+(y - y%TerrainSize.HEIGHT.getSize())/TerrainSize.HEIGHT.getSize());
+			    System.out.println("idx:" + ((mainPanel.getWidth()*((y - y%TerrainSize.HEIGHT.getSize())/TerrainSize.HEIGHT.getSize()) + (x - x%TerrainSize.WIDTH.getSize())/TerrainSize.WIDTH.getSize())));
 			    
+			    // set changing icon
 			    ImageIcon icon = GameIcons.BLANC.getIcon();
 			    if(currentTerrainType != null){
 				for(GameIcons gi : GameIcons.values()){
@@ -221,6 +270,7 @@ public class EngineMainWindow extends JFrame{
 				    }
 				}
 			    }
+			    // change terrain on click
 			    mainPanel.getCurrentMap().removeTerrain((x - x%40)/40, (y - y%40)/40);
 			    mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
 			    System.out.println("Component count: " + mainPanel.getCurrentMap().getComponentCount());

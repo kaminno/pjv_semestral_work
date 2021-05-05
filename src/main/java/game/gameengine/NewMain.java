@@ -7,6 +7,7 @@ import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import Exceptions.WrongEquipmentTypeForWearableItemException;
 import Exceptions.WrongTerrainType;
+import Model.Figures.Beast;
 import Model.Figures.Player;
 import Model.Items.Bag;
 import Model.Items.EquipmentType;
@@ -66,6 +67,11 @@ public class NewMain {
 	map.addFigure(3, 4, p);
 	map.addFigure(4, 6, p);
 	
+	Beast beast = new Beast("sdf", 3, 2, 3, 2, 3);
+	map.printMapTerrain();
+	map.printMapFigures();
+	
+	map.addFigure(3, 4, beast);
 	map.printMapTerrain();
 	map.printMapFigures();
 	

@@ -36,6 +36,10 @@ public class Player extends Figure{
     private int loadWeight = 0;
     private Equipment equipment;
     private Inventory inventory;
+    private int xPosition;
+    private int yPosition;
+    private int xVelocity;
+    private int yVelocity;
 
     /**
      *
@@ -138,5 +142,90 @@ public class Player extends Figure{
 		currentMoves += ((Weapon) i).getBonusMoves();
 	    }
 	}
+    }
+    
+    public void attack(Figure enemy){
+	enemy.defend(currentDamage);
+    }
+    
+    public void defend(int damage){
+	int injury = damage - getCurrentArmor();
+	setCurrentHealth(getCurrentHealth() - injury);
+    }
+    
+    public boolean isAlive(){
+	return getCurrentHealth() > 0;
+    }
+
+    public int getBaseArmor() {
+	return baseArmor;
+    }
+
+    public int getxPosition() {
+	return xPosition;
+    }
+
+    public int getBaseDamage() {
+	return baseDamage;
+    }
+
+    public int getBaseMoves() {
+	return baseMoves;
+    }
+
+    public int getBaseSpeed() {
+	return baseSpeed;
+    }
+
+    public int getBonusDamage() {
+	return bonusDamage;
+    }
+
+    public int getBonusArmor() {
+	return bonusArmor;
+    }
+
+    public int getBonusMoves() {
+	return bonusMoves;
+    }
+
+    public int getBonusSpeed() {
+	return bonusSpeed;
+    }
+
+    public int getCurrentDamage() {
+	return currentDamage;
+    }
+
+    public int getCurrentArmor() {
+	return currentArmor;
+    }
+
+    public int getCurrentMoves() {
+	return currentMoves;
+    }
+
+    public int getCurrentSpeed() {
+	return currentSpeed;
+    }
+
+    public int getyPosition() {
+	return yPosition;
+    }
+
+    public int getxVelocity() {
+	return xVelocity;
+    }
+
+    public int getyVelocity() {
+	return yVelocity;
+    }
+
+    public Inventory getInventory() {
+	return inventory;
+    }
+    
+    public Equipment equipment(){
+	return equipment;
     }
 }

@@ -4,7 +4,7 @@ package Model.Figures;
  *
  * @author honzuna
  */
-public class Figure {
+public abstract class Figure {
     private final String name;
     private int maxHealth;
     private int currentHealth;
@@ -17,6 +17,10 @@ public class Figure {
 	this.maxHealth = health;
 	this.currentHealth = health;
     }
+    
+    public abstract void attack(Figure enemy);
+    public abstract void defend(int damage);
+    public abstract boolean isAlive();
 
     /**
      *
