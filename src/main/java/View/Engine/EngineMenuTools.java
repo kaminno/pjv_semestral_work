@@ -4,8 +4,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class EngineMenuTools extends JMenu{
-    private JMenuItem tool1;
-    private JMenuItem tool2;
+    private JMenuItem toolShowTabPane;
+    private JMenuItem toolHideTabPane;
 
     public EngineMenuTools() {
 	super("Tools");
@@ -13,17 +13,19 @@ public class EngineMenuTools extends JMenu{
     }
     
     private void initMenuTools(){
-	tool1 = new JMenuItem("Tool 1");
-	tool2 = new JMenuItem("Tool 2");
-	this.add(tool1);
-	this.add(tool2);
+	toolShowTabPane = new JMenuItem("Show Tools");
+	toolShowTabPane.setEnabled(false);
+	toolHideTabPane = new JMenuItem("Hide Tools");
+	this.add(toolShowTabPane);
+	this.add(toolHideTabPane);
     }
 
-    public JMenuItem getTool1() {
-	return tool1;
+    public JMenuItem getToolShowTabPane() {
+	return toolShowTabPane;
     }
 
-    public JMenuItem getTool2() {
-	return tool2;
+    public JMenuItem getToolHideTabPane() {
+	return toolHideTabPane;
     }
+    
 }

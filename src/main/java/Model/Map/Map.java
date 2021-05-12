@@ -141,4 +141,20 @@ public class Map {
     public int getId(){
 	return id;
     }
+
+    public int getMapHeight() {
+	return mapHeight;
+    }
+
+    public int getMapWidth() {
+	return mapWidth;
+    }
+
+    public ArrayList<ArrayList<Terrain>> getMapTerrain() {
+	return mapTerrain;
+    }
+
+    public ArrayList<ArrayList<Figure>> getMapFigures() {
+	return mapFigures;
+    }
 }

@@ -1,10 +1,15 @@
 package View.Engine;
 
 import Exceptions.WrongTerrainType;
+import Model.Figures.Figure;
+import Model.Figures.Player;
 import Model.Map.Map;
+import Model.Map.MapSize;
+import Model.Terrains.Terrain;
 import Model.Terrains.TerrainSize;
 import Model.Terrains.TerrainType;
 import View.Engine.EngineMenu;
+import View.Game.GameMainWindow;
 import View.GameIcons;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -12,6 +17,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -22,6 +28,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -45,9 +54,10 @@ public class EngineMainWindow extends JFrame{
     EngineToolPane toolPane;
     EngineMainWorkingPanel mainPanel;
     TerrainType currentTerrainType = null;
+    Map map = null;
     
     JTextField tf;
-    JButton b;
+    //JButton b;
 
     public EngineMainWindow(String title) throws HeadlessException {
 	super(title);
@@ -160,16 +170,17 @@ public class EngineMainWindow extends JFrame{
     }
     
     private void setActions(){
-	b = new JButton("Tlačítko");
-	b.setVisible(false);
+	//b = new JButton("Tlačítko");
+	//b.setVisible(false);
 	pane.add(tf, BorderLayout.SOUTH);
-	pane.add(b, BorderLayout.LINE_END);
+	//pane.add(b, BorderLayout.LINE_END);
 	
 	toolPane.getTerrainTab().getPanelNewMap().getLabelNewMap().addMouseListener(new MouseAdapter(){
 	    public void mouseClicked(MouseEvent e) {
 		// set number of icons/game fields as height and width
-		int height = 10;
-		int width = 15;
+
+		int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
+		int width = MapSize.SIZE.getWidth()/ TerrainSize.WIDTH.getSize();
 		// create the "fill" dialog
 		Object[] possibilities = {"blanc", "grass", "sand", "loam", "water"};
 		String s = (String)JOptionPane.showInputDialog(
@@ -190,9 +201,6 @@ public class EngineMainWindow extends JFrame{
 		    }
 		}
 		
-		
-		
-		//JLabel terrain = new JLabel(GameIcons.GRASS.getIcon());
 		if(type != null){
 		    if(mainPanel.getCurrentMap() != null){
 			// if there is a map, delete it
@@ -201,7 +209,7 @@ public class EngineMainWindow extends JFrame{
 		    // create new map panel (view)
 		    EngineMapPanel newMap = new EngineMapPanel(width, height);
 		    // create new map class (in model)
-		    Map map = new Map(height, width);
+		    map = new Map(height, width);
 		    try {
 			map.fillTheMapWithGround(type.getName(), type, 0, 0);
 			System.out.println("try");
@@ -212,70 +220,64 @@ public class EngineMainWindow extends JFrame{
 		    map.printMapTerrain();
 		    // fill the (view) map with icons of specific type from "fill" dialog
 		    newMap.fillTheMapWithGround(type);
-		    
-		//
-//		ImageIcon i = null;
-//		for(GameIcons gi : GameIcons.values()){
-//		    if(type.getName() == gi.getLabel()){
-//			System.out.println("adding icon");
-//			i = gi.getIcon();
-//			break;
-//		    }
-//		}
-//		    JPanel panel1 = new JPanel();
-//		panel1.setSize(new Dimension(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize()));
-//		panel1.setLayout(new GridLayout(height, width));
-//		for (int h = 0; h < height; h++){
-//		    for (int w = 0; w < width; w++){
-//			JLabel terrain = new JLabel(i);
-//			System.out.println("jl: " + terrain.getSize());
-//			panel1.add(terrain);
-//		    }
-//		}
-//		panel1.revalidate();
-//		panel1.repaint();
-//		mainPanel.add(panel1);
-//		mainPanel.revalidate();
-//		mainPanel.repaint();
-		//
+
 		    // add new map
+		    //mainPanel.add(newMap);
 		    mainPanel.addNewMap(newMap);
 		    mainPanel.revalidate();
 		    mainPanel.repaint();
-		    // print the components in new map - JLabels
-		    for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
-			    System.out.println("ij: " + mainPanel.getCurrentMap().getComponent(i*width + j));			    
-			}
-		    }
-		    //System.out.println(mainPanel.getCurrentMap().getComponents());
-		    
+
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 			    int x = e.getX();
 			    int y = e.getY();
-			    System.out.println("x:" + x);
-			    System.out.println("Y:" + y);
-			    System.out.println("sx:"+(x - x%TerrainSize.WIDTH.getSize())/TerrainSize.WIDTH.getSize());
-			    System.out.println("sy:"+(y - y%TerrainSize.HEIGHT.getSize())/TerrainSize.HEIGHT.getSize());
-			    System.out.println("idx:" + ((mainPanel.getWidth()*((y - y%TerrainSize.HEIGHT.getSize())/TerrainSize.HEIGHT.getSize()) + (x - x%TerrainSize.WIDTH.getSize())/TerrainSize.WIDTH.getSize())));
 			    
-			    // set changing icon
-			    ImageIcon icon = GameIcons.BLANC.getIcon();
-			    if(currentTerrainType != null){
-				for(GameIcons gi : GameIcons.values()){
-				    if(gi.getLabel() == currentTerrainType.getName()){
-					icon = gi.getIcon();
-					break;
+			    if(toolPane.getSelectedIndex() == 0){
+				// set changing icon
+				ImageIcon icon = GameIcons.BLANC.getIcon();
+				if(currentTerrainType == null){
+				    currentTerrainType = TerrainType.BLANC;
+				}
+				else{
+				    for(GameIcons gi : GameIcons.values()){
+					if(gi.getLabel() == currentTerrainType.getName()){
+					    icon = gi.getIcon();
+					    break;
+					}
 				    }
 				}
-			    }
-			    // change terrain on click
-			    mainPanel.getCurrentMap().removeTerrain((x - x%40)/40, (y - y%40)/40);
-			    mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
-			    System.out.println("Component count: " + mainPanel.getCurrentMap().getComponentCount());
-			    System.out.println("Array length: " + mainPanel.getCurrentMap().getMapBoard().size());
 
+				int sx = (x - x%40)/40;
+				int sy = (y - y%40)/40;
+
+				// TODO - adding ground with bonus velocity
+				map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
+				mainPanel.getCurrentMap().removeTerrain(sx, sy);
+				mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
+				map.printMapTerrain();
+			    }
+//			    else if(toolPane.getSelectedIndex() == 1){
+//				int sx = (x - x%40)/40;
+//				int sy = (y - y%40)/40;
+//				ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
+//				for(int i = 0; i < height; i++){
+//				    for(int j = 0; j < width; j++){
+//					if(map.getMapFigures().get(i).get(j) != null && map.getMapFigures().get(i).get(j) instanceof Player){
+//					   map.getMapFigures().get(i).add(null);
+//					}
+//				    }
+//				}
+//				map.addFigure(sy, sx, new Player("Jan", 2, 3, 4, 3, 2, 3));
+//				class mc{
+//				    private void drawObjects(Graphics g) {
+//					g.drawImage(GameIcons.PLAYER_Right_1.getIcon().getImage(), x, y, mainPanel);
+//				    }
+//				}
+//				new mc();
+//				//mainPanel.getCurrentMap().removeTerrain(sx, sy);
+//				//mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
+//				map.printMapTerrain();
+//			    }
 			}
 		    });
 		}}});
@@ -289,25 +291,30 @@ public class EngineMainWindow extends JFrame{
 			"Remove Map?",
 			JOptionPane.YES_NO_OPTION);
 		    if(n == 0){
+			mainPanel.getCurrentMap().saveImage("moje_mapa", "png");
 			mainPanel.removeMap(mainPanel.getCurrentMap().getId());
 		    }
 		}
 		}});
 	
-	menu.getMenuTools().getTool2().addActionListener(new ActionListener(){  
-	    public void actionPerformed(ActionEvent e){  
-			b.setVisible(true);
+	menu.getMenuTools().getToolHideTabPane().addActionListener(new ActionListener(){  
+	    public void actionPerformed(ActionEvent e){
+			toolPane.setVisible(false);
+			menu.getMenuTools().getToolShowTabPane().setEnabled(true);
+			menu.getMenuTools().getToolHideTabPane().setEnabled(false);
 		    }  
 		});
-	menu.getMenuEdit().getEdit1().addActionListener(new ActionListener(){  
-	    public void actionPerformed(ActionEvent e){  
-			b.setVisible(false);
-		    }  
-		});
-	menu.getMenuTools().getTool1().addActionListener(new ActionListener(){  
+//	menu.getMenuEdit().getEdit1().addActionListener(new ActionListener(){  
+//	    public void actionPerformed(ActionEvent e){  
+//			b.setVisible(false);
+//		    }  
+//		});
+	menu.getMenuTools().getToolShowTabPane().addActionListener(new ActionListener(){  
 	    public void actionPerformed(ActionEvent e){  
 			toolPane.setVisible(true);
-		    }  
+			menu.getMenuTools().getToolShowTabPane().setEnabled(false);
+			menu.getMenuTools().getToolHideTabPane().setEnabled(true);
+		    }
 		});
 	menu.getMenuFile().getMenuItemExit().addActionListener(new ActionListener(){  
 	    public void actionPerformed(ActionEvent e){  
@@ -368,6 +375,87 @@ public class EngineMainWindow extends JFrame{
 	    }  
 	});
 	
+	toolPane.getTerrainTab().getPanelSolid().getLabelRock().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+	       currentTerrainType = TerrainType.ROCK;
+	       System.out.println("ROCK");
+	    }  
+	});
+	
+	toolPane.getTerrainTab().getPanelSolid().getLabelWall().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+	       currentTerrainType = TerrainType.WALL;
+	       System.out.println("WALL");
+	    }  
+	});
+	
+	toolPane.getPlayerTab().getPanelNewPlayer().getLabelNewPlayer().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {
+		if(mainPanel.getCurrentMap() != null){
+		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
+			    Image im = null;
+			    public void mouseClicked(MouseEvent e) {
+				if(toolPane.getSelectedIndex() == 1){
+				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
+				int width = MapSize.SIZE.getWidth()/ TerrainSize.WIDTH.getSize();
+				int x = e.getX();
+				int y = e.getY();
+				int sx = (x - x%40)/40;
+				int sy = (y - y%40)/40;
+    //			    System.out.println("x: " + x);
+    //			    System.out.println("y: " + y);
+    //			    System.out.println("sx: " + sx);
+    //			    System.out.println("sy: " + sy);
+				if(map != null){
+				    ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
+				    for(int i = 0; i < height; i++){
+					for(int j = 0; j < width; j++){
+					    if(map.getMapFigures().get(i).get(j) != null && map.getMapFigures().get(i).get(j) instanceof Player){
+					       map.getMapFigures().get(i).remove(j);
+					       map.getMapFigures().get(i).add(j, null);
+					    }
+					}
+				    }
+				    map.addFigure(sy, sx, new Player("Jan", 2, 3, 4, 3, 2, 3));
+
+    //				class mc extends ImageIcon{
+    //				    @Override
+    //				    public void p(Graphics g) {
+    //					super.paintComponent(g);
+    //					g.drawImage(GameIcons.PLAYER_RIGHT_1.getIcon().getImage(), x, y, mainPanel.getCurrentMap());
+    //					Toolkit.getDefaultToolkit().sync();
+    //				    }
+    //				}
+				    im = GameIcons.PLAYER_RIGHT_1.getIcon().getImage();
+				    //mainPanel.getCurrentMap().getGraphics().drawImage(im, x-20, y-20, mainPanel.getParent());
+				    //mainPanel.getGraphics().drawImage(im, x-20, y-20, null);
+				    
+				    //mainPanel.getCurrentMap().getMapBoard().get(sy).get(sx).setIcon(GameIcons.PLAYER_RIGHT_1.getIcon());
+				    //mc m = new mc();
+				    //mainPanel.getCurrentMap().removeTerrain(sx, sy);
+				    //mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
+				    map.printMapFigures();
+				}
+			    }
+			};
+		    });
+		}
+	    }  
+	});
+	
+	menu.getMenuRun().getRun().addActionListener(new ActionListener(){  
+	    public void actionPerformed(ActionEvent e){  
+		try {
+		    JFrame f = new GameMainWindow("Hra");
+		} catch (HeadlessException ex) {
+		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		    }  
+		});
+
+	
 //	mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
 //	    public void mouseClicked(MouseEvent e) {
 //		int x = e.getX();
@@ -398,10 +486,5 @@ public class EngineMainWindow extends JFrame{
     public JTextField getTf() {
 	return tf;
     }
-
-    public JButton getB() {
-	return b;
-    }
-    
     
 }

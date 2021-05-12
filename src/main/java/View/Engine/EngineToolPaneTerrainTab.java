@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,8 +32,7 @@ public class EngineToolPaneTerrainTab extends JPanel{
     private JButton btn;
     
     public EngineToolPaneTerrainTab() throws IOException {
-	GridLayout gr = new GridLayout(0, 4);
-	setLayout(gr);
+	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
 	//add(panelNewMap);
 	
@@ -67,12 +67,36 @@ public class EngineToolPaneTerrainTab extends JPanel{
     }
     
     private void init(){
+	JPanel jp1 = new JPanel();
+	JLabel jl1 = new JLabel("New Map");
+	jl1.setAlignmentX(CENTER_ALIGNMENT);
+	jp1.setLayout(new BoxLayout(jp1, BoxLayout.PAGE_AXIS));
+	jp1.add(jl1);
 	panelNewMap = new EngineToolPaneTerrainTabNewMapPanel();
-	add(panelNewMap);
+	jp1.add(panelNewMap);
+	add(jp1);
+	
+	//add(new JSeparator(SwingConstants.VERTICAL));
+	
+	JPanel jp2 = new JPanel();
+	JLabel jl2 = new JLabel("Ground Terrains");
+	jl2.setAlignmentX(CENTER_ALIGNMENT);
+	jp2.setLayout(new BoxLayout(jp2, BoxLayout.PAGE_AXIS));
+	jp2.add(jl2);
 	panelGround = new EngineToolPaneTerrainTabGroundPanel();
-	add(panelGround);
+	jp2.add(panelGround);
+	add(jp2);
+	
+	//add(new JSeparator(SwingConstants.VERTICAL));
+	
+	JPanel jp3 = new JPanel();
+	JLabel jl3 = new JLabel("Solid Terrains");
+	jl3.setAlignmentX(CENTER_ALIGNMENT);
+	jp3.setLayout(new BoxLayout(jp3, BoxLayout.PAGE_AXIS));
+	jp3.add(jl3);
 	panelSolid = new EngineToolPaneTerrainTabSolidPanel();
-	add(panelSolid);
+	jp3.add(panelSolid);
+	add(jp3);
     }
 
     public JTextArea getAr() {

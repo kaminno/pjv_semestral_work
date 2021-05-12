@@ -2,6 +2,7 @@ package View.Engine;
 
 import View.GameIcons;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,58 +15,73 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 public class EngineToolPanePlayerTab extends JPanel{
-    JLabel l1 = new JLabel("Label 1");
-    JLabel l2 = new JLabel("Label 2");
-    JLabel l3 = new JLabel(GameIcons.GRASS.getIcon());
+    private EngineToolPanePlayerTabNewPlayer panelNewPlayer;
+    private EngineToolPanePlayerTabAttributes panelAttributes;
+    private EngineToolPanePlayerTabInventory panelInventory;
+    private EngineToolPanePlayerTabWeapons panelWeapons;
 
     public EngineToolPanePlayerTab() {
-	l1.setBackground(Color.red);
-	l2.setBackground(Color.MAGENTA);
-	l1.setOpaque(true);
-	l2.setOpaque(true);
-	//add(new JToolBar());
-	
-	setLayout(new GridBagLayout());
-	
-	//l2.setPreferredSize(new Dimension(160, 80));
-	JSeparator sep = new JSeparator();
-	sep.setOrientation(SwingConstants.VERTICAL);
-	JPanel p = new JPanel();
-	//p.setSize(new Dimension(100, 50));
-	p.setBackground(Color.green);
-	JPanel p2 = new JPanel();
-	p.setSize(new Dimension(150, 200));
-	p2.setSize(new Dimension(150, 100));
-	p2.setBackground(Color.yellow);
-	add(p);
-	p.add(l1);
-	add(sep);
-	add(p2);
-	add(new JSeparator(SwingConstants.VERTICAL));
-	JPanel pan = new JPanel();
-//	GridLayout gr = new GridLayout(2, 4);
-//	gr.setHgap(50);
-//	gr.setVgap(20);
-//	pan.setLayout(gr);
-	pan.setBackground(Color.blue);
-	//pan.setSize(new Dimension(50, 100));
-	add(pan);
-	l3.setBackground(Color.blue);
-	pan.add(l3);
-	pan.add(new JButton("Hello there"));
-	pan.add(new JLabel("JBL"));
-	pan.add(new JLabel("QQE"));
-	pan.add(new JLabel("HUGO"));
-	add(new JSeparator(SwingConstants.VERTICAL));
-	add(l2);
-    }
-
-    public JLabel getL1() {
-	return l1;
-    }
-
-    public JLabel getL2() {
-	return l2;
+	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+	init();
     }
     
+    private void init(){
+	JPanel jp1 = new JPanel();
+	JLabel jl1 = new JLabel("New Player");
+	jl1.setAlignmentX(CENTER_ALIGNMENT);
+	jp1.setLayout(new BoxLayout(jp1, BoxLayout.PAGE_AXIS));
+	jp1.add(jl1);
+	panelNewPlayer = new EngineToolPanePlayerTabNewPlayer();
+	jp1.add(panelNewPlayer);
+	add(jp1);
+
+	add(new JSeparator(SwingConstants.VERTICAL));
+
+	JPanel jp2 = new JPanel();
+	JLabel jl2 = new JLabel("Attributes");
+	jl2.setAlignmentX(CENTER_ALIGNMENT);
+	jp2.setLayout(new BoxLayout(jp2, BoxLayout.PAGE_AXIS));
+	jp2.add(jl2);
+	panelAttributes = new EngineToolPanePlayerTabAttributes();
+	jp2.add(panelAttributes);
+	add(jp2);
+	
+	add(new JSeparator(SwingConstants.VERTICAL));
+	
+	JPanel jp3 = new JPanel();
+	JLabel jl3 = new JLabel("Inventory");
+	jl3.setAlignmentX(CENTER_ALIGNMENT);
+	jp3.setLayout(new BoxLayout(jp3, BoxLayout.PAGE_AXIS));
+	jp3.add(jl3);
+	panelInventory = new EngineToolPanePlayerTabInventory();
+	jp3.add(panelInventory);
+	add(jp3);
+	
+	add(new JSeparator(SwingConstants.VERTICAL));
+	
+	JPanel jp4 = new JPanel();
+	JLabel jl4 = new JLabel("Starting Weapons");
+	jl4.setAlignmentX(CENTER_ALIGNMENT);
+	jp4.setLayout(new BoxLayout(jp4, BoxLayout.PAGE_AXIS));
+	jp4.add(jl4);
+	panelWeapons = new EngineToolPanePlayerTabWeapons();
+	jp4.add(panelWeapons);
+	add(jp4);
+    }
+
+    public EngineToolPanePlayerTabNewPlayer getPanelNewPlayer() {
+	return panelNewPlayer;
+    }
+
+    public EngineToolPanePlayerTabAttributes getPanelAttributes() {
+	return panelAttributes;
+    }
+
+    public EngineToolPanePlayerTabInventory getPanelInventory() {
+	return panelInventory;
+    }
+
+    public EngineToolPanePlayerTabWeapons getPanelWeapons() {
+	return panelWeapons;
+    }
 }

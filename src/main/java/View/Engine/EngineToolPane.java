@@ -8,9 +8,11 @@ import javax.swing.JTabbedPane;
 public class EngineToolPane extends JTabbedPane{
     private EngineToolPaneTerrainTab terrainTab;
     private EngineToolPanePlayerTab playerTab;
+    private EngineToolPaneItemsTab itemsTab;
+    private EngineToolPaneBeastTab beastTab;
 
     public EngineToolPane() {
-	this.setMaximumSize(new Dimension(50, 100));
+	//this.setMaximumSize(new Dimension(50, 100));
 	init();
     }
     
@@ -24,6 +26,12 @@ public class EngineToolPane extends JTabbedPane{
 	
 	playerTab = new EngineToolPanePlayerTab();
 	addTab("Player", playerTab);
+	
+	itemsTab = new EngineToolPaneItemsTab();
+	addTab("Items", itemsTab);
+	
+	beastTab = new EngineToolPaneBeastTab();
+	addTab("Beasts", beastTab);
     }
 
     public EngineToolPaneTerrainTab getTerrainTab() {
@@ -33,6 +41,12 @@ public class EngineToolPane extends JTabbedPane{
     public EngineToolPanePlayerTab getPlayerTab() {
 	return playerTab;
     }
-    
-    
+
+    public EngineToolPaneItemsTab getItemsTab() {
+	return itemsTab;
+    }
+
+    public EngineToolPaneBeastTab getBeastTab() {
+	return beastTab;
+    }
 }

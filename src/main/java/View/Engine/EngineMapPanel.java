@@ -1,12 +1,19 @@
 package View.Engine;
 
+import Model.Map.MapSize;
 import Model.Terrains.TerrainSize;
 import Model.Terrains.TerrainType;
 import View.GameIcons;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,56 +21,79 @@ import javax.swing.JPanel;
 public class EngineMapPanel extends JPanel{
     private static int mapIds = 0;
     private final int id;
-    private final int width;
-    private final int height;
+    private final int gameBoardWidth;
+    private final int gameBoardHeight;
     private GridLayout gridLayout;
+
     private ArrayList<ArrayList<JLabel>> mapBoard;
 
-    public EngineMapPanel(int width, int height) {
+    public EngineMapPanel(int widthW, int heightH) {
 	super();
-	if (width <= 0 || height <= 0){
+	if (widthW <= 0 || heightH <= 0){
 	    throw new IllegalArgumentException("Error: width and height must be > 0");
 	}
 	this.id = getNewId();
 	// width and height are game fields size, not the JPanel size!
-	this.width = width;
-	this.height = height;
-	setSize(new Dimension(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize()));
+	this.gameBoardWidth = widthW;
+	this.gameBoardHeight = heightH;
+	//setSize(new Dimension(gameBoardWidth * TerrainSize.WIDTH.getSize(), gameBoardHeight * TerrainSize.HEIGHT.getSize()));
+	//setSize(MapSize.getSIZE().getHeight(), MapSize.getSIZE().getWidth());
+	
+	setSize(new Dimension(MapSize.getSIZE().getWidth(), MapSize.getSIZE().getHeight()));
+	
 	System.out.println("s: " + getSize());
-	System.out.println("constructor height: " + height * TerrainSize.HEIGHT.getSize());
-	System.out.println("width: " + width * TerrainSize.WIDTH.getSize());
+	System.out.println("constructor height: " + heightH * TerrainSize.HEIGHT.getSize());
+	System.out.println("width: " + widthW * TerrainSize.WIDTH.getSize());
 	//setSize(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize());
 	//setMinimumSize(new Dimension(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize()));
-	setBackground(Color.WHITE);
-	//setOpaque(true);
-	gridLayout = new GridLayout(height, width);
+	//setBackground(Color.WHITE);
+	
+	//setOpaque(false);
+	
+	gridLayout = new GridLayout(gameBoardHeight, gameBoardWidth);
 	setLayout(gridLayout);
 	System.out.println("s: " + getSize());
 	//gridLayout.preferredLayoutSize(this);
 	
-	this.mapBoard = new ArrayList(height);
-	for (int i = 0; i < height; i++){
-		this.mapBoard.add(i, new ArrayList(width));
-		for (int j = 0; j < width; j++){
+	this.mapBoard = new ArrayList(gameBoardHeight);
+	for (int i = 0; i < gameBoardHeight; i++){
+		this.mapBoard.add(i, new ArrayList(gameBoardWidth));
+		for (int j = 0; j < gameBoardWidth; j++){
 		    mapBoard.get(i).add(j, null);
 		}
 	    }
-	//revalidate();
-	//repaint();
-	//setVisible(true);
+
 	System.out.println("New map created :)");
     }
     
+    public void saveImage(String name,String type) {
+		BufferedImage image = new BufferedImage(getWidth(),getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = image.createGraphics();
+		paint(g2);
+		try{
+			ImageIO.write(image, type, new File(name+"."+type));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+    
     public void addTerrain(JLabel terrain, int x, int y){
+//	if(mapBoard.get(y).get(x) == null){
+//	    mapBoard.get(y).add(x, new smallField(terrain, null, null));
+//	}
+//	else{
+//	    mapBoard.get(y).get(x).setTerrain(terrain);
+//	}
+	//removeTerrain(x, y);
 	mapBoard.get(y).add(x, terrain);
-	add(terrain, y * width + x);
+	add(terrain, y * gameBoardWidth + x);
 	revalidate();
 	repaint();
     }
     
     public void removeTerrain(int x, int y){
 	mapBoard.get(y).remove(x);
-	remove(y * width + x);
+	remove(y * gameBoardWidth + x);
 	revalidate();
 	repaint();
     }
@@ -73,38 +103,19 @@ public class EngineMapPanel extends JPanel{
 	ImageIcon i = null;
 		for(GameIcons gi : GameIcons.values()){
 		    if(type.getName() == gi.getLabel()){
-			System.out.println("adding icon");
 			i = gi.getIcon();
-			System.out.println("i: " + i.getIconHeight());
-			System.out.println("i: " + i.getIconWidth());
 			break;
 		    }
 		}
-	// sets size (from consultation)
-	setSize(new Dimension(height * TerrainSize.HEIGHT.getSize(), width * TerrainSize.WIDTH.getSize()));
-	setLayout(gridLayout);
-	System.out.println(i.getIconHeight());
-	System.out.println(i.getIconWidth());
 	// go through the grid layout and adding JLabels with icon from above
-	for (int h = 0; h < this.height; h++){
-	    for (int w = 0; w < this.width; w++){
-		System.out.println("width " + this.getWidth());
-		System.out.println("height " + this.getHeight());
-		System.out.println("s: " + getSize());
+	System.out.println("h before cycle" + gameBoardHeight);
+	System.out.println("w before cycle" + gameBoardWidth);
+	for (int h = 0; h < this.gameBoardHeight; h++){
+	    for (int w = 0; w < this.gameBoardWidth; w++){
 		JLabel terrain = new JLabel(i);
-		System.out.println("jl: " + terrain.getSize());
-		//terrain.setSize(40, 40);
-		//terrain.setVisible(true);
-		//add(terrain, h * width + w);
-		//this.add(terrain, 0);
-		
-		// add terrain (JLabel) to the JPanel
+		//System.out.println("I: " + terrain.getIcon().getIconHeight() + " ... " + terrain.getIcon().getIconWidth());
 		add(terrain);
 		mapBoard.get(h).add(w, terrain);
-		//terrain.setVisible(true);
-		//terrain.revalidate();
-		//terrain.repaint();
-		System.out.println("component count: " + getComponentCount());
 	    }
 	}
 	revalidate();
@@ -129,19 +140,19 @@ public class EngineMapPanel extends JPanel{
 	return id;
     }
 
-    public int getWidth() {
-	return width;
+    public int getGameBoardWidth() {
+	return gameBoardWidth;
     }
 
-    public int getHeight() {
-	return height;
+    public int getGameBoardHeight() {
+	return gameBoardHeight;
     }
 
     public GridLayout getGridLayout() {
 	return gridLayout;
     }
 
-    public ArrayList<ArrayList<JLabel>> getMapBoard() {
-	return mapBoard;
-    }
+//    public ArrayList<ArrayList<JLabel>> getMapBoard() {
+//	return mapBoard;
+//    }
 }

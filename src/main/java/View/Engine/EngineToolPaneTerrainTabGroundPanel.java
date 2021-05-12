@@ -15,10 +15,10 @@ public class EngineToolPaneTerrainTabGroundPanel extends JPanel{
 
     public EngineToolPaneTerrainTabGroundPanel() {
 	init();
-	GridLayout gr = new GridLayout(2, 0);
-	gr.setHgap(30);
-	gr.setVgap(10);
-	setLayout(gr);
+	//GridLayout gr = new GridLayout(2, 0);
+	//gr.setHgap(15);
+	//gr.setVgap(10);
+	//setLayout(gr);
 	add(labelGrass);
 	add(labelSand);
 	add(labelWater);
