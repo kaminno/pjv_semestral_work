@@ -1,5 +1,6 @@
 package View.Game;
 
+import Controller.GameController;
 import Model.Map.MapSize;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -18,20 +19,29 @@ import javax.swing.JLabel;
 public class GameMainWindow extends JFrame{
     private Container pane;
     private GameBoard gameBoard;
+    private GameMenu gameMenu;
+    GameController controller;
     
     private Image backgroundImage;
     
-    public GameMainWindow(String title) throws HeadlessException, IOException {
+    public GameMainWindow(String title, GameController controller) throws HeadlessException, IOException {
 	super(title);
+	this.controller = controller;
+	
 	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	this.setSize(new Dimension(MapSize.SIZE.getWidth()+8, MapSize.SIZE.getHeight() + 30));
 	this.setResizable(false);
 	pane = this.getContentPane();
 
         pane.setLayout(new CardLayout());
-	gameBoard = new GameBoard();
+	gameMenu = new GameMenu(this);
+	gameBoard = new GameBoard(gameMenu, controller);
+	
 	//pane.add(gameBoard, BorderLayout.CENTER);
 	pane.add(gameBoard);
+	//pane.add(gameMenu);
 	this.setVisible(true);
     }
+    
+    
 }

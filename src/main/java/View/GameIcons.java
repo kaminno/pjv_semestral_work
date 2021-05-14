@@ -26,6 +26,10 @@ public enum GameIcons {
     ARMOR_BOOTS("boots", new ImageIcon(new ImageIcon("resources/equipment_boots.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
     WEAPON_MAIN_SWORD("main sword", new ImageIcon(new ImageIcon("resources/weapon_main_sword.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
     WEAPON_SECOND_DAGGER("second dagger", new ImageIcon(new ImageIcon("resources/weapon_second_dagger.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
+    BEAST_BAT_1("beast bat 1", new ImageIcon(new ImageIcon("resources/beast_bat_1.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
+    BEAST_BAT_2("beast bat 2", new ImageIcon(new ImageIcon("resources/beast_bat_2.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
+    BEAST_WAR_PIG("beast war pig", new ImageIcon(new ImageIcon("resources/beast_war_pig.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
+    BEAST_SKELETON("beast skeleton", new ImageIcon(new ImageIcon("resources/beast_skeleton.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT))),
     TRANSPARENT("transparent", new ImageIcon(new ImageIcon("resources/icon_transparent.png").getImage().getScaledInstance(TerrainSize.WIDTH.getSize(), TerrainSize.HEIGHT.getSize(), Image.SCALE_DEFAULT)));
     
     private String label;

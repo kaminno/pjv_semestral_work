@@ -1,12 +1,16 @@
 package View.Game;
 
+import Controller.GameController;
 import Model.Map.MapSize;
+import Model.Terrains.Terrain;
 import Model.Terrains.TerrainSize;
+import View.GameIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +22,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -26,29 +31,39 @@ public class GameBoard extends JPanel implements ActionListener{
     
     private Timer timer;
     private PlayerView player;
+    private GameMenu gameMenu;
     private boolean ingame;
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
     private final int B_WIDTH = 400;
     private final int B_HEIGHT = 300;
     private final int DELAY = 15;
+    GameController controller;
 
-    public GameBoard() throws IOException {
+    public GameBoard(GameMenu gameMenu, GameController controller) throws IOException {
+	this.controller = controller;
 	//this.setSize(new Dimension(MapSize.SIZE.getWidth(), MapSize.SIZE.getHeight()));
-	backgroundImage = ImageIO.read(new File("moje_mapa.png"));
+//	backgroundImage = ImageIO.read(new File("moje_mapa.png"));
+	backgroundImage = ImageIO.read(new File("resources/current.map.png"));
+	this.gameMenu = gameMenu;
 	//this.add(new JLabel(new ImageIcon(backgroundImage)));
 	initBoard();
     }
     
     private void initBoard() {
-
+	//gameMenu = new GameMenu();
+	
         addKeyListener(new TAdapter());
         setFocusable(true);
         ingame = true;
 
         setPreferredSize(new Dimension(MapSize.getSIZE().getWidth(), MapSize.getSIZE().getWidth()));
 
-        player = new PlayerView(150, 300);
+        player = new PlayerView(150, 300, 7);
+	add(player.getInventory());
+	add(player.getEquipment());
+	add(gameMenu);
+	//player.getInventory().setVisible(true);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -75,15 +90,14 @@ public class GameBoard extends JPanel implements ActionListener{
             g.drawImage(player.getImage(), player.getX(), player.getY(),
                     this);
         }
-
-        //g.setColor(Color.WHITE);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
 
         inGame();
-
+	
+	
         updatePlayer();
 
         repaint();
@@ -99,10 +113,17 @@ public class GameBoard extends JPanel implements ActionListener{
     private void updatePlayer() {
 
         if (player.isVisible()) {
-            player.move();
+	    controller.checkMove(player);
+	    player.move();
 	    if(player.getSwapTime() == 7 && player.getMoved()){
-		player.swapIcons();
+	        player.swapIcons();
 	    }
+	    
+	    
+//            player.move();
+//	    if(player.getSwapTime() == 7 && player.getMoved()){
+//		player.swapIcons();
+//	    }
         }
     }
     
@@ -116,6 +137,7 @@ public class GameBoard extends JPanel implements ActionListener{
         @Override
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
+	    gameMenu.keyPressed(e);
         }
     }
 }

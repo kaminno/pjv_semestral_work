@@ -5,9 +5,9 @@ package Model.Figures;
  * @author honzuna
  */
 public abstract class Figure {
-    private final String name;
-    private int maxHealth;
-    private int currentHealth;
+    protected final String name;
+    protected int maxHealth;
+    protected int currentHealth;
 
     public Figure(String name, int health) {
 	this.name = name;

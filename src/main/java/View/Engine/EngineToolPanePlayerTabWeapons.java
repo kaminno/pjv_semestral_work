@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,18 +21,22 @@ public class EngineToolPanePlayerTabWeapons extends JPanel{
     private JTextField tfMainWeaponDurability;
     private JTextField tfSecondWeaponDamage;
     private JTextField tfSecondWeaponDurability;
+    private boolean mainSelected = false;
+    private boolean secondSelected = false;
     private JPanel panelLeft;
     private JPanel panelRight;
     private JPanel panelMainRight;
     private JPanel panelSecondRight;
     private GridBagLayout myLayout;
     private GridBagConstraints myConstraints;
+    private Color itemBackground;
     
     public EngineToolPanePlayerTabWeapons() {
 	//setMinimumSize(new Dimension(350, 50));
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
 	myConstraints = new GridBagConstraints();
+	itemBackground = new Color(255, 231, 150);
         myConstraints.fill = GridBagConstraints.HORIZONTAL;
 	init();
     }
@@ -46,7 +51,8 @@ public class EngineToolPanePlayerTabWeapons extends JPanel{
 	
 	iconMainWeapon = new JLabel(GameIcons.WEAPON_MAIN_SWORD.getIcon());
 	iconMainWeapon.setToolTipText("Main weapon");
-	iconMainWeapon.setBackground(Color.YELLOW);
+	iconMainWeapon.setBackground(itemBackground);
+	iconMainWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	
 	lblMainWeaponDamage = new JLabel("  Damage: ");
         myConstraints.gridx = 0;
@@ -79,7 +85,8 @@ public class EngineToolPanePlayerTabWeapons extends JPanel{
 	
 	iconSecondWeapon = new JLabel(GameIcons.WEAPON_SECOND_DAGGER.getIcon());
 	iconSecondWeapon.setToolTipText("Second weapon");
-	iconSecondWeapon.setBackground(Color.YELLOW);
+	iconSecondWeapon.setBackground(itemBackground);
+	iconSecondWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	
 	lblSecondWeaponDamage = new JLabel("  Damage: ");
         myConstraints.gridx = 0;
@@ -112,6 +119,38 @@ public class EngineToolPanePlayerTabWeapons extends JPanel{
 	
 	add(panelLeft);
 	add(panelRight);
+    }
+    
+    public void selectMainWeapon(){
+	iconMainWeapon.setOpaque(true);
+	iconMainWeapon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	tfMainWeaponDamage.setEditable(true);
+	tfMainWeaponDurability.setEditable(true);
+	mainSelected = true;
+    }
+    
+    public void unselectMainWeapon(){
+	iconMainWeapon.setOpaque(false);
+	iconMainWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
+	tfMainWeaponDamage.setEditable(false);
+	tfMainWeaponDurability.setEditable(false);
+	mainSelected = false;
+    }
+    
+    public void selectSecondWeapon(){
+	iconSecondWeapon.setOpaque(true);
+	iconSecondWeapon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	tfSecondWeaponDamage.setEditable(true);
+	tfSecondWeaponDurability.setEditable(true);
+	secondSelected = true;
+    }
+    
+    public void unselectSecondWeapon(){
+	iconSecondWeapon.setOpaque(false);
+	iconSecondWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
+	tfSecondWeaponDamage.setEditable(false);
+	tfSecondWeaponDurability.setEditable(false);
+	secondSelected = false;
     }
 
     public JLabel getIconMainWeapon() {
@@ -176,5 +215,21 @@ public class EngineToolPanePlayerTabWeapons extends JPanel{
 
     public GridBagConstraints getMyConstraints() {
 	return myConstraints;
+    }
+
+    public boolean isMainSelected() {
+	return mainSelected;
+    }
+
+    public boolean isSecondSelected() {
+	return secondSelected;
+    }
+
+    public void setMainSelected(boolean mainSelected) {
+	this.mainSelected = mainSelected;
+    }
+
+    public void setSecondSelected(boolean secondSelected) {
+	this.secondSelected = secondSelected;
     }
 }

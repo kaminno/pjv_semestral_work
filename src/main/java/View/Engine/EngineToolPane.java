@@ -12,7 +12,6 @@ public class EngineToolPane extends JTabbedPane{
     private EngineToolPaneBeastTab beastTab;
 
     public EngineToolPane() {
-	//this.setMaximumSize(new Dimension(50, 100));
 	init();
     }
     

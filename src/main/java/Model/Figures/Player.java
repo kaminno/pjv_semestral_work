@@ -38,8 +38,8 @@ public class Player extends Figure{
     private Inventory inventory;
     private int xPosition;
     private int yPosition;
-    private int xVelocity;
-    private int yVelocity;
+//    private int xVelocity;
+//    private int yVelocity;
 
     /**
      *
@@ -53,7 +53,7 @@ public class Player extends Figure{
      */
     public Player(String name, int health, int armor, int damage, int moves, int speed, int baseInventorySpace) {
 	super(name, health);
-	if (armor >= 0 && moves > 0 && speed > 0 && health > 0){
+	if (armor >= 0 && damage > 0 && moves > 0 && speed > 0 && health > 0){
 	    this.baseDamage = damage;
 	    this.currentDamage = damage;
 	    this.baseArmor = armor;
@@ -66,7 +66,7 @@ public class Player extends Figure{
 	    this.inventory = new Inventory(baseInventorySpace);
 	}
 	else{
-	    throw new IllegalArgumentException("Armor and durability must be a positive number!");
+	    throw new IllegalArgumentException("Armor, damage, moves and speed must be a positive number!");
 	}
     }
 
@@ -213,13 +213,13 @@ public class Player extends Figure{
 	return yPosition;
     }
 
-    public int getxVelocity() {
-	return xVelocity;
-    }
-
-    public int getyVelocity() {
-	return yVelocity;
-    }
+//    public int getxVelocity() {
+//	return xVelocity;
+//    }
+//
+//    public int getyVelocity() {
+//	return yVelocity;
+//    }
 
     public Inventory getInventory() {
 	return inventory;
@@ -227,5 +227,10 @@ public class Player extends Figure{
     
     public Equipment equipment(){
 	return equipment;
+    }
+
+    @Override
+    public String toString() {
+	return "Player{" + "baseHealth=" + maxHealth  + ", baseDamage=" + baseDamage + ", baseArmor=" + baseArmor + ", baseMoves=" + baseMoves + ", baseSpeed=" + baseSpeed + '}';
     }
 }

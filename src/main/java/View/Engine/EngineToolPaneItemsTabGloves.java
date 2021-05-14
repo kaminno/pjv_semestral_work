@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EngineToolPaneItemsTabHelmet extends JPanel{
-    private JLabel iconHelmet;
+public class EngineToolPaneItemsTabGloves extends JPanel{
+    private JLabel iconGloves;
     private JLabel lblArmor;
     private JLabel lblDurability;
     private JTextField tfArmor;
@@ -20,7 +20,7 @@ public class EngineToolPaneItemsTabHelmet extends JPanel{
     private GridBagLayout myLayout;
     private GridBagConstraints myConstraints;
 
-    public EngineToolPaneItemsTabHelmet() {
+    public EngineToolPaneItemsTabGloves() {
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
 	myConstraints = new GridBagConstraints();
@@ -29,10 +29,10 @@ public class EngineToolPaneItemsTabHelmet extends JPanel{
     }
     
     private void init(){
-	iconHelmet = new JLabel(GameIcons.ARMOR_HELMET.getIcon());
-	iconHelmet.setToolTipText("Helmet");
-	iconHelmet.setBackground(new Color(255, 231, 150));
-	iconHelmet.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
+	iconGloves = new JLabel(GameIcons.ARMOR_GLOVES.getIcon());
+	iconGloves.setToolTipText("Gloves");
+	iconGloves.setBackground(new Color(255, 231, 150));
+	iconGloves.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	panelRight = new JPanel();
 	panelRight.setLayout(myLayout);
 	
@@ -62,28 +62,28 @@ public class EngineToolPaneItemsTabHelmet extends JPanel{
         panelRight.add(tfDurability, myConstraints);
 	tfDurability.setEditable(false);
 	
-	add(iconHelmet);
+	add(iconGloves);
 	add(panelRight);
     }
     
-    public void selectHelmet(){
-	iconHelmet.setOpaque(true);
-	iconHelmet.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    public void selectGloves(){
+	iconGloves.setOpaque(true);
+	iconGloves.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	tfArmor.setEditable(true);
 	tfDurability.setEditable(true);
 	selected = true;
     }
     
-    public void unselectHelmet(){
-	iconHelmet.setOpaque(false);
-	iconHelmet.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
+    public void unselectGloves(){
+	iconGloves.setOpaque(false);
+	iconGloves.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	tfArmor.setEditable(false);
 	tfDurability.setEditable(false);
 	selected = false;
     }
 
-    public JLabel getIconHelmet() {
-	return iconHelmet;
+    public JLabel getIconGloves() {
+	return iconGloves;
     }
 
     public JLabel getLblArmor() {
@@ -106,16 +106,16 @@ public class EngineToolPaneItemsTabHelmet extends JPanel{
 	return panelRight;
     }
 
+    public boolean isSelected() {
+	return selected;
+    }
+
     public GridBagLayout getMyLayout() {
 	return myLayout;
     }
 
     public GridBagConstraints getMyConstraints() {
 	return myConstraints;
-    }
-
-    public boolean isSelected() {
-	return selected;
     }
 
     public void setSelected(boolean selected) {

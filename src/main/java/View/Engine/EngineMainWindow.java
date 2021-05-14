@@ -1,5 +1,7 @@
 package View.Engine;
 
+import Controller.EngineController;
+import Controller.GameController;
 import Exceptions.WrongTerrainType;
 import Model.Figures.Figure;
 import Model.Figures.Player;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -46,21 +49,24 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EngineMainWindow extends JFrame{
-    Container pane;
-    EngineMenu menu;
-    EngineToolPane toolPane;
-    EngineMainWorkingPanel mainPanel;
-    TerrainType currentTerrainType = null;
+    private EngineController controller;
+    private Container pane;
+    private EngineMenu menu;
+    private EngineToolPane toolPane;
+    private EngineMainWorkingPanel mainPanel;
+    private TerrainType currentTerrainType = null;
     Map map = null;
     
     JTextField tf;
     //JButton b;
 
-    public EngineMainWindow(String title) throws HeadlessException {
+    public EngineMainWindow(String title, EngineController controller) throws HeadlessException {
 	super(title);
+	this.controller = controller;
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setMinimumSize(new Dimension(1200, 800));
 	//this.setSize(1200, 800);
@@ -212,12 +218,12 @@ public class EngineMainWindow extends JFrame{
 		    map = new Map(height, width);
 		    try {
 			map.fillTheMapWithGround(type.getName(), type, 0, 0);
-			System.out.println("try");
+			//System.out.println("try");
 		    } catch (WrongTerrainType ex) {
 			Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("catch");
+			//System.out.println("catch");
 		    }
-		    map.printMapTerrain();
+		    //map.printMapTerrain();
 		    // fill the (view) map with icons of specific type from "fill" dialog
 		    newMap.fillTheMapWithGround(type);
 
@@ -254,7 +260,7 @@ public class EngineMainWindow extends JFrame{
 				map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
 				mainPanel.getCurrentMap().removeTerrain(sx, sy);
 				mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
-				map.printMapTerrain();
+				//map.printMapTerrain();
 			    }
 //			    else if(toolPane.getSelectedIndex() == 1){
 //				int sx = (x - x%40)/40;
@@ -334,19 +340,19 @@ public class EngineMainWindow extends JFrame{
 			    }
 		}  
 		});
-	toolPane.getTerrainTab().getPanelGround().getLabelGrass().addMouseListener(new MouseAdapter(){  
-	    public void actionPerformed(ActionEvent e){  
-			JFileChooser chooser = new JFileChooser();
-			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-				"JPG & GIF Images", "jpg", "gif");
-			    chooser.setFileFilter(filter);
-			    int returnVal = chooser.showOpenDialog(getParent());
-			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			       System.out.println("You chose to open this file: " +
-				    chooser.getSelectedFile().getName());
-			    }
-		}  
-		});
+//	toolPane.getTerrainTab().getPanelGround().getLabelGrass().addMouseListener(new MouseAdapter(){  
+//	    public void actionPerformed(ActionEvent e){  
+//			JFileChooser chooser = new JFileChooser();
+//			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//				"JPG & GIF Images", "jpg", "gif");
+//			    chooser.setFileFilter(filter);
+//			    int returnVal = chooser.showOpenDialog(getParent());
+//			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+//			       System.out.println("You chose to open this file: " +
+//				    chooser.getSelectedFile().getName());
+//			    }
+//		}  
+//		});
 	toolPane.getTerrainTab().getPanelGround().getLabelGrass().addMouseListener(new MouseAdapter(){  
 	    public void mouseClicked(MouseEvent e)  {  
 	       currentTerrainType = TerrainType.GRASS;
@@ -443,15 +449,68 @@ public class EngineMainWindow extends JFrame{
 	    }  
 	});
 	
-	menu.getMenuRun().getRun().addActionListener(new ActionListener(){  
-	    public void actionPerformed(ActionEvent e){  
-		try {
-		    JFrame f = new GameMainWindow("Hra");
-		} catch (HeadlessException ex) {
-		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+	toolPane.getPlayerTab().getPanelWeapons().getIconMainWeapon().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getPlayerTab().getPanelWeapons().isMainSelected()){
+		    toolPane.getPlayerTab().getPanelWeapons().unselectMainWeapon();
+		    toolPane.getPlayerTab().getPanelWeapons().repaint();
 		}
+		else{
+		    toolPane.getPlayerTab().getPanelWeapons().selectMainWeapon();
+		    toolPane.getPlayerTab().getPanelWeapons().repaint();
+		}
+	    }  
+	});
+	
+	toolPane.getPlayerTab().getPanelWeapons().getIconSecondWeapon().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getPlayerTab().getPanelWeapons().isSecondSelected()){
+		    toolPane.getPlayerTab().getPanelWeapons().unselectSecondWeapon();
+		    toolPane.getPlayerTab().getPanelWeapons().repaint();
+		}
+		else{
+		    toolPane.getPlayerTab().getPanelWeapons().selectSecondWeapon();
+		    toolPane.getPlayerTab().getPanelWeapons().repaint();
+		}
+	    }  
+	});
+	
+	toolPane.getItemsTab().getPanelHelmet().getIconHelmet().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getItemsTab().getPanelHelmet().isSelected()){
+		    toolPane.getItemsTab().getPanelHelmet().unselectHelmet();
+		    toolPane.getItemsTab().getPanelHelmet().repaint();
+		}
+		else{
+		    toolPane.getItemsTab().getPanelHelmet().selectHelmet();
+		    toolPane.getItemsTab().getPanelHelmet().repaint();
+		}
+	    }  
+	});
+	
+	menu.getMenuRun().getRun().addActionListener(new ActionListener(){  
+	    public void actionPerformed(ActionEvent e){
+		controller.createNewMap(map);
+		mainPanel.getCurrentMap().saveImage("resources/current.map", "png");
+		int health = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseHealth().getText());
+		int armor = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseArmor().getText());
+		int damage = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseAttackDamage().getText());
+		int speed = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseSpeed().getText());
+		int invSpace = toolPane.getPlayerTab().getPanelInventory().getInventorySize();
+		controller.createNewPlayer("New Player", health, armor, damage, 1, speed, invSpace);
+		int bossHealth = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblHealth().getText());
+		int bossArmor = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblArmor().getText());
+		int bossDamage = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblDamage().getText());
+		controller.createBoss("Boss", bossHealth, bossArmor, bossDamage);
+		controller.runGame();
+		//controller.getModel().getMap().printMapTerrain();
+//		try {
+//		    JFrame f = new GameMainWindow("Hra");
+//		} catch (HeadlessException ex) {
+//		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+//		} catch (IOException ex) {
+//		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+//		}
 		    }  
 		});
 
@@ -486,5 +545,22 @@ public class EngineMainWindow extends JFrame{
     public JTextField getTf() {
 	return tf;
     }
+
+    public EngineController getController() {
+	return controller;
+    }
+
+    public Container getPane() {
+	return pane;
+    }
+
+    public TerrainType getCurrentTerrainType() {
+	return currentTerrainType;
+    }
+
+    public Map getMap() {
+	return map;
+    }
     
 }
+		

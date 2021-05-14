@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class PlayerView extends FigureView {
 
@@ -16,11 +17,15 @@ public class PlayerView extends FigureView {
     private Image player_fore_2;
     private int swapTime = 0;
     private boolean moved;
+    private InventoryView inventory;
+    private EquipmentView equipment;
     //private List<Missile> missiles;
 
-    public PlayerView(int x, int y) {
+    public PlayerView(int x, int y, int inventorySize) {
         super(x, y);
-
+	inventory = new InventoryView(inventorySize);
+	equipment = new EquipmentView();
+	
         initPlayer();
     }
 
@@ -30,6 +35,8 @@ public class PlayerView extends FigureView {
         //loadImage("resources/player.png");
 	player_fore_1 = GameIcons.PLAYER_FORE_1.getIcon().getImage();
 	player_fore_2 = GameIcons.PLAYER_FORE_2.getIcon().getImage();
+	
+	
 	
 	image = player_fore_1;
         getImageDimensions();
@@ -95,6 +102,36 @@ public class PlayerView extends FigureView {
 //            fire();
 //        }
 
+	if(key == KeyEvent.VK_ESCAPE){
+	    inventory.setVisible(false);
+	    inventory.setShowen(false);
+	    
+	    equipment.setVisible(false);
+	    equipment.setShown(false);
+	}
+	
+	if(key == KeyEvent.VK_I){
+	    if(inventory.isShowen()){
+		inventory.setVisible(false);
+		inventory.setShowen(false);
+	    }
+	    else{
+		inventory.setVisible(true);
+		inventory.setShowen(true);
+	    }
+	}
+	
+	if(key == KeyEvent.VK_C){
+	    if(equipment.isShown()){
+		equipment.setVisible(false);
+		equipment.setShown(false);
+	    }
+	    else{
+		equipment.setVisible(true);
+		equipment.setShown(true);
+	    }
+	}
+
         if (key == KeyEvent.VK_LEFT) {
             dx = -2;
         }
@@ -136,5 +173,29 @@ public class PlayerView extends FigureView {
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+
+    public InventoryView getInventory() {
+	return inventory;
+    }
+
+    public EquipmentView getEquipment() {
+	return equipment;
+    }
+
+    public int getDx() {
+	return dx;
+    }
+
+    public int getDy() {
+	return dy;
+    }
+
+    public void setDx(int dx) {
+	this.dx = dx;
+    }
+
+    public void setDy(int dy) {
+	this.dy = dy;
     }
 }
