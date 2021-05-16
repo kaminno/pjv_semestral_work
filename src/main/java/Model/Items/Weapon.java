@@ -6,7 +6,8 @@ public class Weapon extends WearableItem{
     //private final WeaponType type;
     private int damage;
     private int bonusMoves;
-    private int durability;
+    private int maximumDurability;
+    private int currentDurability;
     private boolean broken;
 
     public Weapon(String name, int weight, int damage, int bonusMoves, int durability, EquipmentType type) throws WrongEquipmentTypeForWearableItemException {
@@ -17,8 +18,9 @@ public class Weapon extends WearableItem{
 		if (damage > 0 && durability >= 0){
 		    this.damage = damage;
 		    this.broken = false;
-		    this.durability = durability;
-		    if (this.durability == 0){
+		    this.maximumDurability = durability;
+		    this.currentDurability = durability;
+		    if (this.maximumDurability == 0){
 			this.broken = true;
 		    }
 		}
@@ -43,12 +45,23 @@ public class Weapon extends WearableItem{
 	return bonusMoves;
     }
 
-    public int getDurability() {
-	return durability;
-    }
-
     public boolean isBroken() {
 	return broken;
+    }
+
+    public int getMaximumDurability() {
+	return maximumDurability;
+    }
+
+    public int getCurrentDurability() {
+	return currentDurability;
+    }
+    
+    public void updateDurability(int coef){
+	currentDurability += coef;
+	if(currentDurability == 0){
+	    this.broken = true;
+	}
     }
     
     public void setDurability(int durability){
@@ -61,7 +74,7 @@ public class Weapon extends WearableItem{
 		if(durability == 0){
 		    this.broken = true;
 		}
-		this.durability = durability;
+		this.maximumDurability = durability;
 	    }
 //	}
 //	catch (IllegalArgumentException e){

@@ -1,6 +1,7 @@
 package View.Game;
 
 import Controller.GameController;
+import Model.Figures.Player;
 import Model.Map.MapSize;
 import Model.Terrains.Terrain;
 import Model.Terrains.TerrainSize;
@@ -40,17 +41,17 @@ public class GameBoard extends JPanel implements ActionListener{
     private final int DELAY = 15;
     GameController controller;
 
-    public GameBoard(GameMenu gameMenu, GameController controller) throws IOException {
+    public GameBoard(GameMenu gameMenu, GameController controller, Player pl) throws IOException {
 	this.controller = controller;
 	//this.setSize(new Dimension(MapSize.SIZE.getWidth(), MapSize.SIZE.getHeight()));
 //	backgroundImage = ImageIO.read(new File("moje_mapa.png"));
 	backgroundImage = ImageIO.read(new File("resources/current.map.png"));
 	this.gameMenu = gameMenu;
 	//this.add(new JLabel(new ImageIcon(backgroundImage)));
-	initBoard();
+	initBoard(pl);
     }
     
-    private void initBoard() {
+    private void initBoard(Player pl) {
 	//gameMenu = new GameMenu();
 	
         addKeyListener(new TAdapter());
@@ -59,7 +60,8 @@ public class GameBoard extends JPanel implements ActionListener{
 
         setPreferredSize(new Dimension(MapSize.getSIZE().getWidth(), MapSize.getSIZE().getWidth()));
 
-        player = new PlayerView(150, 300, 7);
+        player = new PlayerView(150, 300, pl);
+	controller.updateEquipmentInfo(player);
 	add(player.getInventory());
 	add(player.getEquipment());
 	add(gameMenu);
@@ -118,6 +120,8 @@ public class GameBoard extends JPanel implements ActionListener{
 	    if(player.getSwapTime() == 7 && player.getMoved()){
 	        player.swapIcons();
 	    }
+	    controller.updateEquipmentInfo(player);
+	    controller.updateInventoryInfo(player);
 	    
 	    
 //            player.move();

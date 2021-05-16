@@ -13,7 +13,7 @@ public class Beast extends Figure{
 
     public Beast(String name, int health, int armor, int damage, int x, int y) {
 	super(name, health);
-	if(armor < 0 || damage <= 0 || x <= 0 || y <= 0){
+	if(armor < 0 || damage <= 0 || x < 0 || y < 0){
 	    throw new IllegalArgumentException("Wrong values of parameters");
 	}
 	currentArmor = armor;

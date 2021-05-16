@@ -13,6 +13,7 @@ public class EngineMenuRun extends JMenu{
     
     private void init(){
 	run = new JMenuItem("Run Game");
+	run.setEnabled(false);
 	add(run);
     }
 

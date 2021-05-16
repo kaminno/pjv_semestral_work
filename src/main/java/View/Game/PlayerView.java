@@ -1,5 +1,6 @@
 package View.Game;
 
+import Model.Figures.Player;
 import Model.Map.MapSize;
 import View.GameIcons;
 import java.awt.Image;
@@ -19,12 +20,17 @@ public class PlayerView extends FigureView {
     private boolean moved;
     private InventoryView inventory;
     private EquipmentView equipment;
-    //private List<Missile> missiles;
+    private int speed;
 
-    public PlayerView(int x, int y, int inventorySize) {
+    public PlayerView(int x, int y, Player pl) {
         super(x, y);
-	inventory = new InventoryView(inventorySize);
+	inventory = new InventoryView(pl.getInventory().getCurrentCapacity());
 	equipment = new EquipmentView();
+	equipment.getPlayerHealth().setText(Integer.toString(pl.getMaxHealth()));
+//	equipment.getPlayerArmor().setText(Integer.toString(pl.getCurrentArmor()));
+//	equipment.getPlayerDamage().setText(Integer.toString(pl.getCurrentDamage()));
+	equipment.getPlayerSpeed().setText(Integer.toString(pl.getCurrentSpeed()));
+	speed = pl.getCurrentSpeed();
 	
         initPlayer();
     }
@@ -57,12 +63,12 @@ public class PlayerView extends FigureView {
         x += dx;
         y += dy;
 
-        if (x < 2) {
-            x = 2;
+        if (x < speed) {
+            x = speed;
         }
 
-        if (y < 2) {
-            y = 2;
+        if (y < speed) {
+            y = speed;
         }
 	
 	if(x > MapSize.getSIZE().getWidth()-40){
@@ -133,19 +139,19 @@ public class PlayerView extends FigureView {
 	}
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
+            dx = -speed;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+            dx = speed;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -2;
+            dy = -speed;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 2;
+            dy = speed;
         }
     }
 

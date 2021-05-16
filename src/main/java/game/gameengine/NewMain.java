@@ -96,12 +96,8 @@ public class NewMain {
 	//GameController gameController = new GameController();
 
 	//MainWindow mw = new MainWindow("Main window");
-	EngineMainWindow emw = new EngineMainWindow("Titulek", engineController);
-	emw.getMenu().getMenuFile().getMenuItemNewGame().addActionListener(new ActionListener(){  
-	    public void actionPerformed(ActionEvent e){  
-			emw.getTf().setText("Welcome to Javatpoint.");  
-		    }  
-		});
+	EngineMainWindow emw = new EngineMainWindow("PJV Engine", engineController);
+	
 
     }
 }

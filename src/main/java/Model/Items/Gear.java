@@ -4,7 +4,8 @@ import Exceptions.WrongEquipmentTypeForWearableItemException;
 
 public class Gear extends WearableItem{
     private int armor;
-    private int durability;
+    private int currentDurability;
+    private int maximumDurability;
     private boolean broken;
     
     public Gear(String name, int weight, int armor, int durability, EquipmentType type) throws WrongEquipmentTypeForWearableItemException{
@@ -15,8 +16,9 @@ public class Gear extends WearableItem{
 		if (armor > 0 && durability >= 0){
 		    this.armor = armor;
 		    this.broken = false;
-		    this.durability = durability;
-		    if (this.durability == 0){
+		    this.maximumDurability = durability;
+		    this.currentDurability = durability;
+		    if (this.maximumDurability == 0){
 			this.broken = true;
 		    }
 		}
@@ -36,10 +38,6 @@ public class Gear extends WearableItem{
 	return armor;
     }
 
-    public int getDurability() {
-	return durability;
-    }
-
     public boolean isBroken() {
 	return broken;
     }
@@ -53,7 +51,22 @@ public class Gear extends WearableItem{
 	    if(durability == 0){
 	        this.broken = true;
 	    }
-	    this.durability = durability;
+	    this.maximumDurability = durability;
+	}
+    }
+
+    public int getCurrentDurability() {
+	return currentDurability;
+    }
+
+    public int getMaximumDurability() {
+	return maximumDurability;
+    }
+    
+    public void updateDurability(int coef){
+	currentDurability += coef;
+	if(currentDurability == 0){
+	    this.broken = true;
 	}
     }
 }

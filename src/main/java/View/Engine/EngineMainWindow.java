@@ -2,9 +2,11 @@ package View.Engine;
 
 import Controller.EngineController;
 import Controller.GameController;
+import Exceptions.WrongEquipmentTypeForWearableItemException;
 import Exceptions.WrongTerrainType;
 import Model.Figures.Figure;
 import Model.Figures.Player;
+import Model.Items.EquipmentType;
 import Model.Map.Map;
 import Model.Map.MapSize;
 import Model.Terrains.Terrain;
@@ -60,9 +62,6 @@ public class EngineMainWindow extends JFrame{
     private EngineMainWorkingPanel mainPanel;
     private TerrainType currentTerrainType = null;
     Map map = null;
-    
-    JTextField tf;
-    //JButton b;
 
     public EngineMainWindow(String title, EngineController controller) throws HeadlessException {
 	super(title);
@@ -82,104 +81,17 @@ public class EngineMainWindow extends JFrame{
     
     private void createWindow(){
 	menu = new EngineMenu();
-	//pane.add(m, BorderLayout.PAGE_START);
 	setJMenuBar(menu);
 	Image icon = Toolkit.getDefaultToolkit().getImage("resources/helmet_icon.jpg");
 	setIconImage(icon);
-	tf=new JTextField();
-	tf.setText("Toto je text a tak to nezůstane pokud ho někdo změní");
 	
 	toolPane = new EngineToolPane();
 	pane.add(toolPane, BorderLayout.NORTH);
 	mainPanel = new EngineMainWorkingPanel();
 	pane.add(mainPanel, BorderLayout.CENTER);
-	
-
-//	JPanel panel = new JPanel();
-//	panel.setBackground(Color.red);
-//	JPanel mapPanel = new JPanel(new GridLayout(20, 20));
-//	mapPanel.setMinimumSize(new Dimension(200, 50));
-//	mapPanel.setBackground(Color.GRAY);
-//	//mapPanel.setOpaque(true);
-//	panel.add(mapPanel);
-//	//mapPanel.add(new JButton("b"));
-//	ImageIcon imageIconG = new ImageIcon(new ImageIcon("resources/terrain_grass.jpg").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-//	ImageIcon imageIconS = new ImageIcon(new ImageIcon("resources/terrain_sand.jpg").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-//	ImageIcon imageIconW = new ImageIcon(new ImageIcon("resources/terrain_water.jpg").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-//	JLabel specialLabel = new JLabel(imageIconS);
-//	ImageIcon currentIcon = imageIconW;
-//	for(int i = 0; i < 20; i++){
-//	    for(int j = 0; j < 20; j++){
-//		if(i == 7 && j == 13){
-//		    mapPanel.add(specialLabel);
-//		}
-//		else if(((i%2 == 0) && (j % 2 == 1)) || ((i%2 == 1)&&(j%2==0))){
-//		    mapPanel.add(new JLabel(imageIconG));
-//		}
-//		else{
-//		    mapPanel.add(new JLabel(imageIconS));
-//		}
-//		
-//	    }
-//	}
-//	mapPanel.addMouseListener(new MouseAdapter(){
-//	    public void mouseClicked(MouseEvent e) {
-//		int x = e.getX();
-//		int y = e.getY();
-//		System.out.println("x:" + x);
-//		System.out.println("Y:" + y);
-//		System.out.println("sx:"+(x - x%40)/40);
-//		System.out.println("sy:"+(y - y%40)/40);
-//		mapPanel.remove(4);
-//		//mapPanel.remove((int)(x - x%40)/40 + (int)(y - y%40)/40);
-//		//mapPanel.add(new JLabel(imageIconW), (int)(x - x%40)/40 + (int)(y - y%40)/40);
-//		//mapPanel.add(new JLabel(imageIconW), 0);
-//		specialLabel.setIcon(currentIcon);
-//		mapPanel.add(new JLabel(imageIconW), 4);
-//		//mapPanel.add(new JButton("dlksf"));
-//		System.out.println("index: " + (int)(x - x%40)/40 + (int)(y - y%40)/40);
-//		x = 0;
-//		y = 0;
-//		//mapPanel.add(new JLabel(imageIconW), (int)x/40 * (int)y/40);
-//		mapPanel.repaint();
-//		//pane.repaint();
-//		
-//	    }
-//	});
-//	pane.add(panel, BorderLayout.CENTER);
-	
-//	mapPanel.addMouseListener(new MouseAdapter() {
-//	    public void mousePressed(MouseEvent e) {
-//		currentLocation = e.getPoint();
-//	     }
-//	 });
-//	mapPanel.addMouseMotionListener(new MouseAdapter() {
-//	    public void mouseDragged(MouseEvent e) {
-//		Point currentScreenLocation = e.getLocationOnScreen();
-//		setLocation(currentScreenLocation.x - currentLocation.x, currentScreenLocation.y - currentLocation.y);
-//	    }
-//	});
-	
-	
-	
-//	bb.addActionListener(new ActionListener(){  
-//	    public void actionPerformed(ActionEvent e){  
-//			etp.getTerrainTab().getAr().setText("Huhůůůů");
-//			etp.getTerrainTab().add(new JButton("Pfff"));
-//		    }  
-//		});
-//	etp.getTerrainTab().getBtn().addActionListener(new ActionListener(){  
-//	    public void actionPerformed(ActionEvent e){  
-//			currentIcon.setImage(imageIconG.getImage());
-//		    }
-//		});
     }
     
     private void setActions(){
-	//b = new JButton("Tlačítko");
-	//b.setVisible(false);
-	pane.add(tf, BorderLayout.SOUTH);
-	//pane.add(b, BorderLayout.LINE_END);
 	
 	toolPane.getTerrainTab().getPanelNewMap().getLabelNewMap().addMouseListener(new MouseAdapter(){
 	    public void mouseClicked(MouseEvent e) {
@@ -230,6 +142,7 @@ public class EngineMainWindow extends JFrame{
 		    // add new map
 		    //mainPanel.add(newMap);
 		    mainPanel.addNewMap(newMap);
+		    menu.getMenuRun().getRun().setEnabled(true);
 		    mainPanel.revalidate();
 		    mainPanel.repaint();
 
@@ -299,6 +212,7 @@ public class EngineMainWindow extends JFrame{
 		    if(n == 0){
 			mainPanel.getCurrentMap().saveImage("moje_mapa", "png");
 			mainPanel.removeMap(mainPanel.getCurrentMap().getId());
+			menu.getMenuRun().getRun().setEnabled(false);
 		    }
 		}
 		}});
@@ -488,46 +402,252 @@ public class EngineMainWindow extends JFrame{
 	    }  
 	});
 	
+	toolPane.getItemsTab().getPanelChest().getIconChest().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getItemsTab().getPanelChest().isSelected()){
+		    toolPane.getItemsTab().getPanelChest().unselectChest();
+		    toolPane.getItemsTab().getPanelChest().repaint();
+		}
+		else{
+		    toolPane.getItemsTab().getPanelChest().selectChest();
+		    toolPane.getItemsTab().getPanelChest().repaint();
+		}
+	    }  
+	});
+	
+	toolPane.getItemsTab().getPanelLegs().getIconLegs().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getItemsTab().getPanelLegs().isSelected()){
+		    toolPane.getItemsTab().getPanelLegs().unselectLegs();
+		    toolPane.getItemsTab().getPanelLegs().repaint();
+		}
+		else{
+		    toolPane.getItemsTab().getPanelLegs().selectLegs();
+		    toolPane.getItemsTab().getPanelLegs().repaint();
+		}
+	    }  
+	});
+	
+	toolPane.getItemsTab().getPanelGloves().getIconGloves().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getItemsTab().getPanelGloves().isSelected()){
+		    toolPane.getItemsTab().getPanelGloves().unselectGloves();
+		    toolPane.getItemsTab().getPanelGloves().repaint();
+		}
+		else{
+		    toolPane.getItemsTab().getPanelGloves().selectGloves();
+		    toolPane.getItemsTab().getPanelGloves().repaint();
+		}
+	    }  
+	});
+	
+	toolPane.getItemsTab().getPanelBoots().getIconBoots().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {  
+		if(toolPane.getItemsTab().getPanelBoots().isSelected()){
+		    toolPane.getItemsTab().getPanelBoots().unselectBoots();
+		    toolPane.getItemsTab().getPanelBoots().repaint();
+		}
+		else{
+		    toolPane.getItemsTab().getPanelBoots().selectBoots();
+		    toolPane.getItemsTab().getPanelBoots().repaint();
+		}
+	    }  
+	});
+	
 	menu.getMenuRun().getRun().addActionListener(new ActionListener(){  
 	    public void actionPerformed(ActionEvent e){
 		controller.createNewMap(map);
+		
 		mainPanel.getCurrentMap().saveImage("resources/current.map", "png");
-		int health = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseHealth().getText());
-		int armor = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseArmor().getText());
-		int damage = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseAttackDamage().getText());
-		int speed = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseSpeed().getText());
-		int invSpace = toolPane.getPlayerTab().getPanelInventory().getInventorySize();
-		controller.createNewPlayer("New Player", health, armor, damage, 1, speed, invSpace);
-		int bossHealth = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblHealth().getText());
-		int bossArmor = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblArmor().getText());
-		int bossDamage = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigLblDamage().getText());
-		controller.createBoss("Boss", bossHealth, bossArmor, bossDamage);
+		
+		try{
+		    int health = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseHealth().getText());
+		    int armor = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseArmor().getText());
+		    int damage = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseAttackDamage().getText());
+		    int speed = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseSpeed().getText());
+		    int invSpace = toolPane.getPlayerTab().getPanelInventory().getInventorySize();
+		    controller.createNewPlayer("New Player", health, armor, damage, 1, speed, invSpace);
+		}catch(NumberFormatException nfe){
+		    JOptionPane.showMessageDialog(mainPanel,
+		    "Player attribures are wrong",
+		    "Wrong Attributes",
+		    JOptionPane.WARNING_MESSAGE);
+		    return;
+		}catch(IllegalArgumentException iae){
+		    JOptionPane.showMessageDialog(mainPanel,
+		    "Player attribures are wrong",
+		    "Wrong Attributes",
+		    JOptionPane.WARNING_MESSAGE);
+		    return;
+		}
+		
+		try{
+		    int bossHealth = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfHealth().getText());
+		    int bossArmor = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfArmor().getText());
+		    int bossDamage = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfDamage().getText());
+		    controller.createBoss("Boss", bossHealth, bossArmor, bossDamage);
+		}catch(NumberFormatException nfe){
+		    JOptionPane.showMessageDialog(mainPanel,
+		    "Boss attribures are wrong",
+		    "Wrong Stats",
+		    JOptionPane.WARNING_MESSAGE);
+		    return;
+		}catch(IllegalArgumentException iae){
+		    JOptionPane.showMessageDialog(mainPanel,
+		    "Boss attribures are wrong",
+		    "Wrong Stats",
+		    JOptionPane.WARNING_MESSAGE);
+		    return;
+		}
+		
+		if(toolPane.getItemsTab().getPanelHelmet().isSelected()){
+		    try{
+			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelHelmet().getTfArmor().getText());
+			int durability = Integer.parseInt(toolPane.getItemsTab().getPanelHelmet().getTfDurability().getText());
+			controller.createPieceOfGear("Helmet", armor, durability, EquipmentType.HEAD);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Helmet attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Helmet attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		if(toolPane.getItemsTab().getPanelChest().isSelected()){
+		    try{
+			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelChest().getTfArmor().getText());
+			int durability = Integer.parseInt(toolPane.getItemsTab().getPanelChest().getTfDurability().getText());
+			controller.createPieceOfGear("Breast Armor", armor, durability, EquipmentType.CHEST);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Chest attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Chest attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		if(toolPane.getItemsTab().getPanelLegs().isSelected()){
+		    try{
+			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelLegs().getTfArmor().getText());
+			int durability = Integer.parseInt(toolPane.getItemsTab().getPanelLegs().getTfDurability().getText());
+			controller.createPieceOfGear("Leg Armor", armor, durability, EquipmentType.LEGS);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Legs attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Legs attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		if(toolPane.getItemsTab().getPanelGloves().isSelected()){
+		    try{
+			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelGloves().getTfArmor().getText());
+			int durability = Integer.parseInt(toolPane.getItemsTab().getPanelGloves().getTfDurability().getText());
+			controller.createPieceOfGear("Gloves", armor, durability, EquipmentType.HANDS);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Gloves attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Gloves attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		if(toolPane.getItemsTab().getPanelBoots().isSelected()){
+		    try{
+			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelBoots().getTfArmor().getText());
+			int durability = Integer.parseInt(toolPane.getItemsTab().getPanelBoots().getTfDurability().getText());
+			controller.createPieceOfGear("Boots", armor, durability, EquipmentType.FEET);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Boot attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Boot attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		
+		if(toolPane.getPlayerTab().getPanelWeapons().isMainSelected()){
+		    try{
+			int damage = Integer.parseInt(toolPane.getPlayerTab().getPanelWeapons().getTfMainWeaponDamage().getText());
+			int durability = Integer.parseInt(toolPane.getPlayerTab().getPanelWeapons().getTfMainWeaponDurability().getText());
+			controller.createWeapon("Sword", damage, durability, EquipmentType.MAIN_HAND);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Main weapon attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Main weapon attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		if(toolPane.getPlayerTab().getPanelWeapons().isSecondSelected()){
+		    try{
+			int damage = Integer.parseInt(toolPane.getPlayerTab().getPanelWeapons().getTfSecondWeaponDamage().getText());
+			int durability = Integer.parseInt(toolPane.getPlayerTab().getPanelWeapons().getTfSecondWeaponDurability().getText());
+			controller.createWeapon("Dagger", damage, durability, EquipmentType.SECOND_HAND);
+		    }catch(NumberFormatException nfe){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Second weapon attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }catch(WrongEquipmentTypeForWearableItemException myEx){}
+		    catch(IllegalArgumentException iae){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Second weapon attributes are wrong",
+			"Wrong Stats",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		}
+		
+		controller.equipItems();
+		
+		
 		controller.runGame();
-		//controller.getModel().getMap().printMapTerrain();
-//		try {
-//		    JFrame f = new GameMainWindow("Hra");
-//		} catch (HeadlessException ex) {
-//		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (IOException ex) {
-//		    Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-//		}
-		    }  
-		});
-
-	
-//	mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
-//	    public void mouseClicked(MouseEvent e) {
-//		int x = e.getX();
-//		int y = e.getY();
-//		System.out.println("x:" + x);
-//		System.out.println("Y:" + y);
-//		System.out.println("sx:"+(x - x%40)/40);
-//		System.out.println("sy:"+(y - y%40)/40);
-//		System.out.println("idx:" + ((mainPanel.getWidth()*((y - y%40)/40) + (x - x%40)/40)));
-//		
-//		
-//	    }
-//	});
+	    }
+	});
     }
 
     public EngineToolPane getToolPane() {
@@ -540,10 +660,6 @@ public class EngineMainWindow extends JFrame{
 
     public EngineMenu getMenu() {
 	return menu;
-    }
-
-    public JTextField getTf() {
-	return tf;
     }
 
     public EngineController getController() {

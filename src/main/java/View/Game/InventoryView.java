@@ -56,9 +56,9 @@ public class InventoryView extends JPanel{
 		jl.setBackground(inventoryColor);
 		jl.setBorder(itemBorder);
 		jl.setOpaque(true);
-		if(i == 4){
-		    jl.setIcon(GameIcons.ARMOR_BOOTS.getIcon());
-		}
+//		if(i == 4){
+//		    jl.setIcon(GameIcons.ARMOR_BOOTS.getIcon());
+//		}
 		items.add(jl);
 		itemSlots.add(jl);
 	    }
@@ -71,13 +71,6 @@ public class InventoryView extends JPanel{
 		itemSlots.add(jl);
 	    }
 	}
-	// REMOVE
-	itemSlots.get(4).setToolTipText("<html>"
-                              + "Line One"
-                              +"<br>"
-                              + "Line 2"
-                         + "</html>");
-	//
     }
 
     public int getInventorySize() {
@@ -106,6 +99,14 @@ public class InventoryView extends JPanel{
 
     public Border getItemBorder() {
 	return itemBorder;
+    }
+
+    public JPanel getItems() {
+	return items;
+    }
+
+    public ArrayList<JLabel> getItemSlots() {
+	return itemSlots;
     }
 
     public void setItemCount(int itemCount) {
