@@ -28,6 +28,9 @@ public class Beast extends Figure{
     
     public void defend(int damage){
 	int injury = damage - getCurrentArmor();
+	if(injury < 0){
+	    injury = 0;
+	}
 	setCurrentHealth(getCurrentHealth() - injury);
     }
     
@@ -53,5 +56,21 @@ public class Beast extends Figure{
 
     public int getyPosition() {
 	return yPosition;
+    }
+
+    public void setCurrentArmor(int currentArmor) {
+	this.currentArmor = currentArmor;
+    }
+
+    public void setCurrentAttackDamage(int currentAttackDamage) {
+	this.currentAttackDamage = currentAttackDamage;
+    }
+
+    public void setxPosition(int xPosition) {
+	this.xPosition = xPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+	this.yPosition = yPosition;
     }
 }

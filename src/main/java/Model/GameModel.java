@@ -10,13 +10,15 @@ import java.util.LinkedList;
 public class GameModel {
     private Player player;
     private LinkedList<WearableItem> startingItems;
-    private LinkedList<Beast> beasts;
+    private LinkedList<Beast> bats;
+    private LinkedList<Beast> skeletons;
     private Beast boss;
     private Map map;
 
     public GameModel() {
 	startingItems = new LinkedList();
-	beasts = new LinkedList();
+	bats = new LinkedList();
+	skeletons = new LinkedList();
     }
     
     public void printNewMap(){
@@ -29,10 +31,6 @@ public class GameModel {
 
     public LinkedList<WearableItem> getStartingItems() {
 	return startingItems;
-    }
-
-    public LinkedList<Beast> getBeasts() {
-	return beasts;
     }
 
     public Beast getBoss() {
@@ -51,16 +49,28 @@ public class GameModel {
 	this.startingItems = startingItems;
     }
 
-    public void setBeasts(LinkedList<Beast> beasts) {
-	this.beasts = beasts;
-    }
-
     public void setBoss(Beast boss) {
 	this.boss = boss;
     }
 
     public void setMap(Map map) {
 	this.map = map;
+    }
+
+    public LinkedList<Beast> getBats() {
+	return bats;
+    }
+
+    public LinkedList<Beast> getSkeletons() {
+	return skeletons;
+    }
+
+    public void setBats(LinkedList<Beast> bats) {
+	this.bats = bats;
+    }
+
+    public void setSkeletons(LinkedList<Beast> skeletons) {
+	this.skeletons = skeletons;
     }
     
     

@@ -4,6 +4,7 @@ import Controller.EngineController;
 import Controller.GameController;
 import Exceptions.WrongEquipmentTypeForWearableItemException;
 import Exceptions.WrongTerrainType;
+import Model.Figures.Beast;
 import Model.Figures.Figure;
 import Model.Figures.Player;
 import Model.Items.EquipmentType;
@@ -313,48 +314,66 @@ public class EngineMainWindow extends JFrame{
 	    public void mouseClicked(MouseEvent e)  {
 		if(mainPanel.getCurrentMap() != null){
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
-			    Image im = null;
+			    //Image im = null;
 			    public void mouseClicked(MouseEvent e) {
 				if(toolPane.getSelectedIndex() == 1){
-				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
-				int width = MapSize.SIZE.getWidth()/ TerrainSize.WIDTH.getSize();
-				int x = e.getX();
-				int y = e.getY();
-				int sx = (x - x%40)/40;
-				int sy = (y - y%40)/40;
-    //			    System.out.println("x: " + x);
-    //			    System.out.println("y: " + y);
-    //			    System.out.println("sx: " + sx);
-    //			    System.out.println("sy: " + sy);
-				if(map != null){
-				    ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
-				    for(int i = 0; i < height; i++){
-					for(int j = 0; j < width; j++){
-					    if(map.getMapFigures().get(i).get(j) != null && map.getMapFigures().get(i).get(j) instanceof Player){
-					       map.getMapFigures().get(i).remove(j);
-					       map.getMapFigures().get(i).add(j, null);
+				    int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
+				    int width = MapSize.SIZE.getWidth()/ TerrainSize.WIDTH.getSize();
+				    int x = e.getX();
+				    int y = e.getY();
+				
+				    if(map != null && controller.hasPlayerCorrectCoordinates(map, x, y)){
+					ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
+					for(int i = 0; i < height; i++){
+					    for(int j = 0; j < width; j++){
+						if(map.getMapFigures().get(i).get(j) != null && map.getMapFigures().get(i).get(j) instanceof Player){
+						   map.getMapFigures().get(i).remove(j);
+						   map.getMapFigures().get(i).add(j, null);
+						}
 					    }
 					}
-				    }
-				    map.addFigure(sy, sx, new Player("Jan", 2, 3, 4, 3, 2, 3));
-
-    //				class mc extends ImageIcon{
-    //				    @Override
-    //				    public void p(Graphics g) {
-    //					super.paintComponent(g);
-    //					g.drawImage(GameIcons.PLAYER_RIGHT_1.getIcon().getImage(), x, y, mainPanel.getCurrentMap());
-    //					Toolkit.getDefaultToolkit().sync();
-    //				    }
-    //				}
-				    im = GameIcons.PLAYER_RIGHT_1.getIcon().getImage();
-				    //mainPanel.getCurrentMap().getGraphics().drawImage(im, x-20, y-20, mainPanel.getParent());
-				    //mainPanel.getGraphics().drawImage(im, x-20, y-20, null);
-				    
-				    //mainPanel.getCurrentMap().getMapBoard().get(sy).get(sx).setIcon(GameIcons.PLAYER_RIGHT_1.getIcon());
-				    //mc m = new mc();
-				    //mainPanel.getCurrentMap().removeTerrain(sx, sy);
-				    //mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x%40)/40, (y - y%40)/40);
-				    map.printMapFigures();
+					int sx = (x - x%40)/40;
+					int sy = (y - y%40)/40;
+					toolPane.getPlayerTab().getPanelNewPlayer().getCoorX().setText(Integer.toString(x));
+					toolPane.getPlayerTab().getPanelNewPlayer().getCoorY().setText(Integer.toString(y));
+					repaint();
+					map.addFigure(sy, sx, new Player("player", 1, 1, 1, 1, 1, 1));
+				}
+			    }
+			};
+		    });
+		}
+	    }  
+	});
+	
+	toolPane.getBeastTab().getPanelBosses().getWarPigIcon().addMouseListener(new MouseAdapter(){  
+	    public void mouseClicked(MouseEvent e)  {
+		if(mainPanel.getCurrentMap() != null){
+		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter(){
+			    //Image im = null;
+			    public void mouseClicked(MouseEvent e) {
+				if(toolPane.getSelectedIndex() == 3){
+				    int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
+				    int width = MapSize.SIZE.getWidth()/ TerrainSize.WIDTH.getSize();
+				    int x = e.getX();
+				    int y = e.getY();
+				
+				    if(map != null && controller.hasBeastCorrectCoordinates(x, y, map)){
+					ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
+					for(int i = 0; i < height; i++){
+					    for(int j = 0; j < width; j++){
+						if(map.getMapFigures().get(i).get(j) != null && map.getMapFigures().get(i).get(j) instanceof Beast){
+						   map.getMapFigures().get(i).remove(j);
+						   map.getMapFigures().get(i).add(j, null);
+						}
+					    }
+					}
+					int sx = (x - x%40)/40;
+					int sy = (y - y%40)/40;
+					toolPane.getBeastTab().getPanelBosses().getCoorX().setText(Integer.toString(x));
+					toolPane.getBeastTab().getPanelBosses().getCoorY().setText(Integer.toString(y));
+					repaint();
+					map.addFigure(sy, sx, new Beast("boss", 1, 1, 1, 1, 1));
 				}
 			    }
 			};
@@ -456,7 +475,7 @@ public class EngineMainWindow extends JFrame{
 	
 	menu.getMenuRun().getRun().addActionListener(new ActionListener(){  
 	    public void actionPerformed(ActionEvent e){
-		controller.createNewMap(map);
+		//controller.createNewMap(map);
 		
 		mainPanel.getCurrentMap().saveImage("resources/current.map", "png");
 		
@@ -467,9 +486,13 @@ public class EngineMainWindow extends JFrame{
 		    int speed = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseSpeed().getText());
 		    int invSpace = toolPane.getPlayerTab().getPanelInventory().getInventorySize();
 		    controller.createNewPlayer("New Player", health, armor, damage, 1, speed, invSpace);
+		    int x = Integer.parseInt(toolPane.getPlayerTab().getPanelNewPlayer().getCoorX().getText());
+		    int y = Integer.parseInt(toolPane.getPlayerTab().getPanelNewPlayer().getCoorY().getText());
+		    controller.getModel().getPlayer().setxPosition(x);
+		    controller.getModel().getPlayer().setyPosition(y);
 		}catch(NumberFormatException nfe){
 		    JOptionPane.showMessageDialog(mainPanel,
-		    "Player attribures are wrong",
+		    "Player attribures or coordinates are wrong",
 		    "Wrong Attributes",
 		    JOptionPane.WARNING_MESSAGE);
 		    return;
@@ -486,9 +509,13 @@ public class EngineMainWindow extends JFrame{
 		    int bossArmor = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfArmor().getText());
 		    int bossDamage = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfDamage().getText());
 		    controller.createBoss("Boss", bossHealth, bossArmor, bossDamage);
+		    int x = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getCoorX().getText());
+		    int y = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getCoorY().getText());
+		    controller.getModel().getBoss().setxPosition(x);
+		    controller.getModel().getBoss().setyPosition(y);
 		}catch(NumberFormatException nfe){
 		    JOptionPane.showMessageDialog(mainPanel,
-		    "Boss attribures are wrong",
+		    "Boss attribures or coordinates are wrong",
 		    "Wrong Stats",
 		    JOptionPane.WARNING_MESSAGE);
 		    return;
@@ -641,6 +668,49 @@ public class EngineMainWindow extends JFrame{
 			return;
 		    }
 		}
+		
+		try{
+		    int count = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getBatTfCount().getText());
+		    if(count < 0 || count > controller.mapFreeSpaceForBeasts(map)){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Bat count is too low or too high",
+			"Wrong Bat Count",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		    int health = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getBatTfHealth().getText());
+		    int armor = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getBatTfArmor().getText());
+		    int damage = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getBatTfDamage().getText());
+		    controller.createBat(health, armor, damage, map, count);
+		}catch(NumberFormatException nfe){
+		    JOptionPane.showMessageDialog(mainPanel,
+			"Wrong bat data",
+			"Wrong Data",
+			JOptionPane.WARNING_MESSAGE);
+		    return;
+		}
+		try{
+		    int count = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getSkeletonTfCount().getText());
+		    if(count < 0 || count > controller.mapFreeSpaceForBeasts(map)){
+			JOptionPane.showMessageDialog(mainPanel,
+			"Skeleton count is too low or too high",
+			"Wrong Bat Count",
+			JOptionPane.WARNING_MESSAGE);
+			return;
+		    }
+		    int health = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getSkeletonTfHealth().getText());
+		    int armor = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getSkeletonTfArmor().getText());
+		    int damage = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getSkeletonTfDamage().getText());
+		    controller.createSkeleton(health, armor, damage, map, count);
+		}catch(NumberFormatException nfe){
+		    JOptionPane.showMessageDialog(mainPanel,
+			"Wrong skeleton data",
+			"Wrong Data",
+			JOptionPane.WARNING_MESSAGE);
+		    return;
+		}
+		
+		controller.createNewMap(map);
 		
 		controller.equipItems();
 		

@@ -82,7 +82,7 @@ public class EngineToolPanePlayerTabAttributes extends JPanel{
         myConstraints.gridwidth = 2;
         panelRight.add(tfBaseSpeed, myConstraints);
 	
-	tfBaseHealth.setText("50");
+	tfBaseHealth.setText("100");
 	tfBaseArmor.setText("2");
 	tfBaseAttackDamage.setText("7");
 	tfBaseSpeed.setText("2");

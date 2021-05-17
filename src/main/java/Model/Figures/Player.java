@@ -38,8 +38,6 @@ public class Player extends Figure{
     private Inventory inventory;
     private int xPosition;
     private int yPosition;
-//    private int xVelocity;
-//    private int yVelocity;
 
     /**
      *
@@ -150,6 +148,9 @@ public class Player extends Figure{
     
     public void defend(int damage){
 	int injury = damage - getCurrentArmor();
+	if(injury < 0){
+	    injury = 0;
+	}
 	setCurrentHealth(getCurrentHealth() - injury);
     }
     
@@ -213,20 +214,44 @@ public class Player extends Figure{
 	return yPosition;
     }
 
-//    public int getxVelocity() {
-//	return xVelocity;
-//    }
-//
-//    public int getyVelocity() {
-//	return yVelocity;
-//    }
-
     public Inventory getInventory() {
 	return inventory;
     }
     
     public Equipment equipment(){
 	return equipment;
+    }
+
+    public void setBonusDamage(int bonusDamage) {
+	this.bonusDamage = bonusDamage;
+    }
+
+    public void setBonusArmor(int bonusArmor) {
+	this.bonusArmor = bonusArmor;
+    }
+
+    public void setBonusMoves(int bonusMoves) {
+	this.bonusMoves = bonusMoves;
+    }
+
+    public void setBonusSpeed(int bonusSpeed) {
+	this.bonusSpeed = bonusSpeed;
+    }
+
+    public void setEquipment(Equipment equipment) {
+	this.equipment = equipment;
+    }
+
+    public void setInventory(Inventory inventory) {
+	this.inventory = inventory;
+    }
+
+    public void setxPosition(int xPosition) {
+	this.xPosition = xPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+	this.yPosition = yPosition;
     }
 
     @Override

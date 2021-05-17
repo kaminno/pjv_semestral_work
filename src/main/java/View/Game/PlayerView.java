@@ -21,6 +21,8 @@ public class PlayerView extends FigureView {
     private InventoryView inventory;
     private EquipmentView equipment;
     private int speed;
+    private boolean attackReady = false;
+    private int attackTime;
 
     public PlayerView(int x, int y, Player pl) {
         super(x, y);
@@ -31,6 +33,7 @@ public class PlayerView extends FigureView {
 //	equipment.getPlayerDamage().setText(Integer.toString(pl.getCurrentDamage()));
 	equipment.getPlayerSpeed().setText(Integer.toString(pl.getCurrentSpeed()));
 	speed = pl.getCurrentSpeed();
+	attackTime = 0;
 	
         initPlayer();
     }
@@ -59,6 +62,7 @@ public class PlayerView extends FigureView {
 
     public void move() {
 	updateSwapTime();
+	updateAttackTime();
 	
         x += dx;
         y += dy;
@@ -85,6 +89,15 @@ public class PlayerView extends FigureView {
 	if(swapTime == 8){
 	    swapTime = 0;
 	}
+    }
+    
+    private void updateAttackTime(){
+	if(attackTime < 20){
+	attackTime += 1;
+	}
+//	if(attackTime == 21){
+//	    attackTime = 0;
+//	}
     }
     
     public int getSwapTime(){
@@ -137,6 +150,11 @@ public class PlayerView extends FigureView {
 		equipment.setShown(true);
 	    }
 	}
+	
+	if (key == KeyEvent.VK_SPACE && attackTime == 20) {
+            attackReady = true;
+	    attackTime = 0;
+        }
 
         if (key == KeyEvent.VK_LEFT) {
             dx = -speed;
@@ -163,6 +181,10 @@ public class PlayerView extends FigureView {
 	moved = false;
 
         int key = e.getKeyCode();
+	
+//	if (key == KeyEvent.VK_SPACE) {
+//            attackReady = false;
+//        }
 
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;
@@ -203,5 +225,21 @@ public class PlayerView extends FigureView {
 
     public void setDy(int dy) {
 	this.dy = dy;
+    }
+
+    public boolean isMoved() {
+	return moved;
+    }
+
+    public int getSpeed() {
+	return speed;
+    }
+
+    public boolean isAttackReady() {
+	return attackReady;
+    }
+
+    public void setAttackReady(boolean attackReady) {
+	this.attackReady = attackReady;
     }
 }

@@ -1,5 +1,6 @@
 package View.Game;
 
+import View.GameIcons;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -22,8 +23,10 @@ public class FigureView {
 
     protected void getImageDimensions() {
 
-        width = image.getWidth(null);
-        height = image.getHeight(null);
+//        width = image.getWidth(null);
+//        height = image.getHeight(null);
+	width = 40;
+	height = 40;
     }
 
     protected void loadImage(String imageName) {

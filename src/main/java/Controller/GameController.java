@@ -5,6 +5,8 @@ import Exceptions.ItemNotEquipedException;
 import Exceptions.ItemNotStoredException;
 import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
+import Model.Figures.Beast;
+import Model.Figures.Figure;
 import Model.Figures.Player;
 import Model.GameModel;
 import Model.Items.Equipment;
@@ -16,8 +18,12 @@ import Model.Items.Weapon;
 import Model.Items.WearableItem;
 import Model.Terrains.SolidType;
 import Model.Terrains.Terrain;
+import View.Game.BatView;
 import View.Game.EquipmentView;
+import View.Game.FigureView;
 import View.Game.PlayerView;
+import View.Game.SkeletonView;
+import View.Game.WarPigView;
 import View.GameIcons;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -63,10 +69,153 @@ public class GameController {
 	}
     }
     
+    public void checkBatMove(BatView bat){
+	int x = bat.getX() + 20 + bat.getDx() + (int)Math.signum(bat.getDx())*20;
+	int y = bat.getY() + 20 + bat.getDy() + (int)Math.signum(bat.getDy())*20;
+	int sx = (x - x%40)/40;
+	int sy = (y - y%40)/40;
+	
+	if(sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()){
+	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
+
+	    Rectangle rec_bat = new Rectangle(x, y, 40, 40);
+	    Rectangle rec_terrain = new Rectangle((sx)*40, (sy)*40, 40, 40);
+	    for(SolidType st : SolidType.values()){
+		if(terrain.getName() == st.getName() && rec_bat.intersects(rec_terrain)){
+		    bat.setDx((-1)*bat.getDx());
+		    bat.setDy((-1)*bat.getDy());
+		    break;
+		}
+	    }
+	}
+    }
+    
+    public void checkSkeletonMove(SkeletonView skeleton){
+	int x = skeleton.getX() + 20 + skeleton.getDx() + (int)Math.signum(skeleton.getDx())*20;
+	int y = skeleton.getY() + 20 + skeleton.getDy() + (int)Math.signum(skeleton.getDy())*20;
+	int sx = (x - x%40)/40;
+	int sy = (y - y%40)/40;
+	
+	if(sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()){
+	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
+
+	    Rectangle rec_skeleton = new Rectangle(x, y, 40, 40);
+	    Rectangle rec_terrain = new Rectangle((sx)*40, (sy)*40, 40, 40);
+	    for(SolidType st : SolidType.values()){
+		if(terrain.getName() == st.getName() && rec_skeleton.intersects(rec_terrain)){
+		    skeleton.setDx((-1)*skeleton.getDx());
+		    skeleton.setDy((-1)*skeleton.getDy());
+		    break;
+		}
+	    }
+	}
+    }
+    
+    public void checkBossMove(WarPigView warPig){
+	int x = warPig.getX() + 20 + warPig.getDx() + (int)Math.signum(warPig.getDx())*20;
+	int y = warPig.getY() + 20 + warPig.getDy() + (int)Math.signum(warPig.getDy())*20;
+	int sx = (x - x%40)/40;
+	int sy = (y - y%40)/40;
+	
+	if(sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()){
+	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
+
+	    Rectangle rec_war_pig = new Rectangle(x, y, 40, 40);
+	    Rectangle rec_terrain = new Rectangle((sx)*40, (sy)*40, 40, 40);
+	    for(SolidType st : SolidType.values()){
+		if(terrain.getName() == st.getName() && rec_war_pig.intersects(rec_terrain)){
+		    warPig.setDx((-1)*warPig.getDx());
+		    warPig.setDy((-1)*warPig.getDy());
+		    break;
+		}
+	    }
+	}
+    }
+    
+    public boolean playerNearEnemy(PlayerView player, FigureView beast){
+	if(beast.getBounds().intersects(player.getBounds())){
+	    return true;
+	}
+	return false;
+    }
+    
+    public boolean enemyNearPlyer(PlayerView player, FigureView beast){
+	if(player.getBounds().intersects(beast.getBounds())){
+	    return true;
+	}
+	return false;
+    }
+    
+    public void updateBat(BatView batView){
+	int beastIndex = batView.getIdx();
+	try{
+	    Beast currentBat = model.getBats().get(beastIndex);
+	    currentBat.setxPosition(batView.getX());
+	    currentBat.setyPosition(batView.getY());
+	    batView.setHp(currentBat.getCurrentHealth());
+	    batView.setArm(currentBat.getCurrentArmor());
+	    batView.setDmg(currentBat.getCurrentAttackDamage());
+	}catch(IndexOutOfBoundsException iobe){}
+    }
+    
+    public void updateSkeleton(SkeletonView skeletonView){
+	int beastIndex = skeletonView.getIdx();
+	try{
+	    Beast currentSkeleton = model.getSkeletons().get(beastIndex);
+	    currentSkeleton.setxPosition(skeletonView.getX());
+	    currentSkeleton.setyPosition(skeletonView.getY());
+	    skeletonView.setHp(currentSkeleton.getCurrentHealth());
+	    skeletonView.setArm(currentSkeleton.getCurrentArmor());
+	    skeletonView.setDmg(currentSkeleton.getCurrentAttackDamage());
+	}catch(IndexOutOfBoundsException iobe){}
+    }
+    
+    public void updateWarPig(WarPigView warPigView){
+	int beastIndex = warPigView.getIdx();
+	try{
+	    Beast warPig = model.getBoss();
+	    warPig.setxPosition(warPigView.getX());
+	    warPig.setyPosition(warPigView.getY());
+	    warPigView.setHp(warPig.getCurrentHealth());
+	    warPigView.setArm(warPig.getCurrentArmor());
+	    warPigView.setDmg(warPig.getCurrentAttackDamage());
+	}catch(IndexOutOfBoundsException iobe){}
+    }
+    
+    public void beastAttackPlayer(FigureView beastView){
+	Beast beast;
+	if(beastView instanceof BatView){
+	    beast = model.getBats().get(((BatView) beastView).getIdx());
+	}
+	else if(beastView instanceof SkeletonView){
+	    beast = model.getSkeletons().get(((SkeletonView) beastView).getIdx());
+	}
+	else{
+	    beast = model.getBoss();
+	}
+	beast.attack(model.getPlayer());
+    }
+    
+    public void playerAttackBeast(FigureView beastView){
+	Beast beast;
+	if(beastView instanceof BatView){
+	    System.out.println("Bats length: " + model.getBats().size());
+	    beast = model.getBats().get(((BatView) beastView).getIdx());
+	}
+	else if(beastView instanceof SkeletonView){
+	    beast = model.getSkeletons().get(((SkeletonView) beastView).getIdx());
+	}
+	else{
+	    beast = model.getBoss();
+	}
+	model.getPlayer().attack(beast);
+    }
+    
     public void clearData(){
 	model.setStartingItems(new LinkedList());
-	model.setBeasts(new LinkedList());
-	System.out.println("Clearing model data");
+	model.setBats(new LinkedList());
+	model.setSkeletons(new LinkedList());
+	//System.out.println("Clearing model data");
     }
     
     public void updateEquipmentInfo(PlayerView pl){
@@ -790,6 +939,7 @@ public class GameController {
 	return i;
     }
     
+    
 //    private HashMap<String, Integer> initEquipmentIdx(){
 //	HashMap<String, Integer> idx = new HashMap();
 //	idx.put(EquipmentType.HEAD.label, 0);
@@ -801,4 +951,8 @@ public class GameController {
 //	idx.put(EquipmentType.SECOND_HAND.label, 6);
 //	return idx;
 //    }
+
+    public GameModel getModel() {
+	return model;
+    }
 }
