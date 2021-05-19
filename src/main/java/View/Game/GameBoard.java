@@ -52,6 +52,7 @@ public class GameBoard extends JPanel implements ActionListener{
 	this.gameMenu = gameMenu;
 	font = new Font("Verdana", Font.BOLD, 18);
 	
+	setLayout(null);
 	//this.add(new JLabel(new ImageIcon(backgroundImage)));
 	initBoard(pl);
     }
@@ -68,9 +69,13 @@ public class GameBoard extends JPanel implements ActionListener{
         player = new PlayerView(controller.getModel().getPlayer().getxPosition(), controller.getModel().getPlayer().getyPosition(), pl);
 	controller.updateEquipmentInfo(player);
 	add(player.getInventory());
+	player.getInventory().setBounds(MapSize.getSIZE().getWidth() - 300, 100, player.getInventory().getWidth(), player.getInventory().getHeight());
 	add(player.getEquipment());
+	player.getEquipment().setBounds(30, 100, player.getEquipment().getWidth(), player.getEquipment().getHeight());
 	add(gameMenu);
-	
+	gameMenu.setBounds((MapSize.getSIZE().getWidth() - gameMenu.getWidth())/2, 100, gameMenu.getWidth(), gameMenu.getHeight());
+	//gameMenu.setBounds(400, 100, gameMenu.getWidth(), gameMenu.getHeight());
+
 	bats = new ArrayList();
 	for(int i = 0; i < controller.getModel().getBats().size(); i++){
 	    BatView bv = new BatView(controller.getModel().getBats().get(i).getxPosition(),
@@ -142,25 +147,19 @@ public class GameBoard extends JPanel implements ActionListener{
 	//bats.get(0).drawBeast(g, this);
 	g.setFont(font);
 	g.setColor(Color.RED);
-	g.drawString(Integer.toString(controller.getModel().getPlayer().getCurrentHealth()), 10, 20);
+	g.drawString("HP: " + Integer.toString(controller.getModel().getPlayer().getCurrentHealth()), 10, 20);
 	if(!player.isVisible()){
-	    Font f = new Font("Verdana", Font.BOLD, 10);
-	    g.setFont(font);
-	    g.setColor(Color.RED);
-	    g.drawString("GAME OVER", 500, 200);
+	    g.drawImage(new ImageIcon("resources/game_over.png").getImage(), 250, 150, this);
 	}
 	if(!boss.isVisible()){
-	    Font f = new Font("Verdana", Font.BOLD, 10);
-	    g.setFont(font);
-	    g.setColor(Color.GREEN);
-	    g.drawString("WICTORY", 100, 200);
+	    g.drawImage(new ImageIcon("resources/victory.png").getImage(), 250, 150, this);
 	}
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
 	
-	if(player.isVisible()){
+	if(player.isVisible() && boss.isVisible()){
 	    if(!gameMenu.isVisible()){
 		inGame();
 

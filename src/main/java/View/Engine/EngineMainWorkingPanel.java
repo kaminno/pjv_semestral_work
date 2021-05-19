@@ -35,7 +35,9 @@ public class EngineMainWorkingPanel extends JPanel{
 	//layers.setSize(new Dimension(MapSize.getSIZE().getWidth(), MapSize.getSIZE().getHeight()));
 	//brl = new BorderLayout();
 	//setLayout(brl);
-	setBackground(Color.red);
+	
+	setBackground(new Color(89, 140, 145));
+	//setBackground(new Color(0, 117, 130));
 	currentMap = null;
 	currentFigures = null;
 	//layers.add(currentMap, 1);

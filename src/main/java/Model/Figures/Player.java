@@ -152,6 +152,9 @@ public class Player extends Figure{
 	    injury = 0;
 	}
 	setCurrentHealth(getCurrentHealth() - injury);
+	if(currentHealth < 0){
+	    currentHealth = 0;
+	}
     }
     
     public boolean isAlive(){

@@ -5,10 +5,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class EngineMenuFile extends JMenu{
-    private JMenuItem menuItemNewGame;
     private JMenuItem menuItemNewMap;
-    private JMenuItem menuItemLoadGame;
-    private JMenuItem menuItemSaveGame;
+    private JMenuItem menuItemLoadItems;
+    private JMenuItem menuItemLoadMap;
+    private JMenuItem menuItemSaveItems;
+    private JMenuItem menuItemSaveMap;
     private JMenuItem menuItemExit;
 
     public EngineMenuFile() {
@@ -17,35 +18,45 @@ public class EngineMenuFile extends JMenu{
     }
     
     private void initMenuFile(){
-	menuItemNewGame = new JMenuItem("New Game", new ImageIcon("resources/icon_new_file.png"));
-	menuItemNewMap = new JMenuItem("New Map");
-	menuItemLoadGame = new JMenuItem("Load Game", new ImageIcon("resources/icon_load_file.png"));
-	menuItemSaveGame = new JMenuItem("Save Game");
+	menuItemNewMap = new JMenuItem("New Map", new ImageIcon("resources/icon_new_file.png"));
+	menuItemLoadItems = new JMenuItem("Load Items", new ImageIcon("resources/icon_load_file.png"));
+	menuItemLoadMap = new JMenuItem("Load Map", new ImageIcon("resources/icon_load_file.png"));
+	menuItemSaveItems = new JMenuItem("Save Items");
+	menuItemSaveMap = new JMenuItem("Save Map");
+	menuItemSaveMap.setEnabled(false);
 	menuItemExit = new JMenuItem("Exit", new ImageIcon("resources/icon_exit.png"));
 	
-	this.add(menuItemNewGame);
 	this.add(menuItemNewMap);
-	menuItemNewMap.setEnabled(false);
-	this.add(menuItemLoadGame);
+	this.add(menuItemLoadMap);
+	this.add(menuItemLoadItems);
 	this.addSeparator();
-	this.add(menuItemSaveGame);
+	this.add(menuItemSaveMap);
+	this.add(menuItemSaveItems);
 	this.addSeparator();
 	this.add(menuItemExit);
     }
 
-    public JMenuItem getMenuItemNewGame() {
-	return menuItemNewGame;
+    public JMenuItem getMenuItemLoadItems() {
+	return menuItemLoadItems;
     }
 
-    public JMenuItem getMenuItemLoadGame() {
-	return menuItemLoadGame;
-    }
-
-    public JMenuItem getMenuItemSaveGame() {
-	return menuItemSaveGame;
+    public JMenuItem getMenuItemSaveItems() {
+	return menuItemSaveItems;
     }
 
     public JMenuItem getMenuItemExit() {
 	return menuItemExit;
+    }
+
+    public JMenuItem getMenuItemNewMap() {
+	return menuItemNewMap;
+    }
+
+    public JMenuItem getMenuItemLoadMap() {
+	return menuItemLoadMap;
+    }
+
+    public JMenuItem getMenuItemSaveMap() {
+	return menuItemSaveMap;
     }
 }

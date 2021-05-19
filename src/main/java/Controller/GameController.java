@@ -63,7 +63,7 @@ public class GameController {
 		    break;
 		}
 	    }
-	    if(terrain.getName() == "water" && rec_player.intersects(rec_terrain)){
+	    if(terrain.getName().equals("water") && rec_player.intersects(rec_terrain)){
 		    pw.setX(pw.getX() + 1);
 		}
 	}

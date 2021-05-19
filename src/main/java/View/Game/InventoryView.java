@@ -33,8 +33,11 @@ public class InventoryView extends JPanel{
 	itemSlots = new ArrayList(inventorySize);
 	items = new JPanel();
 	items.setLayout(new GridLayout(2, 5));
+	items.setBackground(borderColor);
 	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+	
+	setSize(280, 130);
+	
 	inventoryColor = new Color(242, 201, 65);
 	borderColor = new Color(99, 59, 19);
 	itemBorder = BorderFactory.createLineBorder(borderColor, 3);

@@ -45,16 +45,18 @@ public class Map {
     }
     
     public void addTerrain(int h, int w, Terrain terrain){
-	if(mapTerrain.get(h).get(w) != null){
-	    mapTerrain.get(h).remove(w);
-	}
+//	if(mapTerrain.get(h).get(w) != null){
+//	    mapTerrain.get(h).remove(w);
+//	}
+	mapTerrain.get(h).remove(w);
 	mapTerrain.get(h).add(w, terrain);
     }
     
     public void addFigure(int h, int w, Figure figure){
-	if(mapFigures.get(h).get(w) != null){
-	    mapFigures.get(h).remove(w);
-	}
+//	if(mapFigures.get(h).get(w) != null){
+//	    mapFigures.get(h).remove(w);
+//	}
+	mapFigures.get(h).remove(w);
 	mapFigures.get(h).add(w, figure);
     }
     

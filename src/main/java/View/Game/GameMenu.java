@@ -3,6 +3,7 @@ package View.Game;
 import View.GameIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -23,28 +24,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-// TODO DESIGN
 
 public class GameMenu extends JPanel{
-    private JButton exitGame;
-    private JButton returnToGame;
+    private JLabel exitGame;
+    private JLabel returnToGame;
     private boolean shown;
     private Color buttonColor;
     private JFrame frame;
-    //private ImageIcon backgroundImage;
+    private ImageIcon backgroundImage;
 
     public GameMenu(JFrame frame) {
 	shown = false;
 	buttonColor = new Color(171, 46, 9);
 	
-	//backgroundImage = new ImageIcon("resources/game_menu_image.jpg");//mageIO.read(new File("resources/game_menu_image.jpg"));
-	//setSize(backgroundImage.getIconHeight(), backgroundImage.getIconWidth());
-	//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-	//setLayout(new GridLayout(2, 1));
-	setLayout(new BorderLayout());
-	setSize(300, 100);
+	backgroundImage = new ImageIcon("resources/game_menu_image.jpg");
+	setLayout(null);
+	setSize(backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
 	setVisible(false);
-	setBackground(new Color(99, 59, 19));
 	setOpaque(true);
 	this.frame = frame;
 	init();
@@ -52,37 +48,46 @@ public class GameMenu extends JPanel{
     
     private void init(){
 	JLabel jl = new JLabel("MENU");
-	jl.setForeground(Color.WHITE);
+	jl.setForeground(new Color(140, 9, 0));
 	jl.setAlignmentX(CENTER_ALIGNMENT);
-	//jl.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 20));
-	
-	add(jl, BorderLayout.NORTH);
-	
-	JPanel jp = new JPanel();
-	jp.setBackground(new Color(99, 59, 19));
-	jp.setLayout(new BoxLayout(jp, BoxLayout.PAGE_AXIS));
-	exitGame = new JButton("Exit Game");
-	//exitGame.setBorder(BorderFactory.createLineBorder(new Color(99, 59, 19), 10));
-	exitGame.setBackground(buttonColor);
+	jl.setBounds(getWidth()/2 -45, 20, 100, 50);
+	Font mf = new Font("Verdana", Font.BOLD, 30);
+	jl.setFont(mf);
+	add(jl);
+
+	exitGame = new JLabel("Exit Game");
 	exitGame.setAlignmentX(CENTER_ALIGNMENT);
-	exitGame.setAlignmentY(TOP_ALIGNMENT);
-	//add(exitGame, BorderLayout.CENTER);
-	jp.add(exitGame);
-	jp.add(new JLabel(GameIcons.TRANSPARENT.getIcon()));
-	returnToGame = new JButton("Return To Game");
-	//returnToGame.setBorder(BorderFactory.createLineBorder(new Color(99, 59, 19), 10));
-	returnToGame.setBackground(buttonColor);
+	exitGame.setForeground(Color.BLACK);
+	exitGame.setBounds(getWidth()/2 -70, 120, 160, 50);
+	mf = new Font("Verdana", Font.BOLD, 22);
+	exitGame.setFont(mf);
+	add(exitGame);
+
+	returnToGame = new JLabel("Return To Game");
 	returnToGame.setAlignmentX(CENTER_ALIGNMENT);
-	returnToGame.setAlignmentY(BOTTOM_ALIGNMENT);
-	//add(returnToGame, BorderLayout.SOUTH);
-	jp.add(returnToGame);
-	
-	add(jp, BorderLayout.CENTER);
-	add(new JLabel(GameIcons.TRANSPARENT.getIcon()), BorderLayout.SOUTH);
+	returnToGame.setForeground(Color.BLACK);
+	returnToGame.setBounds(getWidth()/2 -100, 220, 260, 50);
+	mf = new Font("Verdana", Font.BOLD, 22);
+	returnToGame.setFont(mf);
+	add(returnToGame);
 	
 	exitGame.addMouseListener(new MouseAdapter(){  
 	    public void mouseClicked(MouseEvent e)  {  
 		frame.dispose();
+	    }  
+	});
+	
+	exitGame.addMouseListener(new MouseAdapter(){  
+	    public void mouseEntered(MouseEvent e)  {  
+		exitGame.setForeground(new Color(138, 138, 138));
+		exitGame.repaint();
+	    }  
+	});
+	
+	exitGame.addMouseListener(new MouseAdapter(){  
+	    public void mouseExited(MouseEvent e)  {  
+		exitGame.setForeground(Color.BLACK);
+		exitGame.repaint();
 	    }  
 	});
 	
@@ -91,13 +96,27 @@ public class GameMenu extends JPanel{
 		setVisible(false);
 	    }  
 	});
+	
+	returnToGame.addMouseListener(new MouseAdapter(){  
+	    public void mouseEntered(MouseEvent e)  {  
+		returnToGame.setForeground(new Color(138, 138, 138));
+		returnToGame.repaint();
+	    }  
+	});
+	
+	returnToGame.addMouseListener(new MouseAdapter(){  
+	    public void mouseExited(MouseEvent e)  {  
+		returnToGame.setForeground(Color.BLACK);
+		returnToGame.repaint();
+	    }  
+	});
     }
     
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//      super.paintComponent(g);
-//	  g.drawImage(backgroundImage.getImage(), 0, 0, null);
-//    }
+    @Override
+    protected void paintComponent(Graphics g) {
+      super.paintComponent(g);
+	  g.drawImage(backgroundImage.getImage(), 0, 0, null);
+    }
     
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -114,14 +133,6 @@ public class GameMenu extends JPanel{
 	}
     }
 
-    public JButton getExitGame() {
-	return exitGame;
-    }
-
-    public JButton getReturnToGame() {
-	return returnToGame;
-    }
-
     public boolean isShown() {
 	return shown;
     }
@@ -132,6 +143,22 @@ public class GameMenu extends JPanel{
 
     public void setShown(boolean shown) {
 	this.shown = shown;
+    }
+
+    public JLabel getExitGame() {
+	return exitGame;
+    }
+
+    public JLabel getReturnToGame() {
+	return returnToGame;
+    }
+
+    public JFrame getFrame() {
+	return frame;
+    }
+
+    public ImageIcon getBackgroundImage() {
+	return backgroundImage;
     }
     
     

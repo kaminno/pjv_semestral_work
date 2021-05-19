@@ -4,7 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class EngineMenuEdit extends JMenu{
-    private JMenuItem edit1;
+    private JMenuItem export;
 
     public EngineMenuEdit() {
 	super("Edit");
@@ -12,11 +12,12 @@ public class EngineMenuEdit extends JMenu{
     }
     
     private void initMenuTools(){
-	edit1 = new JMenuItem("Edit 1");
-	this.add(edit1);
+	export = new JMenuItem("Export map");
+	export.setEnabled(false);
+	this.add(export);
     }
 
-    public JMenuItem getEdit1() {
-	return edit1;
+    public JMenuItem getExport() {
+	return export;
     }
 }

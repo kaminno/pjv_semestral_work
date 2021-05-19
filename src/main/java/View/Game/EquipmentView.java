@@ -3,6 +3,7 @@ package View.Game;
 import View.GameIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -47,6 +48,9 @@ public class EquipmentView extends JPanel{
 	borderColor = new Color(99, 59, 19);
 	itemBorder = BorderFactory.createLineBorder(borderColor, 3);
 	setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+	
+	setBackground(borderColor);
+	setSize(300, 350);
 	
 	init();
     }
@@ -131,7 +135,7 @@ public class EquipmentView extends JPanel{
 	panelCenter.setBackground(borderColor);
 	panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.PAGE_AXIS));
 	
-	playerImage = new JLabel(new ImageIcon(new ImageIcon("resources/equipment_player_image.png").getImage().getScaledInstance(170, 170, Image.SCALE_DEFAULT)));
+	playerImage = new JLabel(new ImageIcon(new ImageIcon("resources/equipment_player_image.png").getImage().getScaledInstance(120, 170, Image.SCALE_DEFAULT)));
 	playerImage.setBackground(itemColor);
 	playerImage.setOpaque(true);
 	playerImage.setAlignmentX(CENTER_ALIGNMENT);
