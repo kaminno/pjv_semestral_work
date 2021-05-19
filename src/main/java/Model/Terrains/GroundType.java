@@ -6,7 +6,7 @@ public enum GroundType {
     SAND("sand"),
     WATER("water"),
     BLANC("blanc");
-    
+
     private final String name;
 
     private GroundType(String name) {

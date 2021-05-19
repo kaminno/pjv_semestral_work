@@ -2,10 +2,8 @@ package Model.Terrains;
 
 public enum SolidType {
     ROCK("rock"),
-    STONE("stone"),
-    WALL("wall"),
-    TREE("tree");
-    
+    WALL("wall");
+
     private final String name;
 
     private SolidType(String name) {

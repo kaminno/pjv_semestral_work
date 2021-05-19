@@ -2,20 +2,20 @@ package Model.Terrains;
 
 import Exceptions.WrongTerrainType;
 
-public class Ground extends Terrain{
+public class Ground extends Terrain {
+
     private final int bonusXVelocity;
     private final int bonusYVelocity;
-    
 
     public Ground(String name, TerrainType type, int xVel, int yVel) throws WrongTerrainType {
 	super(name, type);
 	boolean ok = false;
-	for (GroundType g : GroundType.values()){
-	    if (g.getName() == type.getName()){
+	for (GroundType g : GroundType.values()) {
+	    if (g.getName() == type.getName()) {
 		ok = true;
 	    }
 	}
-	if (!ok){
+	if (!ok) {
 	    throw new WrongTerrainType();
 	}
 	this.bonusXVelocity = xVel;
@@ -28,5 +28,5 @@ public class Ground extends Terrain{
 
     public int getBonusYVelocity() {
 	return bonusYVelocity;
-    }    
+    }
 }

@@ -44,10 +44,10 @@ public class WeaponTest {
     @Test
     public void setDurability(){
 	weapon.setDurability(3);
-	assertEquals(3, weapon.getDurability());
+	assertEquals(3, weapon.getCurrentDurability());
 	assertFalse(weapon.isBroken());
 	weapon.setDurability(0);
-	assertEquals(0, weapon.getDurability());
+	assertEquals(0, weapon.getCurrentDurability());
 	assertTrue(weapon.isBroken());	
     }
     

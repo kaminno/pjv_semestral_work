@@ -3,7 +3,6 @@ package View.Game;
 import View.GameIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -13,7 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class EquipmentView extends JPanel{
+public class EquipmentView extends JPanel {
+
     private JLabel title;
     private JLabel playerImage;
     private JLabel equipmentHelmet;
@@ -48,25 +48,25 @@ public class EquipmentView extends JPanel{
 	borderColor = new Color(99, 59, 19);
 	itemBorder = BorderFactory.createLineBorder(borderColor, 3);
 	setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
-	
+
 	setBackground(borderColor);
 	setSize(300, 350);
-	
+
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	initTop();
 	initLeft();
 	initCenter();
 	initBottom();
     }
-    
-    private void initBottom(){
+
+    private void initBottom() {
 	panelBottom = new JPanel();
 	panelBottom.setBackground(borderColor);
 	panelBottom.setLayout(new GridLayout(2, 2));
-	
+
 	JPanel jp1 = new JPanel();
 	jp1.setBackground(borderColor);
 	lblHealth = new JLabel("Health:");
@@ -78,7 +78,7 @@ public class EquipmentView extends JPanel{
 	jp1.add(playerHealth);
 	jp1.setAlignmentX(LEFT_ALIGNMENT);
 	panelBottom.add(jp1);
-	
+
 	JPanel jp3 = new JPanel();
 	jp3.setBackground(borderColor);
 	lblDamage = new JLabel("Attack Damage:");
@@ -90,7 +90,7 @@ public class EquipmentView extends JPanel{
 	jp3.add(playerDamage);
 	jp3.setAlignmentX(LEFT_ALIGNMENT);
 	panelBottom.add(jp3);
-	
+
 	JPanel jp2 = new JPanel();
 	jp2.setBackground(borderColor);
 	lblArmor = new JLabel("Armor:");
@@ -102,7 +102,7 @@ public class EquipmentView extends JPanel{
 	jp2.add(playerArmor);
 	jp2.setAlignmentX(LEFT_ALIGNMENT);
 	panelBottom.add(jp2);
-	
+
 	JPanel jp4 = new JPanel();
 	jp4.setBackground(borderColor);
 	lblSpeed = new JLabel("Speed:");
@@ -114,34 +114,34 @@ public class EquipmentView extends JPanel{
 	jp4.add(playerSpeed);
 	jp4.setAlignmentX(LEFT_ALIGNMENT);
 	panelBottom.add(jp4);
-	
+
 	add(panelBottom, BorderLayout.SOUTH);
     }
-    
-    private void initTop(){
+
+    private void initTop() {
 	panelTop = new JPanel();
 	panelTop.setBackground(borderColor);
-	
+
 	title = new JLabel("Character");
 	title.setAlignmentX(CENTER_ALIGNMENT);
 	title.setForeground(Color.WHITE);
 	panelTop.add(title, BorderLayout.NORTH);
-	
+
 	add(panelTop, BorderLayout.NORTH);
     }
-    
-    private void initCenter(){
+
+    private void initCenter() {
 	panelCenter = new JPanel();
 	panelCenter.setBackground(borderColor);
 	panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.PAGE_AXIS));
-	
+
 	playerImage = new JLabel(new ImageIcon(new ImageIcon("resources/equipment_player_image.png").getImage().getScaledInstance(120, 170, Image.SCALE_DEFAULT)));
 	playerImage.setBackground(itemColor);
 	playerImage.setOpaque(true);
 	playerImage.setAlignmentX(CENTER_ALIGNMENT);
 	playerImage.setBorder(BorderFactory.createLineBorder(borderColor, 5));
 	panelCenter.add(playerImage);
-	
+
 	JPanel pl = new JPanel();
 	pl.setBackground(borderColor);
 	equipmentMainHand = new JLabel(GameIcons.TRANSPARENT.getIcon());
@@ -149,52 +149,52 @@ public class EquipmentView extends JPanel{
 	equipmentMainHand.setBorder(itemBorder);
 	equipmentMainHand.setOpaque(true);
 	pl.add(equipmentMainHand);
-	
+
 	equipmentSecondHand = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentSecondHand.setBackground(itemColor);
 	equipmentSecondHand.setBorder(itemBorder);
 	equipmentSecondHand.setOpaque(true);
 	pl.add(equipmentSecondHand);
 	panelCenter.add(pl);
-	
+
 	add(panelCenter, BorderLayout.CENTER);
     }
-    
-    private void initLeft(){
+
+    private void initLeft() {
 	panelLeft = new JPanel();
 	panelLeft.setLayout(new BoxLayout(panelLeft, BoxLayout.PAGE_AXIS));
 	panelLeft.setBackground(borderColor);
-	
+
 	equipmentHelmet = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentHelmet.setBackground(itemColor);
 	equipmentHelmet.setBorder(itemBorder);
 	equipmentHelmet.setOpaque(true);
 	panelLeft.add(equipmentHelmet);
-	
+
 	equipmentChest = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentChest.setBackground(itemColor);
 	equipmentChest.setBorder(itemBorder);
 	equipmentChest.setOpaque(true);
 	panelLeft.add(equipmentChest);
-	
+
 	equipmentLegs = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentLegs.setBackground(itemColor);
 	equipmentLegs.setBorder(itemBorder);
 	equipmentLegs.setOpaque(true);
 	panelLeft.add(equipmentLegs);
-	
+
 	equipmentGloves = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentGloves.setBackground(itemColor);
 	equipmentGloves.setBorder(itemBorder);
 	equipmentGloves.setOpaque(true);
 	panelLeft.add(equipmentGloves);
-	
+
 	equipmentBoots = new JLabel(GameIcons.TRANSPARENT.getIcon());
 	equipmentBoots.setBackground(itemColor);
 	equipmentBoots.setBorder(itemBorder);
 	equipmentBoots.setOpaque(true);
 	panelLeft.add(equipmentBoots);
-	
+
 	add(panelLeft, BorderLayout.WEST);
     }
 

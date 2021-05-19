@@ -9,7 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EngineToolPaneItemsTabLegs extends JPanel{
+public class EngineToolPaneItemsTabLegs extends JPanel {
+
     private JLabel iconLegs;
     private JLabel lblArmor;
     private JLabel lblDurability;
@@ -24,57 +25,57 @@ public class EngineToolPaneItemsTabLegs extends JPanel{
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
 	myConstraints = new GridBagConstraints();
-        myConstraints.fill = GridBagConstraints.HORIZONTAL;
+	myConstraints.fill = GridBagConstraints.HORIZONTAL;
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	iconLegs = new JLabel(GameIcons.ARMOR_LEGS.getIcon());
 	iconLegs.setToolTipText("Trousers");
 	iconLegs.setBackground(new Color(255, 231, 150));
 	iconLegs.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	panelRight = new JPanel();
 	panelRight.setLayout(myLayout);
-	
+
 	lblArmor = new JLabel(" Armor: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        panelRight.add(lblArmor, myConstraints);
- 
-        tfArmor = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
-        panelRight.add(tfArmor, myConstraints);
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	panelRight.add(lblArmor, myConstraints);
+
+	tfArmor = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
+	panelRight.add(tfArmor, myConstraints);
 	tfArmor.setEditable(false);
- 
-        lblDurability = new JLabel(" Durability: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        panelRight.add(lblDurability, myConstraints);
- 
-        tfDurability = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
-        panelRight.add(tfDurability, myConstraints);
+
+	lblDurability = new JLabel(" Durability: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	panelRight.add(lblDurability, myConstraints);
+
+	tfDurability = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
+	panelRight.add(tfDurability, myConstraints);
 	tfDurability.setEditable(false);
-	
+
 	add(iconLegs);
 	add(panelRight);
     }
-    
-    public void selectLegs(){
+
+    public void selectLegs() {
 	iconLegs.setOpaque(true);
 	iconLegs.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	tfArmor.setEditable(true);
 	tfDurability.setEditable(true);
 	selected = true;
     }
-    
-    public void unselectLegs(){
+
+    public void unselectLegs() {
 	iconLegs.setOpaque(false);
 	iconLegs.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
 	tfArmor.setEditable(false);

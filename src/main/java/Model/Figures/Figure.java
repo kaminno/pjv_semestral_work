@@ -5,21 +5,24 @@ package Model.Figures;
  * @author honzuna
  */
 public abstract class Figure {
+
     protected final String name;
     protected int maxHealth;
     protected int currentHealth;
 
     public Figure(String name, int health) {
 	this.name = name;
-	if (health <= 0){
+	if (health <= 0) {
 	    throw new IllegalArgumentException("Health must be a positive number!");
 	}
 	this.maxHealth = health;
 	this.currentHealth = health;
     }
-    
+
     public abstract void attack(Figure enemy);
+
     public abstract void defend(int damage);
+
     public abstract boolean isAlive();
 
     /**

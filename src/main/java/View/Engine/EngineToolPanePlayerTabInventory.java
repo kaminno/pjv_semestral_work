@@ -4,7 +4,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EngineToolPanePlayerTabInventory extends JPanel{
+public class EngineToolPanePlayerTabInventory extends JPanel {
+
     private JLabel lblInventorySize;
     private String inventorySizes[] = {"5", "6", "7", "8", "9", "10"};
     private int inventorySize;
@@ -25,6 +26,5 @@ public class EngineToolPanePlayerTabInventory extends JPanel{
     public JComboBox getComboBox() {
 	return comboBox;
     }
-    
-    
+
 }

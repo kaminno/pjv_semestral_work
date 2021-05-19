@@ -8,7 +8,8 @@ import java.awt.Image;
 import java.util.Random;
 import javax.swing.JPanel;
 
-public class WarPigView extends FigureView{
+public class WarPigView extends FigureView {
+
     private int dx;
     private int dy;
     private Image war_pig_1;
@@ -27,33 +28,31 @@ public class WarPigView extends FigureView{
 
     public WarPigView(int x, int y) {
 	super(x, y);
-	
-	
+
 	initBeast();
     }
-    
-    private void initBeast(){
+
+    private void initBeast() {
 	war_pig_1 = GameIcons.BEAST_WAR_PIG.getIcon().getImage();
 	war_pig_2 = GameIcons.BEAST_WAR_PIG.getIcon().getImage();
 	attackTime = 0;
 	moved = true;
 	speed = 2;
-	
+
 	Random rand = new Random();
 	dx = rand.nextInt(2) * speed;
-	if(dx == 0){
+	if (dx == 0) {
 	    dy = speed;
-	}
-	else{
+	} else {
 	    dy = 0;
 	}
-	
+
 	image = war_pig_1;
-        getImageDimensions();
+	getImageDimensions();
     }
-    
-    public void drawBeast(Graphics g, JPanel p){
-	if(isVisible()){
+
+    public void drawBeast(Graphics g, JPanel p) {
+	if (isVisible()) {
 	    g.drawImage(this.getImage(), this.getX(), this.getY(), p);
 	    g.setColor(Color.WHITE);
 	    g.drawString(Integer.toString(hp), this.getX() + 40, this.getY() + 15);
@@ -61,38 +60,37 @@ public class WarPigView extends FigureView{
 	    g.drawString(Integer.toString(dmg), this.getX() + 40, this.getY() + 35);
 	}
     }
-    
-    public void swapIcons(){
-	if(image.equals(war_pig_2)){
+
+    public void swapIcons() {
+	if (image.equals(war_pig_2)) {
 	    image = war_pig_1;
-	}
-	else{
+	} else {
 	    image = war_pig_2;
 	}
     }
-    
-    private void updateSwapTime(){
+
+    private void updateSwapTime() {
 	swapTime += 1;
-	if(swapTime == 8){
+	if (swapTime == 8) {
 	    swapTime = 0;
 	}
     }
-    
-    private void updateAttackTime(){
+
+    private void updateAttackTime() {
 	attackTime += 1;
-	if(attackTime == 21){
+	if (attackTime == 21) {
 	    attackTime = 0;
 	}
     }
-    
-    private void stopMove(){
+
+    private void stopMove() {
 	tmpDx = dx;
 	dx = 0;
 	tmpDy = dy;
 	dy = 0;
     }
-    
-    private void continueMove(){
+
+    private void continueMove() {
 	dx = tmpDx;
 	dy = tmpDy;
     }
@@ -100,15 +98,14 @@ public class WarPigView extends FigureView{
     public void move() {
 	updateSwapTime();
 	updateAttackTime();
-	
-	if(enemyNear){
-	    if(moved){
+
+	if (enemyNear) {
+	    if (moved) {
 		stopMove();
 		moved = false;
 	    }
-	}
-	else{
-	    if(!moved){
+	} else {
+	    if (!moved) {
 		continueMove();
 		moved = true;
 	    }
@@ -117,22 +114,22 @@ public class WarPigView extends FigureView{
 
 	    if (x < speed) {
 		x = speed;
-		dx = (-1)*dx;
+		dx = (-1) * dx;
 	    }
 
 	    if (y < speed) {
 		y = speed;
-		dy = (-1)*dy;
+		dy = (-1) * dy;
 	    }
 
-	    if(x > MapSize.getSIZE().getWidth()-40){
-		x = MapSize.getSIZE().getWidth()-40;
-		dx = (-1)*dx;
+	    if (x > MapSize.getSIZE().getWidth() - 40) {
+		x = MapSize.getSIZE().getWidth() - 40;
+		dx = (-1) * dx;
 	    }
 
-	    if(y > MapSize.getSIZE().getHeight()-40){
-		y = MapSize.getSIZE().getHeight()-40;
-		dy = (-1)*dy;
+	    if (y > MapSize.getSIZE().getHeight() - 40) {
+		y = MapSize.getSIZE().getHeight() - 40;
+		dy = (-1) * dy;
 	    }
 	}
     }

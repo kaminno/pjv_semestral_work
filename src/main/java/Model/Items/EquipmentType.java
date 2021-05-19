@@ -9,10 +9,10 @@ public enum EquipmentType {
     MAIN_HAND("main hand"),
     SECOND_HAND("second hand"),
     BAG("bag");
-    
+
     public final String label;
-    
-    private EquipmentType(String label){
+
+    private EquipmentType(String label) {
 	this.label = label;
     }
 }

@@ -1,15 +1,16 @@
 package Model.Items;
 
 public class WearableItem extends Item {
+
     private final EquipmentType type;
     private boolean equiped = false;
-    
-    public WearableItem(String name, int weight, EquipmentType type){
+
+    public WearableItem(String name, int weight, EquipmentType type) {
 	super(name, weight);
 	this.type = type;
     }
-    
-    public boolean isEquiped(){
+
+    public boolean isEquiped() {
 	return equiped;
     }
 

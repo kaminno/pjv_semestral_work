@@ -1,6 +1,7 @@
 package Model.Terrains;
 
 public class Terrain {
+
     private final int width = TerrainSize.WIDTH.getSize();
     private final int height = TerrainSize.HEIGHT.getSize();
     private final String name;
@@ -22,8 +23,8 @@ public class Terrain {
     public String getName() {
 	return name;
     }
-    
-    public TerrainType getType(){
+
+    public TerrainType getType() {
 	return type;
     }
 }

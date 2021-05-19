@@ -1,7 +1,6 @@
 package View.Engine;
 
 import Controller.EngineController;
-import Controller.GameController;
 import Exceptions.WrongEquipmentTypeForWearableItemException;
 import Exceptions.WrongTerrainType;
 import Model.Figures.Beast;
@@ -13,50 +12,32 @@ import Model.Map.MapSize;
 import Model.Terrains.Terrain;
 import Model.Terrains.TerrainSize;
 import Model.Terrains.TerrainType;
-import View.Engine.EngineMenu;
-import View.Game.GameMainWindow;
 import View.GameIcons;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EngineMainWindow extends JFrame {
@@ -73,17 +54,23 @@ public class EngineMainWindow extends JFrame {
     public EngineMainWindow(String title, EngineController controller) throws HeadlessException {
 	super(title);
 	this.controller = controller;
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	this.setMinimumSize(new Dimension(1200, 800 + 10));
-	//this.setSize(1200, 800);
-	//this.setMaximumSize(new Dimension(828, 666));
-	pane = this.getContentPane();
 
+	pane = this.getContentPane();
 	pane.setLayout(new BorderLayout());
 
 	createWindow();
 	setActions();
 	this.setVisible(true);
+
+	this.addWindowListener(new WindowAdapter() {
+	    public void windowClosing(WindowEvent e) {
+		File f = new File("resources/current.map.png");
+		f.delete();
+		System.exit(0);
+	    }
+	});
     }
 
     private void createWindow() {
@@ -139,17 +126,13 @@ public class EngineMainWindow extends JFrame {
 		    map = new Map(height, width);
 		    try {
 			map.fillTheMapWithGround(type.getName(), type, 0, 0);
-			//System.out.println("try");
 		    } catch (WrongTerrainType ex) {
 			Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			//System.out.println("catch");
 		    }
-		    //map.printMapTerrain();
 		    // fill the (view) map with icons of specific type from "fill" dialog
 		    newMap.fillTheMapWithGround(type);
 
 		    // add new map
-		    //mainPanel.add(newMap);
 		    mainPanel.addNewMap(newMap);
 		    menu.getMenuRun().getRun().setEnabled(true);
 		    menu.getMenuEdit().getExport().setEnabled(true);
@@ -185,7 +168,6 @@ public class EngineMainWindow extends JFrame {
 				map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
 				mainPanel.getCurrentMap().removeTerrain(sx, sy);
 				mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x % 40) / 40, (y - y % 40) / 40);
-				//map.printMapTerrain();
 			    }
 			}
 		    });
@@ -284,18 +266,13 @@ public class EngineMainWindow extends JFrame {
 		    map = new Map(height, width);
 		    try {
 			map.fillTheMapWithGround(type.getName(), type, 0, 0);
-			//System.out.println("Map size: " + map.getMapTerrain().get(0).size());
-			//System.out.println("try");
 		    } catch (WrongTerrainType ex) {
 			Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			//System.out.println("catch");
 		    }
-		    //map.printMapTerrain();
 		    // fill the (view) map with icons of specific type from "fill" dialog
 		    newMap.fillTheMapWithGround(type);
 
 		    // add new map
-		    //mainPanel.add(newMap);
 		    mainPanel.addNewMap(newMap);
 		    menu.getMenuRun().getRun().setEnabled(true);
 		    menu.getMenuEdit().getExport().setEnabled(true);
@@ -346,9 +323,7 @@ public class EngineMainWindow extends JFrame {
 		int returnVal = chooser.showOpenDialog(pane);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    File fileItemsToLoad = chooser.getSelectedFile();
-		    //System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 		    String[] spl = fileItemsToLoad.getAbsolutePath().split("\\.");
-		    System.out.println("item file: " + spl[0] + " - " + spl[spl.length - 2] + " - " + spl[spl.length - 1]);
 		    if (!spl[spl.length - 1].equals("pjv")) {
 			JOptionPane.showMessageDialog(mainPanel,
 				"Wrong file extension",
@@ -362,8 +337,6 @@ public class EngineMainWindow extends JFrame {
 				JOptionPane.WARNING_MESSAGE);
 			return;
 		    } else {
-			System.out.println("You chose to open this file: "
-				+ chooser.getSelectedFile().getName());
 			try {
 			    Scanner myScan = new Scanner(fileItemsToLoad);
 			    int counter = 0;
@@ -454,7 +427,6 @@ public class EngineMainWindow extends JFrame {
 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 		    File fileToSave = fileChooser.getSelectedFile();
-		    //System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 		    try {
 			String[] spl = fileToSave.getAbsolutePath().split("\\.");
 			FileWriter writer = new FileWriter(spl[0] + ".items.pjv");
@@ -492,7 +464,7 @@ public class EngineMainWindow extends JFrame {
 		}
 	    }
 	});
-	
+
 	menu.getMenuFile().getMenuItemLoadMap().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
@@ -502,42 +474,38 @@ public class EngineMainWindow extends JFrame {
 		int returnVal = chooser.showOpenDialog(pane);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    File fileItemsToLoad = chooser.getSelectedFile();
-		    //System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 		    String[] spl = fileItemsToLoad.getAbsolutePath().split("\\.");
-		    if(!spl[spl.length-1].equals("pjv")){
+		    if (!spl[spl.length - 1].equals("pjv")) {
 			JOptionPane.showMessageDialog(mainPanel,
 				"Wrong file extension",
 				"Loading Error",
 				JOptionPane.WARNING_MESSAGE);
 			return;
 		    }
-		    if(!spl[spl.length-2].equals("map")){
+		    if (!spl[spl.length - 2].equals("map")) {
 			JOptionPane.showMessageDialog(mainPanel,
 				"Try to load file that does not contain map info",
 				"Loading Error",
 				JOptionPane.WARNING_MESSAGE);
 			return;
-		    }
-		    else{
-			try{
+		    } else {
+			try {
 			    Scanner mapScan = new Scanner(fileItemsToLoad);
 			    int counter = 0;
 			    int mapHeight = MapSize.getSIZE().getHeight() / 40;
-			    int mapWidth = MapSize.getSIZE().getWidth()/ 40;
-			    //while (mapScan.hasNextLine()) {
+			    int mapWidth = MapSize.getSIZE().getWidth() / 40;
 			    Map tmpMap = new Map(mapHeight, mapWidth);
 			    EngineMapPanel newMap = new EngineMapPanel(mapWidth, mapHeight);
 			    newMap.fillTheMapWithGround(TerrainType.BLANC);
 			    ImageIcon icon = GameIcons.BLANC.getIcon();
-			    //System.out.println("Map tmp size: " + tmpMap.getMapTerrain().get(0).size());
-			    for(int h = 0; h < mapHeight; h++){
+
+			    for (int h = 0; h < mapHeight; h++) {
 				String line = mapScan.nextLine();
 				String[] terrainTypes = line.split(",");
 				int w = 0;
-				//System.out.println("Map tmp size: " + tmpMap.getMapTerrain().get(h).size());
-				for(String terrain : terrainTypes){
-				    for(TerrainType terrainType : TerrainType.values()){
-					if(terrain.equals(terrainType.getName())){
+				for (String terrain : terrainTypes) {
+				    for (TerrainType terrainType : TerrainType.values()) {
+					if (terrain.equals(terrainType.getName())) {
 					    tmpMap.addTerrain(h, w, new Terrain(terrain, terrainType));
 					    for (GameIcons gi : GameIcons.values()) {
 						if (gi.getLabel().equals(terrain)) {
@@ -549,12 +517,10 @@ public class EngineMainWindow extends JFrame {
 					    newMap.addTerrain(new JLabel(icon), w, h);
 					}
 				    }
-				    //System.out.println("Map tmp size: " + tmpMap.getMapTerrain().get(h).size());
 				    w++;
 				}
 				tmpMap.printMapTerrain();
-				//System.out.println("Map size: " + tmpMap.getMapTerrain().get(h).size());
-				if(tmpMap.getMapTerrain().get(h).size() != mapWidth){
+				if (tmpMap.getMapTerrain().get(h).size() != mapWidth) {
 				    throw new WrongTerrainType();
 				}
 			    }
@@ -570,7 +536,7 @@ public class EngineMainWindow extends JFrame {
 			    menu.getMenuFile().getMenuItemSaveMap().setEnabled(true);
 			    mainPanel.revalidate();
 			    mainPanel.repaint();
-			    
+
 			    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 				    int x = e.getX();
@@ -597,11 +563,10 @@ public class EngineMainWindow extends JFrame {
 					map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
 					mainPanel.getCurrentMap().removeTerrain(sx, sy);
 					mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x % 40) / 40, (y - y % 40) / 40);
-					//map.printMapTerrain();
 				    }
 				}
 			    });
-			}catch(WrongTerrainType wtt){
+			} catch (WrongTerrainType wtt) {
 			    JOptionPane.showMessageDialog(mainPanel,
 				    "Load was not successful",
 				    "Loading Error",
@@ -619,7 +584,7 @@ public class EngineMainWindow extends JFrame {
 		}
 	    }
 	});
-	
+
 	menu.getMenuFile().getMenuItemSaveMap().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
@@ -632,9 +597,9 @@ public class EngineMainWindow extends JFrame {
 		    try {
 			String[] spl = fileToSave.getAbsolutePath().split("\\.");
 			FileWriter writer = new FileWriter(spl[0] + ".map.pjv");
-			for(int h = 0; h < map.getMapHeight(); h++){
+			for (int h = 0; h < map.getMapHeight(); h++) {
 			    String s = map.getMapTerrain().get(h).get(0).getName();
-			    for(int w = 1; w < map.getMapWidth(); w++){
+			    for (int w = 1; w < map.getMapWidth(); w++) {
 				s += "," + map.getMapTerrain().get(h).get(w).getName();
 			    }
 			    writer.write(s + "\n");
@@ -643,9 +608,9 @@ public class EngineMainWindow extends JFrame {
 		    } catch (IOException ex) {
 			Logger.getLogger(EngineMainWindow.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(mainPanel,
-		    	"Save was not successful",
-		    	"Saving Error",
-		    	JOptionPane.WARNING_MESSAGE);
+				"Save was not successful",
+				"Saving Error",
+				JOptionPane.WARNING_MESSAGE);
 			return;
 		    }
 		}
@@ -704,7 +669,6 @@ public class EngineMainWindow extends JFrame {
 	    public void mouseClicked(MouseEvent e) {
 		if (mainPanel.getCurrentMap() != null) {
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
-			//Image im = null;
 			public void mouseClicked(MouseEvent e) {
 			    if (toolPane.getSelectedIndex() == 1) {
 				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
@@ -743,7 +707,6 @@ public class EngineMainWindow extends JFrame {
 	    public void mouseClicked(MouseEvent e) {
 		if (mainPanel.getCurrentMap() != null) {
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
-			//Image im = null;
 			public void mouseClicked(MouseEvent e) {
 			    if (toolPane.getSelectedIndex() == 3) {
 				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
@@ -769,9 +732,12 @@ public class EngineMainWindow extends JFrame {
 				    map.addFigure(sy, sx, new Beast("boss", 1, 1, 1, 1, 1));
 				}
 			    }
-			};
-		});
-	    }}
+			}
+		    ;
+		}
+	    
+	);
+	}}
 	});
 	
 	toolPane.getPlayerTab().getPanelWeapons().getIconMainWeapon().addMouseListener(new MouseAdapter() {
@@ -860,8 +826,6 @@ public class EngineMainWindow extends JFrame {
 
 	menu.getMenuRun().getRun().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		//controller.createNewMap(map);
-
 		mainPanel.getCurrentMap().saveImage("resources/current.map", "png");
 
 		try {

@@ -1,6 +1,5 @@
 package View.Game;
 
-import View.GameIcons;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -14,49 +13,46 @@ public class FigureView {
     protected boolean visible;
     protected Image image;
 
-    public FigureView (int x, int y) {
+    public FigureView(int x, int y) {
 
-        this.x = x;
-        this.y = y;
-        visible = true;
+	this.x = x;
+	this.y = y;
+	visible = true;
     }
 
     protected void getImageDimensions() {
-
-//        width = image.getWidth(null);
-//        height = image.getHeight(null);
 	width = 40;
 	height = 40;
     }
 
     protected void loadImage(String imageName) {
 
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
+	ImageIcon ii = new ImageIcon(imageName);
+	image = ii.getImage();
     }
 
     public Image getImage() {
-        return image;
+	return image;
     }
 
     public int getX() {
-        return x;
+	return x;
     }
 
     public int getY() {
-        return y;
+	return y;
     }
 
     public boolean isVisible() {
-        return visible;
+	return visible;
     }
 
     public void setVisible(Boolean visible) {
-        this.visible = visible;
+	this.visible = visible;
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+	return new Rectangle(x, y, width, height);
     }
 
     public void setX(int x) {

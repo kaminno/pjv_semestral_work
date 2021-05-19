@@ -1,4 +1,1 @@
-*.class
-*.lst
-*.xml
-*.txt
+target/*

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model.Items;
 
 import Exceptions.WrongEquipmentTypeForWearableItemException;
@@ -44,10 +39,10 @@ public class GearTest {
     @Test
     public void setDurability(){
 	gear.setDurability(3);
-	assertEquals(3, gear.getDurability());
+	assertEquals(3, gear.getCurrentDurability());
 	assertFalse(gear.isBroken());
 	gear.setDurability(0);
-	assertEquals(0, gear.getDurability());
+	assertEquals(0, gear.getCurrentDurability());
 	assertTrue(gear.isBroken());
     }
     

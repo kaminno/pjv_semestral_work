@@ -1,11 +1,10 @@
 package View.Engine;
 
-import java.awt.Dimension;
 import java.io.IOException;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class EngineToolPane extends JTabbedPane{
+public class EngineToolPane extends JTabbedPane {
+
     private EngineToolPaneTerrainTab terrainTab;
     private EngineToolPanePlayerTab playerTab;
     private EngineToolPaneItemsTab itemsTab;
@@ -14,21 +13,21 @@ public class EngineToolPane extends JTabbedPane{
     public EngineToolPane() {
 	init();
     }
-    
-    private void init(){
-	try{
-	terrainTab = new EngineToolPaneTerrainTab();
-	addTab("Terrain", terrainTab);
-	}catch (IOException e){
+
+    private void init() {
+	try {
+	    terrainTab = new EngineToolPaneTerrainTab();
+	    addTab("Terrain", terrainTab);
+	} catch (IOException e) {
 	    System.out.println("Hehe + " + e);
 	}
-	
+
 	playerTab = new EngineToolPanePlayerTab();
 	addTab("Player", playerTab);
-	
+
 	itemsTab = new EngineToolPaneItemsTab();
 	addTab("Items", itemsTab);
-	
+
 	beastTab = new EngineToolPaneBeastTab();
 	addTab("Beasts", beastTab);
     }

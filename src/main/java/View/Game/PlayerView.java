@@ -5,10 +5,6 @@ import Model.Map.MapSize;
 import View.GameIcons;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class PlayerView extends FigureView {
 
@@ -25,37 +21,29 @@ public class PlayerView extends FigureView {
     private int attackTime;
 
     public PlayerView(int x, int y, Player pl) {
-        super(x, y);
+	super(x, y);
 	inventory = new InventoryView(pl.getInventory().getCurrentCapacity());
 	equipment = new EquipmentView();
 	equipment.getPlayerHealth().setText(Integer.toString(pl.getMaxHealth()));
-//	equipment.getPlayerArmor().setText(Integer.toString(pl.getCurrentArmor()));
-//	equipment.getPlayerDamage().setText(Integer.toString(pl.getCurrentDamage()));
 	equipment.getPlayerSpeed().setText(Integer.toString(pl.getCurrentSpeed()));
 	speed = pl.getCurrentSpeed();
 	attackTime = 0;
-	
-        initPlayer();
+
+	initPlayer();
     }
 
     private void initPlayer() {
-        
-        //missiles = new ArrayList<>();
-        //loadImage("resources/player.png");
 	player_fore_1 = GameIcons.PLAYER_FORE_1.getIcon().getImage();
 	player_fore_2 = GameIcons.PLAYER_FORE_2.getIcon().getImage();
-	
-	
-	
+
 	image = player_fore_1;
-        getImageDimensions();
+	getImageDimensions();
     }
-    
-    public void swapIcons(){
-	if(image.equals(player_fore_2)){
+
+    public void swapIcons() {
+	if (image.equals(player_fore_2)) {
 	    image = player_fore_1;
-	}
-	else{
+	} else {
 	    image = player_fore_2;
 	}
     }
@@ -63,144 +51,123 @@ public class PlayerView extends FigureView {
     public void move() {
 	updateSwapTime();
 	updateAttackTime();
-	
-        x += dx;
-        y += dy;
 
-        if (x < speed) {
-            x = speed;
-        }
+	x += dx;
+	y += dy;
 
-        if (y < speed) {
-            y = speed;
-        }
-	
-	if(x > MapSize.getSIZE().getWidth()-40){
-	    x = MapSize.getSIZE().getWidth()-40;
+	if (x < speed) {
+	    x = speed;
 	}
-	
-	if(y > MapSize.getSIZE().getHeight()-40){
-	    y = MapSize.getSIZE().getHeight()-40;
+
+	if (y < speed) {
+	    y = speed;
+	}
+
+	if (x > MapSize.getSIZE().getWidth() - 40) {
+	    x = MapSize.getSIZE().getWidth() - 40;
+	}
+
+	if (y > MapSize.getSIZE().getHeight() - 40) {
+	    y = MapSize.getSIZE().getHeight() - 40;
 	}
     }
-    
-    private void updateSwapTime(){
+
+    private void updateSwapTime() {
 	swapTime += 1;
-	if(swapTime == 8){
+	if (swapTime == 8) {
 	    swapTime = 0;
 	}
     }
-    
-    private void updateAttackTime(){
-	if(attackTime < 20){
-	attackTime += 1;
+
+    private void updateAttackTime() {
+	if (attackTime < 20) {
+	    attackTime += 1;
 	}
-//	if(attackTime == 21){
-//	    attackTime = 0;
-//	}
-    }
-    
-    public int getSwapTime(){
-	return swapTime;
-    }
-    
-    public boolean getMoved(){
-	return moved;
     }
 
-//    public List<Missile> getMissiles() {
-//        return missiles;
-//    }
+    public int getSwapTime() {
+	return swapTime;
+    }
+
+    public boolean getMoved() {
+	return moved;
+    }
 
     public void keyPressed(KeyEvent e) {
 	moved = true;
 
-        int key = e.getKeyCode();
+	int key = e.getKeyCode();
 
-//        if (key == KeyEvent.VK_SPACE) {
-//            fire();
-//        }
-
-	if(key == KeyEvent.VK_ESCAPE){
+	if (key == KeyEvent.VK_ESCAPE) {
 	    inventory.setVisible(false);
 	    inventory.setShowen(false);
-	    
+
 	    equipment.setVisible(false);
 	    equipment.setShown(false);
 	}
-	
-	if(key == KeyEvent.VK_I){
-	    if(inventory.isShowen()){
+
+	if (key == KeyEvent.VK_I) {
+	    if (inventory.isShowen()) {
 		inventory.setVisible(false);
 		inventory.setShowen(false);
-	    }
-	    else{
+	    } else {
 		inventory.setVisible(true);
 		inventory.setShowen(true);
 	    }
 	}
-	
-	if(key == KeyEvent.VK_C){
-	    if(equipment.isShown()){
+
+	if (key == KeyEvent.VK_C) {
+	    if (equipment.isShown()) {
 		equipment.setVisible(false);
 		equipment.setShown(false);
-	    }
-	    else{
+	    } else {
 		equipment.setVisible(true);
 		equipment.setShown(true);
 	    }
 	}
-	
+
 	if (key == KeyEvent.VK_SPACE && attackTime == 20) {
-            attackReady = true;
+	    attackReady = true;
 	    attackTime = 0;
-        }
+	}
 
-        if (key == KeyEvent.VK_LEFT) {
-            dx = -speed;
-        }
+	if (key == KeyEvent.VK_LEFT) {
+	    dx = -speed;
+	}
 
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = speed;
-        }
+	if (key == KeyEvent.VK_RIGHT) {
+	    dx = speed;
+	}
 
-        if (key == KeyEvent.VK_UP) {
-            dy = -speed;
-        }
+	if (key == KeyEvent.VK_UP) {
+	    dy = -speed;
+	}
 
-        if (key == KeyEvent.VK_DOWN) {
-            dy = speed;
-        }
+	if (key == KeyEvent.VK_DOWN) {
+	    dy = speed;
+	}
     }
-
-//    public void fire() {
-//        missiles.add(new Missile(x + width, y + height / 2));
-//    }
 
     public void keyReleased(KeyEvent e) {
 	moved = false;
 
-        int key = e.getKeyCode();
-	
-//	if (key == KeyEvent.VK_SPACE) {
-//            attackReady = false;
-//        }
+	int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
-        }
+	if (key == KeyEvent.VK_LEFT) {
+	    dx = 0;
+	}
 
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
-        }
+	if (key == KeyEvent.VK_RIGHT) {
+	    dx = 0;
+	}
 
-        if (key == KeyEvent.VK_UP) {
-            dy = 0;
-        }
+	if (key == KeyEvent.VK_UP) {
+	    dy = 0;
+	}
 
-        if (key == KeyEvent.VK_DOWN) {
-            dy = 0;
-        }
+	if (key == KeyEvent.VK_DOWN) {
+	    dy = 0;
+	}
     }
 
     public InventoryView getInventory() {

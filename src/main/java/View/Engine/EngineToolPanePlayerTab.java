@@ -1,20 +1,13 @@
 package View.Engine;
 
-import View.GameIcons;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-public class EngineToolPanePlayerTab extends JPanel{
+public class EngineToolPanePlayerTab extends JPanel {
+
     private EngineToolPanePlayerTabNewPlayer panelNewPlayer;
     private EngineToolPanePlayerTabAttributes panelAttributes;
     private EngineToolPanePlayerTabInventory panelInventory;
@@ -24,8 +17,8 @@ public class EngineToolPanePlayerTab extends JPanel{
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	JPanel jp1 = new JPanel();
 	JLabel jl1 = new JLabel("New Player");
 	jl1.setAlignmentX(CENTER_ALIGNMENT);
@@ -45,9 +38,9 @@ public class EngineToolPanePlayerTab extends JPanel{
 	panelAttributes = new EngineToolPanePlayerTabAttributes();
 	jp2.add(panelAttributes);
 	add(jp2);
-	
+
 	add(new JSeparator(SwingConstants.VERTICAL));
-	
+
 	JPanel jp3 = new JPanel();
 	JLabel jl3 = new JLabel("Inventory");
 	jl3.setAlignmentX(CENTER_ALIGNMENT);
@@ -56,9 +49,9 @@ public class EngineToolPanePlayerTab extends JPanel{
 	panelInventory = new EngineToolPanePlayerTabInventory();
 	jp3.add(panelInventory);
 	add(jp3);
-	
+
 	add(new JSeparator(SwingConstants.VERTICAL));
-	
+
 	JPanel jp4 = new JPanel();
 	JLabel jl4 = new JLabel("Starting Weapons");
 	jl4.setAlignmentX(CENTER_ALIGNMENT);

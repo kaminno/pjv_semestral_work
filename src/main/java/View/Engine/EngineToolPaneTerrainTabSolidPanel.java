@@ -4,7 +4,8 @@ import View.GameIcons;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EngineToolPaneTerrainTabSolidPanel extends JPanel{
+public class EngineToolPaneTerrainTabSolidPanel extends JPanel {
+
     private JLabel labelRock;
     private JLabel labelWall;
 
@@ -13,8 +14,8 @@ public class EngineToolPaneTerrainTabSolidPanel extends JPanel{
 	add(labelRock);
 	add(labelWall);
     }
-    
-    private void init(){
+
+    private void init() {
 	labelRock = new JLabel(GameIcons.ROCK.getIcon());
 	labelRock.setToolTipText("Rock");
 	labelWall = new JLabel(GameIcons.WALL.getIcon());

@@ -8,7 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EngineToolPaneBeastTabBosses extends JPanel{
+public class EngineToolPaneBeastTabBosses extends JPanel {
+
     private JLabel warPigIcon;
     private JLabel warPigLblCount;
     private JLabel warPigLblHealth;
@@ -30,77 +31,77 @@ public class EngineToolPaneBeastTabBosses extends JPanel{
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
 	myConstraints = new GridBagConstraints();
-        myConstraints.fill = GridBagConstraints.HORIZONTAL;
+	myConstraints.fill = GridBagConstraints.HORIZONTAL;
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	initWarPig();
     }
-    
-    private void initWarPig(){
+
+    private void initWarPig() {
 	panelWarPig = new JPanel();
 	warPigIcon = new JLabel(GameIcons.BEAST_WAR_PIG.getIcon());
 	warPigIcon.setToolTipText("War Pig");
 	JPanel panelRight = new JPanel();
-	
+
 	JPanel jp1 = new JPanel();
 	jp1.setLayout(myLayout);
 	warPigLblHealth = new JLabel(" Health: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp1.add(warPigLblHealth, myConstraints);
- 
-        warPigTfHealth = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp1.add(warPigLblHealth, myConstraints);
+
+	warPigTfHealth = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	warPigTfHealth.setText("75");
-        jp1.add(warPigTfHealth, myConstraints);
- 
-        warPigLblArmor = new JLabel(" Armor: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp1.add(warPigLblArmor, myConstraints);
- 
-        warPigTfArmor = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
+	jp1.add(warPigTfHealth, myConstraints);
+
+	warPigLblArmor = new JLabel(" Armor: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp1.add(warPigLblArmor, myConstraints);
+
+	warPigTfArmor = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
 	warPigTfArmor.setText("6");
-        jp1.add(warPigTfArmor, myConstraints);
-	
+	jp1.add(warPigTfArmor, myConstraints);
+
 	JPanel jp2 = new JPanel();
 	jp2.setLayout(myLayout);
 	warPigLblDamage = new JLabel(" Damage: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp2.add(warPigLblDamage, myConstraints);
- 
-        warPigTfDamage = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp2.add(warPigLblDamage, myConstraints);
+
+	warPigTfDamage = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	warPigTfDamage.setText("10");
-        jp2.add(warPigTfDamage, myConstraints);
- 
-        warPigLblCount = new JLabel(" Count: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp2.add(warPigLblCount, myConstraints);
- 
-        warPigTfCount = new JTextField(5);
+	jp2.add(warPigTfDamage, myConstraints);
+
+	warPigLblCount = new JLabel(" Count: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp2.add(warPigLblCount, myConstraints);
+
+	warPigTfCount = new JTextField(5);
 	warPigTfCount.setEditable(false);
 	warPigTfCount.setText("1");
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
-        jp2.add(warPigTfCount, myConstraints);
-	
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
+	jp2.add(warPigTfCount, myConstraints);
+
 	lblX = new JLabel("X: ");
 	lblY = new JLabel("Y: ");
 	coorX = new JLabel();
@@ -179,5 +180,5 @@ public class EngineToolPaneBeastTabBosses extends JPanel{
     public JLabel getCoorY() {
 	return coorY;
     }
-    
+
 }

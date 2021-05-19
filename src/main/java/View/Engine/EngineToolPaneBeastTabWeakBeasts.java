@@ -1,7 +1,6 @@
 package View.Engine;
 
 import View.GameIcons;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -10,7 +9,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class EngineToolPaneBeastTabWeakBeasts extends JPanel{
+public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
+
     private JLabel batIcon;
     private JLabel batLblCount;
     private JLabel batLblHealth;
@@ -36,79 +36,78 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel{
 
     public EngineToolPaneBeastTabWeakBeasts() {
 	myLayout = new GridBagLayout();
-	//setLayout(myLayout);
 	myConstraints = new GridBagConstraints();
-        myConstraints.fill = GridBagConstraints.HORIZONTAL;
+	myConstraints.fill = GridBagConstraints.HORIZONTAL;
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	initBat();
 	add(new JSeparator(SwingConstants.VERTICAL));
 	initSkeleton();
     }
-    
-    private void initBat(){
+
+    private void initBat() {
 	panelBat = new JPanel();
 	batIcon = new JLabel(GameIcons.BEAST_BAT_1.getIcon());
 	batIcon.setToolTipText("Bat");
 	JPanel panelRight = new JPanel();
-	
+
 	JPanel jp1 = new JPanel();
 	jp1.setLayout(myLayout);
 	batLblHealth = new JLabel(" Health: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp1.add(batLblHealth, myConstraints);
- 
-        batTfHealth = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp1.add(batLblHealth, myConstraints);
+
+	batTfHealth = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	batTfHealth.setText("20");
-        jp1.add(batTfHealth, myConstraints);
- 
-        batLblArmor = new JLabel(" Armor: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp1.add(batLblArmor, myConstraints);
- 
-        batTfArmor = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
+	jp1.add(batTfHealth, myConstraints);
+
+	batLblArmor = new JLabel(" Armor: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp1.add(batLblArmor, myConstraints);
+
+	batTfArmor = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
 	batTfArmor.setText("0");
-        jp1.add(batTfArmor, myConstraints);
-	
+	jp1.add(batTfArmor, myConstraints);
+
 	JPanel jp2 = new JPanel();
 	jp2.setLayout(myLayout);
 	batLblDamage = new JLabel(" Damage: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp2.add(batLblDamage, myConstraints);
- 
-        batTfDamage = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp2.add(batLblDamage, myConstraints);
+
+	batTfDamage = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	batTfDamage.setText("5");
-        jp2.add(batTfDamage, myConstraints);
- 
-        batLblCount = new JLabel(" Count: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp2.add(batLblCount, myConstraints);
- 
-        batTfCount = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
+	jp2.add(batTfDamage, myConstraints);
+
+	batLblCount = new JLabel(" Count: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp2.add(batLblCount, myConstraints);
+
+	batTfCount = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
 	batTfCount.setText("5");
-        jp2.add(batTfCount, myConstraints);
+	jp2.add(batTfCount, myConstraints);
 
 	panelRight.add(jp1);
 	panelRight.add(jp2);
@@ -116,68 +115,68 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel{
 	panelBat.add(panelRight);
 	add(panelBat);
     }
-    
-    private void initSkeleton(){
+
+    private void initSkeleton() {
 	panelSkeleton = new JPanel();
 	skeletonIcon = new JLabel(GameIcons.BEAST_SKELETON.getIcon());
 	skeletonIcon.setToolTipText("Skeleton");
 	JPanel panelRight = new JPanel();
-	
+
 	JPanel jp1 = new JPanel();
 	jp1.setLayout(myLayout);
 	skeletonLblHealth = new JLabel(" Health: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp1.add(skeletonLblHealth, myConstraints);
- 
-        skeletonTfHealth = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp1.add(skeletonLblHealth, myConstraints);
+
+	skeletonTfHealth = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	skeletonTfHealth.setText("35");
-        jp1.add(skeletonTfHealth, myConstraints);
- 
-        skeletonLblArmor = new JLabel(" Armor: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp1.add(skeletonLblArmor, myConstraints);
- 
-        skeletonTfArmor = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
+	jp1.add(skeletonTfHealth, myConstraints);
+
+	skeletonLblArmor = new JLabel(" Armor: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp1.add(skeletonLblArmor, myConstraints);
+
+	skeletonTfArmor = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
 	skeletonTfArmor.setText("3");
-        jp1.add(skeletonTfArmor, myConstraints);
-	
+	jp1.add(skeletonTfArmor, myConstraints);
+
 	JPanel jp2 = new JPanel();
 	jp2.setLayout(myLayout);
 	skeletonLblDamage = new JLabel(" Damage: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 1;
-        jp2.add(skeletonLblDamage, myConstraints);
- 
-        skeletonTfDamage = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 0;
-        myConstraints.gridwidth = 2;
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 1;
+	jp2.add(skeletonLblDamage, myConstraints);
+
+	skeletonTfDamage = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 0;
+	myConstraints.gridwidth = 2;
 	skeletonTfDamage.setText("6");
-        jp2.add(skeletonTfDamage, myConstraints);
- 
-        skeletonLblCount = new JLabel(" Count: ");
-        myConstraints.gridx = 0;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 1;
-        jp2.add(skeletonLblCount, myConstraints);
- 
-        skeletonTfCount = new JTextField(5);
-        myConstraints.gridx = 1;
-        myConstraints.gridy = 1;
-        myConstraints.gridwidth = 2;
+	jp2.add(skeletonTfDamage, myConstraints);
+
+	skeletonLblCount = new JLabel(" Count: ");
+	myConstraints.gridx = 0;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 1;
+	jp2.add(skeletonLblCount, myConstraints);
+
+	skeletonTfCount = new JTextField(5);
+	myConstraints.gridx = 1;
+	myConstraints.gridy = 1;
+	myConstraints.gridwidth = 2;
 	skeletonTfCount.setText("2");
-        jp2.add(skeletonTfCount, myConstraints);
+	jp2.add(skeletonTfCount, myConstraints);
 
 	panelRight.add(jp1);
 	panelRight.add(jp2);

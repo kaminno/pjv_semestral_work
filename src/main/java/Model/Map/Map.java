@@ -8,6 +8,7 @@ import Model.Terrains.TerrainType;
 import java.util.ArrayList;
 
 public class Map {
+
     private static int mapIds = 0;
     private final int id;
     private final int mapHeight;
@@ -16,73 +17,66 @@ public class Map {
     private ArrayList<ArrayList<Figure>> mapFigures;
 
     public Map(int mapHeight, int mapWidth) {
-	if (mapHeight > 0 && mapWidth > 0){
+	if (mapHeight > 0 && mapWidth > 0) {
 	    this.id = Map.getNewId();
 	    this.mapHeight = mapHeight;
 	    this.mapWidth = mapWidth;
 	    this.mapTerrain = new ArrayList(mapHeight);
 	    this.mapFigures = new ArrayList(mapHeight);
-	    for (int i = 0; i < mapHeight; i++){
+	    for (int i = 0; i < mapHeight; i++) {
 		this.mapTerrain.add(i, new ArrayList(mapWidth));
 		this.mapFigures.add(i, new ArrayList(mapWidth));
-		for (int j = 0; j < mapWidth; j++){
+		for (int j = 0; j < mapWidth; j++) {
 		    mapTerrain.get(i).add(j, null);
 		    mapFigures.get(i).add(j, null);
 		}
 	    }
-	}
-	else{
+	} else {
 	    throw new IllegalArgumentException("Map size must be greater than zero!");
 	}
     }
 
-    public void fillTheMapWithGround(String name, TerrainType terrainType, int xVel, int yVel) throws WrongTerrainType{
-	for (int h = 0; h < this.mapHeight; h++){
-	    for (int w = 0; w < this.mapWidth; w++){
+    public void fillTheMapWithGround(String name, TerrainType terrainType, int xVel, int yVel) throws WrongTerrainType {
+	for (int h = 0; h < this.mapHeight; h++) {
+	    for (int w = 0; w < this.mapWidth; w++) {
 		mapTerrain.get(h).add(w, new Ground(name, terrainType, xVel, yVel));
 	    }
 	}
     }
-    
-    public void addTerrain(int h, int w, Terrain terrain){
-//	if(mapTerrain.get(h).get(w) != null){
-//	    mapTerrain.get(h).remove(w);
-//	}
+
+    public void addTerrain(int h, int w, Terrain terrain) {
 	mapTerrain.get(h).remove(w);
 	mapTerrain.get(h).add(w, terrain);
     }
-    
-    public void addFigure(int h, int w, Figure figure){
-//	if(mapFigures.get(h).get(w) != null){
-//	    mapFigures.get(h).remove(w);
-//	}
+
+    public void addFigure(int h, int w, Figure figure) {
 	mapFigures.get(h).remove(w);
 	mapFigures.get(h).add(w, figure);
     }
-    
-    public void printMapTerrain(){
-	for (int h = 0; h < this.mapHeight + 2; h++){
-	    for (int w = 0; w < this.mapWidth; w++){
-		if (h == 0){
+
+    public void printMapTerrain() {
+	for (int h = 0; h < this.mapHeight + 2; h++) {
+	    for (int w = 0; w < this.mapWidth; w++) {
+		if (h == 0) {
 		    System.out.print("________");
 		    continue;
 		}
-		if (h == this.mapHeight + 1){
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
+		if (h == this.mapHeight + 1) {
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
 		    continue;
 		}
 		Terrain t = mapTerrain.get(h - 1).get(w);
-		if (w == 0){
+		if (w == 0) {
 		    System.out.print("| ");
 		}
-		if (t != null){
+		if (t != null) {
 		    System.out.print(t.getType().getName() + " | ");
 		    continue;
 		}
@@ -91,32 +85,30 @@ public class Map {
 	    System.out.println("");
 	}
     }
-    
-    public void printMapFigures(){
-	for (int h = 0; h < this.mapHeight + 2; h++){
-	    //System.out.println("length " + mapFigures.get(6).size());
-	    
-	    for (int w = 0; w < this.mapWidth; w++){
-		if (h == 0){
+
+    public void printMapFigures() {
+	for (int h = 0; h < this.mapHeight + 2; h++) {
+	    for (int w = 0; w < this.mapWidth; w++) {
+		if (h == 0) {
 		    System.out.print("________");
 		    continue;
 		}
-		if (h == this.mapHeight + 1){
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
-		    System.out.print((char)0x203E);
+		if (h == this.mapHeight + 1) {
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
+		    System.out.print((char) 0x203E);
 		    continue;
 		}
-		if (w == 0){
+		if (w == 0) {
 		    System.out.print("| ");
 		}
 		Figure f = mapFigures.get(h - 1).get(w);
-		if (f != null){
+		if (f != null) {
 		    System.out.print(f.getName() + " | ");
 		    continue;
 		}
@@ -125,22 +117,22 @@ public class Map {
 	    System.out.println("");
 	}
     }
-    
-    private static int getNewId(){
+
+    private static int getNewId() {
 	int id = Map.getMapIds();
 	Map.updateId();
 	return id;
     }
-    
-    private static int getMapIds(){
+
+    private static int getMapIds() {
 	return mapIds;
     }
-    
-    private static void updateId(){
+
+    private static void updateId() {
 	mapIds += 1;
     }
-    
-    public int getId(){
+
+    public int getId() {
 	return id;
     }
 

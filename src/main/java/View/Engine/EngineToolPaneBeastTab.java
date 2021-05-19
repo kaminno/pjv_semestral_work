@@ -7,7 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-public class EngineToolPaneBeastTab extends JPanel{
+public class EngineToolPaneBeastTab extends JPanel {
+
     private EngineToolPaneBeastTabWeakBeasts panelWeakBeasts;
     private EngineToolPaneBeastTabBosses panelBosses;
 
@@ -15,8 +16,8 @@ public class EngineToolPaneBeastTab extends JPanel{
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	JPanel jp1 = new JPanel();
 	JLabel jl1 = new JLabel("Weak Beasts");
 	jl1.setAlignmentX(CENTER_ALIGNMENT);
@@ -25,9 +26,9 @@ public class EngineToolPaneBeastTab extends JPanel{
 	panelWeakBeasts = new EngineToolPaneBeastTabWeakBeasts();
 	jp1.add(panelWeakBeasts);
 	add(jp1);
-	
+
 	add(new JSeparator(SwingConstants.VERTICAL));
-	
+
 	JPanel jp2 = new JPanel();
 	JLabel jl2 = new JLabel("Bosses");
 	jl2.setAlignmentX(CENTER_ALIGNMENT);

@@ -2,8 +2,8 @@ package Model.Items;
 
 import Exceptions.WrongEquipmentTypeForWearableItemException;
 
-public class Weapon extends WearableItem{
-    //private final WeaponType type;
+public class Weapon extends WearableItem {
+
     private int damage;
     private int bonusMoves;
     private int maximumDurability;
@@ -13,18 +13,17 @@ public class Weapon extends WearableItem{
     public Weapon(String name, int weight, int damage, int bonusMoves, int durability, EquipmentType type) throws WrongEquipmentTypeForWearableItemException {
 	super(name, weight, type);
 	boolean ok = false;
-	for (WeaponType w : WeaponType.values()){
-	    if (w.label.equals(type.label)){
-		if (damage > 0 && durability >= 0){
+	for (WeaponType w : WeaponType.values()) {
+	    if (w.label.equals(type.label)) {
+		if (damage > 0 && durability >= 0) {
 		    this.damage = damage;
 		    this.broken = false;
 		    this.maximumDurability = durability;
 		    this.currentDurability = durability;
-		    if (this.maximumDurability == 0){
+		    if (this.maximumDurability == 0) {
 			this.broken = true;
 		    }
-		}
-		else{
+		} else {
 		    throw new IllegalArgumentException("Damage and durability must be a positive number!");
 		}
 		this.bonusMoves = bonusMoves;
@@ -32,7 +31,7 @@ public class Weapon extends WearableItem{
 		break;
 	    }
 	}
-	if (!ok){
+	if (!ok) {
 	    throw new WrongEquipmentTypeForWearableItemException("Wrong equipment type: expect WeaponType-like, but get another!");
 	}
     }
@@ -56,31 +55,23 @@ public class Weapon extends WearableItem{
     public int getCurrentDurability() {
 	return currentDurability;
     }
-    
-    public void updateDurability(int coef){
+
+    public void updateDurability(int coef) {
 	currentDurability += coef;
-	if(currentDurability == 0){
+	if (currentDurability == 0) {
 	    this.broken = true;
 	}
     }
-    
-    public void setDurability(int durability){
-	//try{
-	    if (durability < 0){
-		throw new IllegalArgumentException("Durability must be positive");
+
+    public void setDurability(int durability) {
+	if (durability < 0) {
+	    throw new IllegalArgumentException("Durability must be positive");
+	} else {
+	    this.broken = false;
+	    if (durability == 0) {
+		this.broken = true;
 	    }
-	    else{
-		this.broken = false;
-		if(durability == 0){
-		    this.broken = true;
-		}
-		this.maximumDurability = durability;
-	    }
-//	}
-//	catch (IllegalArgumentException e){
-//	    System.out.println("Durability must be a positive number!");
-//	}
+	    this.maximumDurability = durability;
+	}
     }
-    
-    
 }

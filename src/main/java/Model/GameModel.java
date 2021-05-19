@@ -2,12 +2,12 @@ package Model;
 
 import Model.Figures.Beast;
 import Model.Figures.Player;
-import Model.Items.Equipment;
 import Model.Items.WearableItem;
 import Model.Map.Map;
 import java.util.LinkedList;
 
 public class GameModel {
+
     private Player player;
     private LinkedList<WearableItem> startingItems;
     private LinkedList<Beast> bats;
@@ -20,8 +20,8 @@ public class GameModel {
 	bats = new LinkedList();
 	skeletons = new LinkedList();
     }
-    
-    public void printNewMap(){
+
+    public void printNewMap() {
 	map.printMapTerrain();
     }
 
@@ -72,6 +72,4 @@ public class GameModel {
     public void setSkeletons(LinkedList<Beast> skeletons) {
 	this.skeletons = skeletons;
     }
-    
-    
 }

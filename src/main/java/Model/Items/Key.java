@@ -1,6 +1,7 @@
 package Model.Items;
 
-public class Key extends UsableItem{
+public class Key extends UsableItem {
+
     private final boolean universal;
     private int doorId;
 

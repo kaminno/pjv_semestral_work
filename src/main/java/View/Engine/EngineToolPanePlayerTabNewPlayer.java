@@ -4,9 +4,9 @@ import View.GameIcons;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-public class EngineToolPanePlayerTabNewPlayer extends JPanel{
+public class EngineToolPanePlayerTabNewPlayer extends JPanel {
+
     private JLabel labelNewPlayer;
     private JLabel labelX;
     private JLabel labelY;
@@ -17,12 +17,12 @@ public class EngineToolPanePlayerTabNewPlayer extends JPanel{
     public EngineToolPanePlayerTabNewPlayer() {
 	init();
     }
-    
-    private void init(){
+
+    private void init() {
 	labelNewPlayer = new JLabel(GameIcons.NEW_PLAYER.getIcon());
 	labelNewPlayer.setToolTipText("Add new player");
 	add(labelNewPlayer);
-	
+
 	labelX = new JLabel("X: ");
 	labelY = new JLabel("Y: ");
 	coorX = new JLabel();

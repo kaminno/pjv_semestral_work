@@ -1,13 +1,11 @@
 package View.Engine;
 
 import View.GameIcons;
-import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
-public class EngineToolPaneTerrainTabGroundPanel extends JPanel{
+public class EngineToolPaneTerrainTabGroundPanel extends JPanel {
+
     private JLabel labelGrass;
     private JLabel labelSand;
     private JLabel labelLoam;
@@ -15,17 +13,13 @@ public class EngineToolPaneTerrainTabGroundPanel extends JPanel{
 
     public EngineToolPaneTerrainTabGroundPanel() {
 	init();
-	//GridLayout gr = new GridLayout(2, 0);
-	//gr.setHgap(15);
-	//gr.setVgap(10);
-	//setLayout(gr);
 	add(labelGrass);
 	add(labelSand);
 	add(labelWater);
 	add(labelLoam);
     }
-    
-    private void init(){
+
+    private void init() {
 	labelGrass = new JLabel(GameIcons.GRASS.getIcon());
 	labelGrass.setToolTipText("Grass");
 	labelSand = new JLabel(GameIcons.SAND.getIcon());

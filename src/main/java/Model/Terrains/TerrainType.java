@@ -6,12 +6,9 @@ public enum TerrainType {
     SAND("sand"),
     WATER("water"),
     ROCK("rock"),
-    //STONE("stone"),
     WALL("wall"),
-    //TREE("tree"),
-    //DOOR("door"),
     BLANC("blanc");
-    
+
     private final String name;
 
     private TerrainType(String name) {

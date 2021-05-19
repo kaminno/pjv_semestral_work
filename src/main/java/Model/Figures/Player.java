@@ -1,6 +1,5 @@
 package Model.Figures;
 
-
 import Exceptions.ItemEquipedYetException;
 import Exceptions.ItemNotEquipedException;
 import Exceptions.ItemNotStoredException;
@@ -20,7 +19,8 @@ import java.util.EnumMap;
  *
  * @author honzuna
  */
-public class Player extends Figure{
+public class Player extends Figure {
+
     private final int baseDamage;
     private final int baseArmor;
     private final int baseMoves;
@@ -51,7 +51,7 @@ public class Player extends Figure{
      */
     public Player(String name, int health, int armor, int damage, int moves, int speed, int baseInventorySpace) {
 	super(name, health);
-	if (armor >= 0 && damage > 0 && moves > 0 && speed > 0 && health > 0){
+	if (armor >= 0 && damage > 0 && moves > 0 && speed > 0 && health > 0) {
 	    this.baseDamage = damage;
 	    this.currentDamage = damage;
 	    this.baseArmor = armor;
@@ -62,8 +62,7 @@ public class Player extends Figure{
 	    this.currentSpeed = speed;
 	    this.equipment = new Equipment();
 	    this.inventory = new Inventory(baseInventorySpace);
-	}
-	else{
+	} else {
 	    throw new IllegalArgumentException("Armor, damage, moves and speed must be a positive number!");
 	}
     }
@@ -71,21 +70,20 @@ public class Player extends Figure{
     public EnumMap<EquipmentType, WearableItem> getEquipment() {
 	return equipment.getEquipment();
     }
-    
-    public void equip(WearableItem item) throws ItemNotStoredException, ItemEquipedYetException, NotEnoughInventoryFreeSpaceException, ItemNotEquipedException, ItemStoredYetException{
-	if (item.isStored()){
-	    if (equipment.getPieceOfEquipment(item.getType()) == null){
-		if (item instanceof Bag){
+
+    public void equip(WearableItem item) throws ItemNotStoredException, ItemEquipedYetException, NotEnoughInventoryFreeSpaceException, ItemNotEquipedException, ItemStoredYetException {
+	if (item.isStored()) {
+	    if (equipment.getPieceOfEquipment(item.getType()) == null) {
+		if (item instanceof Bag) {
 		    inventory.updateCapacity(((Bag) item).getSize());
 		}
 		this.removeFromInventory(item);
 		equipment.add(item);
 		loadWeight += item.getWeight();
-	    }
-	    else{
+	    } else {
 		this.removeFromInventory(item);
 		WearableItem newItem = equipment.getPieceOfEquipment(item.getType());
-		if (item instanceof Bag){
+		if (item instanceof Bag) {
 		    inventory.updateCapacity(-((Bag) item).getSize());
 		    inventory.updateCapacity(((Bag) item).getSize());
 		}
@@ -95,69 +93,66 @@ public class Player extends Figure{
 		loadWeight += item.getWeight();
 	    }
 	    updateStats();
-	}
-	else{
+	} else {
 	    throw new ItemNotStoredException("Can not equip item that is not in inventory!");
 	}
     }
-    
-    public void unequip(WearableItem item) throws ItemNotEquipedException, NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
-	if(item.isEquiped()){
-	    if (item instanceof Bag){
+
+    public void unequip(WearableItem item) throws ItemNotEquipedException, NotEnoughInventoryFreeSpaceException, ItemStoredYetException {
+	if (item.isEquiped()) {
+	    if (item instanceof Bag) {
 		inventory.updateCapacity(-((Bag) item).getSize());
 	    }
 	    this.storeToInventory(item);
 	    equipment.remove(item);
 	    loadWeight -= item.getWeight();
 	    updateStats();
-	}
-	else{
+	} else {
 	    throw new ItemNotEquipedException("Can not unequip item that is not equiped!");
 	}
     }
-    
-    public void storeToInventory(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException{
+
+    public void storeToInventory(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException {
 	inventory.storeItem(item);
 	loadWeight += item.getWeight();
     }
-    
+
     public void removeFromInventory(Item item) throws ItemNotStoredException {
 	inventory.removeItem(item);
-        loadWeight -= item.getWeight();
+	loadWeight -= item.getWeight();
     }
-    
-    private void updateStats(){
+
+    private void updateStats() {
 	currentArmor = baseArmor + bonusArmor;
 	currentDamage = baseDamage + bonusDamage;
 	currentMoves = baseMoves + bonusMoves;
 	currentSpeed = baseSpeed + bonusSpeed;
-	for (WearableItem i : equipment.getEquipment().values()){
-	    if (i instanceof Gear){
+	for (WearableItem i : equipment.getEquipment().values()) {
+	    if (i instanceof Gear) {
 		currentArmor += ((Gear) i).getArmor();
-	    }
-	    else if (i instanceof Weapon){
+	    } else if (i instanceof Weapon) {
 		currentDamage += ((Weapon) i).getDamage();
 		currentMoves += ((Weapon) i).getBonusMoves();
 	    }
 	}
     }
-    
-    public void attack(Figure enemy){
+
+    public void attack(Figure enemy) {
 	enemy.defend(currentDamage);
     }
-    
-    public void defend(int damage){
+
+    public void defend(int damage) {
 	int injury = damage - getCurrentArmor();
-	if(injury < 0){
+	if (injury < 0) {
 	    injury = 0;
 	}
 	setCurrentHealth(getCurrentHealth() - injury);
-	if(currentHealth < 0){
+	if (currentHealth < 0) {
 	    currentHealth = 0;
 	}
     }
-    
-    public boolean isAlive(){
+
+    public boolean isAlive() {
 	return getCurrentHealth() > 0;
     }
 
@@ -220,8 +215,8 @@ public class Player extends Figure{
     public Inventory getInventory() {
 	return inventory;
     }
-    
-    public Equipment equipment(){
+
+    public Equipment equipment() {
 	return equipment;
     }
 
@@ -259,6 +254,6 @@ public class Player extends Figure{
 
     @Override
     public String toString() {
-	return "Player{" + "baseHealth=" + maxHealth  + ", baseDamage=" + baseDamage + ", baseArmor=" + baseArmor + ", baseMoves=" + baseMoves + ", baseSpeed=" + baseSpeed + '}';
+	return "Player{" + "baseHealth=" + maxHealth + ", baseDamage=" + baseDamage + ", baseArmor=" + baseArmor + ", baseMoves=" + baseMoves + ", baseSpeed=" + baseSpeed + '}';
     }
 }
