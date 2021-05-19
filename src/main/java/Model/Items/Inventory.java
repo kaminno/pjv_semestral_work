@@ -5,6 +5,10 @@ import Exceptions.ItemStoredYetException;
 import Exceptions.NotEnoughInventoryFreeSpaceException;
 import java.util.ArrayList;
 
+/**
+ * data structure to store player's items (item class instances)
+ * @author honzuna
+ */
 public class Inventory {
 
     private final int baseCapacity;
@@ -12,6 +16,10 @@ public class Inventory {
     private int freeSpace;
     private ArrayList<Item> items = new ArrayList();
 
+    /**
+     *
+     * @param baseCapacity
+     */
     public Inventory(int baseCapacity) {
 	if (baseCapacity < 1) {
 	    throw new IllegalArgumentException("Base capacity must be at least 1!");
@@ -21,8 +29,15 @@ public class Inventory {
 	this.freeSpace = baseCapacity;
     }
 
+    /**
+     * update capacity (enlarge the space for items)
+     * @param bonusCapacity
+     * @throws NotEnoughInventoryFreeSpaceException
+     */
     public void updateCapacity(int bonusCapacity) throws NotEnoughInventoryFreeSpaceException {
+	// capacity could not be smaller than the base value
 	if (currentCapacity + bonusCapacity >= baseCapacity) {
+	    // free space can not be negative
 	    if (freeSpace + bonusCapacity < 0) {
 		throw new NotEnoughInventoryFreeSpaceException("Remove some items before capacity changes!");
 	    }
@@ -33,10 +48,20 @@ public class Inventory {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Item> getItems() {
 	return items;
     }
 
+    /**
+     * adding item instance to the structure
+     * @param item
+     * @throws NotEnoughInventoryFreeSpaceException
+     * @throws ItemStoredYetException
+     */
     public void storeItem(Item item) throws NotEnoughInventoryFreeSpaceException, ItemStoredYetException {
 	if (freeSpace == 0) {
 	    throw new NotEnoughInventoryFreeSpaceException("Inventory is full");
@@ -50,6 +75,12 @@ public class Inventory {
     }
 
     //TODO getItem()
+
+    /**
+     * remove item from structure
+     * @param item
+     * @throws ItemNotStoredException
+     */
     public void removeItem(Item item) throws ItemNotStoredException {
 	if (item.isStored()) {
 	    freeSpace += 1;
@@ -66,10 +97,18 @@ public class Inventory {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCurrentCapacity() {
 	return currentCapacity;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getFreeSpace() {
 	return freeSpace;
     }

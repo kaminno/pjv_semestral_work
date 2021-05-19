@@ -4,12 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 
+/**
+ * main panel where the map is located
+ * @author honzuna
+ */
 public class EngineMainWorkingPanel extends JPanel {
 
     EngineMapPanel currentMap;
     BorderLayout brl;
     JPanel jpp;
 
+    /**
+     *
+     */
     public EngineMainWorkingPanel() {
 	super();
 
@@ -17,6 +24,10 @@ public class EngineMainWorkingPanel extends JPanel {
 	currentMap = null;
     }
 
+    /**
+     *
+     * @param newMap
+     */
     public void addNewMap(EngineMapPanel newMap) {
 	if (currentMap != null) {
 	    remove(0);
@@ -28,6 +39,10 @@ public class EngineMainWorkingPanel extends JPanel {
 	repaint();
     }
 
+    /**
+     * removes the map from the panel
+     * @param mapId
+     */
     public void removeMap(int mapId) {
 	if (currentMap != null) {
 	    remove(0);
@@ -37,6 +52,10 @@ public class EngineMainWorkingPanel extends JPanel {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMapPanel getCurrentMap() {
 	return currentMap;
     }

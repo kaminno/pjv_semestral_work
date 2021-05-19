@@ -4,6 +4,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+/**
+ * file item of menu
+ * @author honzuna
+ */
 public class EngineMenuFile extends JMenu{
     private JMenuItem menuItemNewMap;
     private JMenuItem menuItemLoadItems;
@@ -12,6 +16,9 @@ public class EngineMenuFile extends JMenu{
     private JMenuItem menuItemSaveMap;
     private JMenuItem menuItemExit;
 
+    /**
+     *
+     */
     public EngineMenuFile() {
 	super("File");
 	initMenuFile();
@@ -36,26 +43,50 @@ public class EngineMenuFile extends JMenu{
 	this.add(menuItemExit);
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemLoadItems() {
 	return menuItemLoadItems;
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemSaveItems() {
 	return menuItemSaveItems;
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemExit() {
 	return menuItemExit;
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemNewMap() {
 	return menuItemNewMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemLoadMap() {
 	return menuItemLoadMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public JMenuItem getMenuItemSaveMap() {
 	return menuItemSaveMap;
     }

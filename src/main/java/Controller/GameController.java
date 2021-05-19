@@ -32,23 +32,38 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+/**
+ * controller class that update view data based on model data
+ * @author honzuna
+ */
 public class GameController {
 
     GameModel model;
 
+    /**
+     *
+     * @param model
+     */
     public GameController(GameModel model) {
 	this.model = model;
     }
 
+    /**
+     * checks if the player view could move to specific location or not
+     * @param pw
+     */
     public void checkMove(PlayerView pw) {
+	// recount the coordinates to set the origin to middle of the player icon
 	int x = pw.getX() + 20 + pw.getDx() + (int) Math.signum(pw.getDx()) * 20;
 	int y = pw.getY() + 20 + pw.getDy() + (int) Math.signum(pw.getDy()) * 20;
 	int sx = (x - x % 40) / 40;
 	int sy = (y - y % 40) / 40;
 
+	// if the player is in the map
 	if (sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()) {
 	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
 
+	    // create rectangles of player and the terrain and checks if the terrain is of solid type and intersects the player
 	    Rectangle rec_player = new Rectangle(x, y, 40, 40);
 	    Rectangle rec_terrain = new Rectangle((sx) * 40, (sy) * 40, 40, 40);
 	    for (SolidType st : SolidType.values()) {
@@ -58,21 +73,29 @@ public class GameController {
 		    break;
 		}
 	    }
+	    // adding the flow to the water terrain
 	    if (terrain.getName().equals("water") && rec_player.intersects(rec_terrain)) {
 		pw.setX(pw.getX() + 1);
 	    }
 	}
     }
 
+    /**
+     * checks the bat move - if it is correct
+     * @param bat
+     */
     public void checkBatMove(BatView bat) {
+	// recount the coordinates to center it
 	int x = bat.getX() + 20 + bat.getDx() + (int) Math.signum(bat.getDx()) * 20;
 	int y = bat.getY() + 20 + bat.getDy() + (int) Math.signum(bat.getDy()) * 20;
 	int sx = (x - x % 40) / 40;
 	int sy = (y - y % 40) / 40;
 
+	// if bat is in the map
 	if (sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()) {
 	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
 
+	    // create rectangles of bat and the terrain where bat now is and if the terrain is of solid type, let the bat bounc back
 	    Rectangle rec_bat = new Rectangle(x, y, 40, 40);
 	    Rectangle rec_terrain = new Rectangle((sx) * 40, (sy) * 40, 40, 40);
 	    for (SolidType st : SolidType.values()) {
@@ -85,15 +108,22 @@ public class GameController {
 	}
     }
 
+    /**
+     * checks the skeleton move - if it is correct
+     * @param skeleton
+     */
     public void checkSkeletonMove(SkeletonView skeleton) {
+	// recount the coordinates to center it
 	int x = skeleton.getX() + 20 + skeleton.getDx() + (int) Math.signum(skeleton.getDx()) * 20;
 	int y = skeleton.getY() + 20 + skeleton.getDy() + (int) Math.signum(skeleton.getDy()) * 20;
 	int sx = (x - x % 40) / 40;
 	int sy = (y - y % 40) / 40;
 
+	// if skeleton is in the map
 	if (sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()) {
 	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
 
+	    // create rectangles of skeleton and the terrain where skeleton now is and if the terrain is of solid type, let the skeleton bounc back
 	    Rectangle rec_skeleton = new Rectangle(x, y, 40, 40);
 	    Rectangle rec_terrain = new Rectangle((sx) * 40, (sy) * 40, 40, 40);
 	    for (SolidType st : SolidType.values()) {
@@ -106,15 +136,22 @@ public class GameController {
 	}
     }
 
+    /**
+     * checks the boss move - if it is correct
+     * @param warPig
+     */
     public void checkBossMove(WarPigView warPig) {
+	// recount the coordinates to center it
 	int x = warPig.getX() + 20 + warPig.getDx() + (int) Math.signum(warPig.getDx()) * 20;
 	int y = warPig.getY() + 20 + warPig.getDy() + (int) Math.signum(warPig.getDy()) * 20;
 	int sx = (x - x % 40) / 40;
 	int sy = (y - y % 40) / 40;
 
+	// if boss is in the map
 	if (sy < model.getMap().getMapHeight() && sx < model.getMap().getMapWidth()) {
 	    Terrain terrain = model.getMap().getMapTerrain().get(sy).get(sx);
 
+	    // create rectangles of boss and the terrain where boss now is and if the terrain is of solid type, let the boss bounc back
 	    Rectangle rec_war_pig = new Rectangle(x, y, 40, 40);
 	    Rectangle rec_terrain = new Rectangle((sx) * 40, (sy) * 40, 40, 40);
 	    for (SolidType st : SolidType.values()) {
@@ -127,6 +164,12 @@ public class GameController {
 	}
     }
 
+    /**
+     * checks if the player and enemy are in contact, which means if their rectangles intersects
+     * @param player
+     * @param beast
+     * @return
+     */
     public boolean playerNearEnemy(PlayerView player, FigureView beast) {
 	if (beast.getBounds().intersects(player.getBounds())) {
 	    return true;
@@ -134,6 +177,12 @@ public class GameController {
 	return false;
     }
 
+    /**
+     * checks if the player and enemy are in contact, which means if their rectangles intersects
+     * @param player
+     * @param beast
+     * @return
+     */
     public boolean enemyNearPlyer(PlayerView player, FigureView beast) {
 	if (player.getBounds().intersects(beast.getBounds())) {
 	    return true;
@@ -141,6 +190,10 @@ public class GameController {
 	return false;
     }
 
+    /**
+     * update bat of class beast position based on the batview class, and the batview class attributes based on beast class
+     * @param batView
+     */
     public void updateBat(BatView batView) {
 	int beastIndex = batView.getIdx();
 	try {
@@ -154,6 +207,10 @@ public class GameController {
 	}
     }
 
+    /**
+     * update skeleton of class beast position based on the skeletonview class, and the skeletonview class attributes based on beast class
+     * @param skeletonView
+     */
     public void updateSkeleton(SkeletonView skeletonView) {
 	int beastIndex = skeletonView.getIdx();
 	try {
@@ -167,6 +224,10 @@ public class GameController {
 	}
     }
 
+    /**
+     * update boss of class beast position based on the warpigview class, and the warpigview class attributes based on beast class
+     * @param warPigView
+     */
     public void updateWarPig(WarPigView warPigView) {
 	try {
 	    Beast warPig = model.getBoss();
@@ -179,6 +240,10 @@ public class GameController {
 	}
     }
 
+    /**
+     * call attack method on beast class
+     * @param beastView
+     */
     public void beastAttackPlayer(FigureView beastView) {
 	Beast beast;
 	if (beastView instanceof BatView) {
@@ -191,6 +256,10 @@ public class GameController {
 	beast.attack(model.getPlayer());
     }
 
+    /**
+     * call attack method on player class
+     * @param beastView
+     */
     public void playerAttackBeast(FigureView beastView) {
 	Beast beast;
 	if (beastView instanceof BatView) {
@@ -203,17 +272,27 @@ public class GameController {
 	model.getPlayer().attack(beast);
     }
 
+    /**
+     * clear model data (use on game window close)
+     */
     public void clearData() {
 	model.setStartingItems(new LinkedList());
 	model.setBats(new LinkedList());
 	model.setSkeletons(new LinkedList());
     }
 
+    /**
+     * update equipmentview attributes in playerview class based on model equipment values
+     * @param pl
+     */
     public void updateEquipmentInfo(PlayerView pl) {
 	Equipment eiq = model.getPlayer().equipment();
+	// iterate through model player equipment and if there is some piece of it, update its info
 	for (EquipmentType eqt : eiq.getEquipment().keySet()) {
 	    if (eiq.getEquipment().get(eqt) != null) {
+		// if equipment is a helmet
 		if (eqt.label.equals("head")) {
+		    // set icon and the text on mouse hover
 		    pl.getEquipment().getEquipmentHelmet().setIcon(findEquipmentIcon("helmet"));
 		    pl.getEquipment().getEquipmentHelmet().setToolTipText("<html>"
 			    + model.getPlayer().getEquipment().get(eqt).getName()
@@ -223,6 +302,7 @@ public class GameController {
 			    + "Durability: " + ((Gear) model.getPlayer().equipment().getPieceOfEquipment(eqt)).getMaximumDurability()
 			    + " / " + ((Gear) model.getPlayer().equipment().getPieceOfEquipment(eqt)).getCurrentDurability()
 			    + "</html>");
+		    // add listener to unequip helmet (change the icon) and repaint the data
 		    pl.getEquipment().getEquipmentHelmet().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -558,14 +638,23 @@ public class GameController {
 	}
     }
 
+    /**
+     * update inventory icons based on model-player-inventory values
+     * @param pl
+     */
     public void updateInventoryInfo(PlayerView pl) {
 	Inventory inv = model.getPlayer().getInventory();
 	int count = 0;
+	// iterate through the player's inventory
 	for (Item item : inv.getItems()) {
+	    // if the current item is a wearabel item
 	    if (item instanceof WearableItem) {
+		// for each type of equipment update info and icon
 		if (((WearableItem) item).getType() == EquipmentType.HEAD) {
 		    final int c = count;
+		    // set icon
 		    pl.getInventory().getItemSlots().get(c).setIcon(findEquipmentIcon("helmet"));
+		    // set on mouse hover item info
 		    pl.getInventory().getItemSlots().get(c).setToolTipText("<html>"
 			    + model.getPlayer().getInventory().getItems().get(c).getName()
 			    + "<br>"
@@ -574,6 +663,7 @@ public class GameController {
 			    + "Durability: " + ((Gear) model.getPlayer().getInventory().getItems().get(c)).getMaximumDurability()
 			    + " / " + ((Gear) model.getPlayer().getInventory().getItems().get(c)).getCurrentDurability()
 			    + "</html>");
+		    // when clicked, change icon and remove text
 		    MouseListener ml = new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			    try {
@@ -903,6 +993,7 @@ public class GameController {
 	    }
 	    count++;
 	}
+	// update inventory free space icons
 	for (int j = 0; j < model.getPlayer().getInventory().getFreeSpace(); j++) {
 	    pl.getInventory().getItemSlots().get(count + j).setIcon(GameIcons.TRANSPARENT.getIcon());
 	}
@@ -920,6 +1011,10 @@ public class GameController {
 	return i;
     }
 
+    /**
+     *
+     * @return
+     */
     public GameModel getModel() {
 	return model;
     }

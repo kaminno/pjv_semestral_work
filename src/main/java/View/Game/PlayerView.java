@@ -6,6 +6,10 @@ import View.GameIcons;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+/**
+ * player view
+ * @author honzuna
+ */
 public class PlayerView extends FigureView {
 
     private int dx;
@@ -20,8 +24,15 @@ public class PlayerView extends FigureView {
     private boolean attackReady = false;
     private int attackTime;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param pl
+     */
     public PlayerView(int x, int y, Player pl) {
 	super(x, y);
+	// create player's inventory and equipment view
 	inventory = new InventoryView(pl.getInventory().getCurrentCapacity());
 	equipment = new EquipmentView();
 	equipment.getPlayerHealth().setText(Integer.toString(pl.getMaxHealth()));
@@ -40,6 +51,9 @@ public class PlayerView extends FigureView {
 	getImageDimensions();
     }
 
+    /**
+     * swaping icont to make animation
+     */
     public void swapIcons() {
 	if (image.equals(player_fore_2)) {
 	    image = player_fore_1;
@@ -48,6 +62,9 @@ public class PlayerView extends FigureView {
 	}
     }
 
+    /**
+     * move player and update its attack and swap (animation) counter
+     */
     public void move() {
 	updateSwapTime();
 	updateAttackTime();
@@ -85,14 +102,26 @@ public class PlayerView extends FigureView {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSwapTime() {
 	return swapTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getMoved() {
 	return moved;
     }
 
+    /**
+     * set key events to specific keys
+     * @param e
+     */
     public void keyPressed(KeyEvent e) {
 	moved = true;
 
@@ -148,6 +177,10 @@ public class PlayerView extends FigureView {
 	}
     }
 
+    /**
+     * set key events to key releases
+     * @param e
+     */
     public void keyReleased(KeyEvent e) {
 	moved = false;
 
@@ -170,42 +203,82 @@ public class PlayerView extends FigureView {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public InventoryView getInventory() {
 	return inventory;
     }
 
+    /**
+     *
+     * @return
+     */
     public EquipmentView getEquipment() {
 	return equipment;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDx() {
 	return dx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDy() {
 	return dy;
     }
 
+    /**
+     *
+     * @param dx
+     */
     public void setDx(int dx) {
 	this.dx = dx;
     }
 
+    /**
+     *
+     * @param dy
+     */
     public void setDy(int dy) {
 	this.dy = dy;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMoved() {
 	return moved;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSpeed() {
 	return speed;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAttackReady() {
 	return attackReady;
     }
 
+    /**
+     *
+     * @param attackReady
+     */
     public void setAttackReady(boolean attackReady) {
 	this.attackReady = attackReady;
     }

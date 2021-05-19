@@ -10,6 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+/**
+ * player's inventory view
+ * @author honzuna
+ */
 public class InventoryView extends JPanel {
 
     private int inventorySize;
@@ -22,6 +26,10 @@ public class InventoryView extends JPanel {
     private JPanel items;
     private ArrayList<JLabel> itemSlots;
 
+    /**
+     *
+     * @param inventorySize
+     */
     public InventoryView(int inventorySize) {
 	this.inventorySize = inventorySize;
 	freeSpace = true;
@@ -50,8 +58,10 @@ public class InventoryView extends JPanel {
 	ji.setAlignmentX(CENTER_ALIGNMENT);
 	add(ji);
 	add(items);
+	// iterate and create item slot or empty slot based on given inventory size
 	for (int i = 0; i < 10; i++) {
 	    if (i < inventorySize) {
+		// create item slot
 		JLabel jl = new JLabel(GameIcons.TRANSPARENT.getIcon());
 		jl.setBackground(inventoryColor);
 		jl.setBorder(itemBorder);
@@ -59,6 +69,7 @@ public class InventoryView extends JPanel {
 		items.add(jl);
 		itemSlots.add(jl);
 	    } else {
+		// let the rest of inventory empty
 		JLabel jl = new JLabel();
 		jl.setBackground(borderColor);
 		jl.setBorder(itemBorder);
@@ -69,50 +80,98 @@ public class InventoryView extends JPanel {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getInventorySize() {
 	return inventorySize;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getItemCount() {
 	return itemCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFreeSpace() {
 	return freeSpace;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isShowen() {
 	return showen;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getInventoryColor() {
 	return inventoryColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getBorderColor() {
 	return borderColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Border getItemBorder() {
 	return itemBorder;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getItems() {
 	return items;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<JLabel> getItemSlots() {
 	return itemSlots;
     }
 
+    /**
+     *
+     * @param itemCount
+     */
     public void setItemCount(int itemCount) {
 	this.itemCount = itemCount;
     }
 
+    /**
+     *
+     * @param freeSpace
+     */
     public void setFreeSpace(boolean freeSpace) {
 	this.freeSpace = freeSpace;
     }
 
+    /**
+     *
+     * @param showen
+     */
     public void setShowen(boolean showen) {
 	this.showen = showen;
     }

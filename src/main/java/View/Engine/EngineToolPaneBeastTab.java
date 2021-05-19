@@ -7,11 +7,18 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+/**
+ * beast item of tabbedpane
+ * @author honzuna
+ */
 public class EngineToolPaneBeastTab extends JPanel {
 
     private EngineToolPaneBeastTabWeakBeasts panelWeakBeasts;
     private EngineToolPaneBeastTabBosses panelBosses;
 
+    /**
+     *
+     */
     public EngineToolPaneBeastTab() {
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
@@ -39,10 +46,18 @@ public class EngineToolPaneBeastTab extends JPanel {
 	add(jp2);
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneBeastTabWeakBeasts getPanelWeakBeasts() {
 	return panelWeakBeasts;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneBeastTabBosses getPanelBosses() {
 	return panelBosses;
     }

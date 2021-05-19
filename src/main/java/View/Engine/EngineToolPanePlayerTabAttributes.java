@@ -6,6 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * player attributes panel in tabbed pane
+ * @author honzuna
+ */
 public class EngineToolPanePlayerTabAttributes extends JPanel {
 
     private JLabel lblBaseHealth;
@@ -21,6 +25,9 @@ public class EngineToolPanePlayerTabAttributes extends JPanel {
     private GridBagLayout myLayout;
     private GridBagConstraints myConstraints;
 
+    /**
+     *
+     */
     public EngineToolPanePlayerTabAttributes() {
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
@@ -30,6 +37,7 @@ public class EngineToolPanePlayerTabAttributes extends JPanel {
     }
 
     private void init() {
+	// graphics design
 	panelLeft = new JPanel();
 	panelLeft.setLayout(myLayout);
 	panelRight = new JPanel();
@@ -92,18 +100,34 @@ public class EngineToolPanePlayerTabAttributes extends JPanel {
 	add(panelRight);
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfBaseHealth() {
 	return tfBaseHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfBaseArmor() {
 	return tfBaseArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfBaseAttackDamage() {
 	return tfBaseAttackDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfBaseSpeed() {
 	return tfBaseSpeed;
     }

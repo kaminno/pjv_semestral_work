@@ -2,6 +2,10 @@ package Model.Items;
 
 import Exceptions.WrongEquipmentTypeForWearableItemException;
 
+/**
+ * weapon class
+ * @author honzuna
+ */
 public class Weapon extends WearableItem {
 
     private int damage;
@@ -10,9 +14,20 @@ public class Weapon extends WearableItem {
     private int currentDurability;
     private boolean broken;
 
+    /**
+     *
+     * @param name
+     * @param weight
+     * @param damage
+     * @param bonusMoves
+     * @param durability
+     * @param type
+     * @throws WrongEquipmentTypeForWearableItemException
+     */
     public Weapon(String name, int weight, int damage, int bonusMoves, int durability, EquipmentType type) throws WrongEquipmentTypeForWearableItemException {
 	super(name, weight, type);
 	boolean ok = false;
+	// check if the equipment type is really weapon and if the constructor values are correct
 	for (WeaponType w : WeaponType.values()) {
 	    if (w.label.equals(type.label)) {
 		if (damage > 0 && durability >= 0) {
@@ -36,26 +51,50 @@ public class Weapon extends WearableItem {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDamage() {
 	return damage;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBonusMoves() {
 	return bonusMoves;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isBroken() {
 	return broken;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMaximumDurability() {
 	return maximumDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCurrentDurability() {
 	return currentDurability;
     }
 
+    /**
+     * update durability value
+     * @param coef
+     */
     public void updateDurability(int coef) {
 	currentDurability += coef;
 	if (currentDurability == 0) {
@@ -63,6 +102,10 @@ public class Weapon extends WearableItem {
 	}
     }
 
+    /**
+     * set the durability value and checks if the weapon is broken or not
+     * @param durability
+     */
     public void setDurability(int durability) {
 	if (durability < 0) {
 	    throw new IllegalArgumentException("Durability must be positive");

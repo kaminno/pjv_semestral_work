@@ -9,6 +9,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * normal beasts panel of tabbed pane
+ * @author honzuna
+ */
 public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
 
     private JLabel batIcon;
@@ -34,6 +38,9 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
     private GridBagLayout myLayout;
     private GridBagConstraints myConstraints;
 
+    /**
+     *
+     */
     public EngineToolPaneBeastTabWeakBeasts() {
 	myLayout = new GridBagLayout();
 	myConstraints = new GridBagConstraints();
@@ -48,6 +55,7 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
     }
 
     private void initBat() {
+	// create bat layout design
 	panelBat = new JPanel();
 	batIcon = new JLabel(GameIcons.BEAST_BAT_1.getIcon());
 	batIcon.setToolTipText("Bat");
@@ -109,6 +117,7 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
 	batTfCount.setText("5");
 	jp2.add(batTfCount, myConstraints);
 
+	// add components to panel
 	panelRight.add(jp1);
 	panelRight.add(jp2);
 	panelBat.add(batIcon);
@@ -117,6 +126,7 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
     }
 
     private void initSkeleton() {
+	// skeleton layout design
 	panelSkeleton = new JPanel();
 	skeletonIcon = new JLabel(GameIcons.BEAST_SKELETON.getIcon());
 	skeletonIcon.setToolTipText("Skeleton");
@@ -178,6 +188,7 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
 	skeletonTfCount.setText("2");
 	jp2.add(skeletonTfCount, myConstraints);
 
+	// add components to panel
 	panelRight.add(jp1);
 	panelRight.add(jp2);
 	panelSkeleton.add(skeletonIcon);
@@ -185,90 +196,178 @@ public class EngineToolPaneBeastTabWeakBeasts extends JPanel {
 	add(panelSkeleton);
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getBatIcon() {
 	return batIcon;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getBatLblCount() {
 	return batLblCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getBatLblHealth() {
 	return batLblHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getBatLblArmor() {
 	return batLblArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getBatLblDamage() {
 	return batLblDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getBatTfHealth() {
 	return batTfHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getBatTfArmor() {
 	return batTfArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getBatTfDamage() {
 	return batTfDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getBatTfCount() {
 	return batTfCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelBat() {
 	return panelBat;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSkeletonIcon() {
 	return skeletonIcon;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSkeletonLblCount() {
 	return skeletonLblCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSkeletonLblHealth() {
 	return skeletonLblHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSkeletonLblArmor() {
 	return skeletonLblArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSkeletonLblDamage() {
 	return skeletonLblDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getSkeletonTfHealth() {
 	return skeletonTfHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getSkeletonTfArmor() {
 	return skeletonTfArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getSkeletonTfDamage() {
 	return skeletonTfDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getSkeletonTfCount() {
 	return skeletonTfCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelSkeleton() {
 	return panelSkeleton;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagLayout getMyLayout() {
 	return myLayout;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getMyConstraints() {
 	return myConstraints;
     }

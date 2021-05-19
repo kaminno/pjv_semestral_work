@@ -14,6 +14,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * panel with map visualisation
+ * @author honzuna
+ */
 public class EngineMapPanel extends JPanel {
 
     private static int mapIds = 0;
@@ -24,6 +28,11 @@ public class EngineMapPanel extends JPanel {
 
     private ArrayList<ArrayList<JLabel>> mapBoard;
 
+    /**
+     *
+     * @param widthW
+     * @param heightH
+     */
     public EngineMapPanel(int widthW, int heightH) {
 	super();
 	if (widthW <= 0 || heightH <= 0) {
@@ -47,6 +56,11 @@ public class EngineMapPanel extends JPanel {
 	}
     }
 
+    /**
+     * save panel as an image of specific extension
+     * @param name
+     * @param type
+     */
     public void saveImage(String name, String type) {
 	BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
 	Graphics2D g2 = image.createGraphics();
@@ -58,6 +72,12 @@ public class EngineMapPanel extends JPanel {
 	}
     }
 
+    /**
+     *
+     * @param terrain
+     * @param x
+     * @param y
+     */
     public void addTerrain(JLabel terrain, int x, int y) {
 	mapBoard.get(y).add(x, terrain);
 	add(terrain, y * gameBoardWidth + x);
@@ -65,6 +85,11 @@ public class EngineMapPanel extends JPanel {
 	repaint();
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public void removeTerrain(int x, int y) {
 	mapBoard.get(y).remove(x);
 	remove(y * gameBoardWidth + x);
@@ -72,6 +97,10 @@ public class EngineMapPanel extends JPanel {
 	repaint();
     }
 
+    /**
+     * fill the map panel with icons of specific terrain type
+     * @param type
+     */
     public void fillTheMapWithGround(TerrainType type) {
 	// set icon coresponds to terrain type
 	ImageIcon i = null;
@@ -107,18 +136,34 @@ public class EngineMapPanel extends JPanel {
 	mapIds += 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
 	return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getGameBoardWidth() {
 	return gameBoardWidth;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getGameBoardHeight() {
 	return gameBoardHeight;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridLayout getGridLayout() {
 	return gridLayout;
     }

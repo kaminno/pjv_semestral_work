@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+/**
+ * tabbed pane item with terrain types
+ * @author honzuna
+ */
 public class EngineToolPaneTerrainTab extends JPanel {
 
     private EngineToolPaneTerrainTabNewMapPanel panelNewMap;
@@ -16,12 +20,17 @@ public class EngineToolPaneTerrainTab extends JPanel {
     private JTextArea ar;
     private JButton btn;
 
+    /**
+     *
+     * @throws IOException
+     */
     public EngineToolPaneTerrainTab() throws IOException {
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
     }
 
     private void init() {
+	// create layout
 	JPanel jp1 = new JPanel();
 	JLabel jl1 = new JLabel("New Map");
 	jl1.setAlignmentX(CENTER_ALIGNMENT);
@@ -50,22 +59,42 @@ public class EngineToolPaneTerrainTab extends JPanel {
 	add(jp3);
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextArea getAr() {
 	return ar;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getBtn() {
 	return btn;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneTerrainTabNewMapPanel getPanelNewMap() {
 	return panelNewMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneTerrainTabGroundPanel getPanelGround() {
 	return panelGround;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneTerrainTabSolidPanel getPanelSolid() {
 	return panelSolid;
     }

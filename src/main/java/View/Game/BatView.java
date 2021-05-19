@@ -8,6 +8,10 @@ import java.awt.Image;
 import java.util.Random;
 import javax.swing.JPanel;
 
+/**
+ * view class of bat beast
+ * @author honzuna
+ */
 public class BatView extends FigureView {
 
     private int dx;
@@ -26,6 +30,11 @@ public class BatView extends FigureView {
     private boolean enemyNear = false;
     private int attackTime;
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public BatView(int x, int y) {
 	super(x, y);
 
@@ -40,6 +49,7 @@ public class BatView extends FigureView {
 	moved = true;
 	attackTime = 0;
 	Random rand = new Random();
+	// choose random beast direction
 	dx = rand.nextInt(2) * speed;
 	if (dx == 0) {
 	    dy = speed;
@@ -51,6 +61,11 @@ public class BatView extends FigureView {
 	getImageDimensions();
     }
 
+    /**
+     * draw beast icon with beast stats on the right side
+     * @param g
+     * @param p
+     */
     public void drawBeast(Graphics g, JPanel p) {
 	if (isVisible()) {
 	    g.drawImage(this.getImage(), this.getX(), this.getY(), p);
@@ -61,6 +76,9 @@ public class BatView extends FigureView {
 	}
     }
 
+    /**
+     * swap icon to do simple animation
+     */
     public void swapIcons() {
 	if (image.equals(bat_2)) {
 	    image = bat_1;
@@ -95,6 +113,9 @@ public class BatView extends FigureView {
 	dy = tmpDy;
     }
 
+    /**
+     * update beast position and stop moving if player is near
+     */
     public void move() {
 	updateSwapTime();
 	updateAttackTime();
@@ -135,98 +156,194 @@ public class BatView extends FigureView {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSwapTime() {
 	return swapTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getMoved() {
 	return moved;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDx() {
 	return dx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDy() {
 	return dy;
     }
 
+    /**
+     *
+     * @return
+     */
     public Image getBat_1() {
 	return bat_1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Image getBat_2() {
 	return bat_2;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMoved() {
 	return moved;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSpeed() {
 	return speed;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHp() {
 	return hp;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getArm() {
 	return arm;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDmg() {
 	return dmg;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getIdx() {
 	return idx;
     }
 
+    /**
+     *
+     * @param dx
+     */
     public void setDx(int dx) {
 	this.dx = dx;
     }
 
+    /**
+     *
+     * @param dy
+     */
     public void setDy(int dy) {
 	this.dy = dy;
     }
 
+    /**
+     *
+     * @param hp
+     */
     public void setHp(int hp) {
 	this.hp = hp;
     }
 
+    /**
+     *
+     * @param arm
+     */
     public void setArm(int arm) {
 	this.arm = arm;
     }
 
+    /**
+     *
+     * @param dmg
+     */
     public void setDmg(int dmg) {
 	this.dmg = dmg;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTmpDx() {
 	return tmpDx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTmpDy() {
 	return tmpDy;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnemyNear() {
 	return enemyNear;
     }
 
+    /**
+     *
+     * @param moved
+     */
     public void setMoved(boolean moved) {
 	this.moved = moved;
     }
 
+    /**
+     *
+     * @param enemyNear
+     */
     public void setEnemyNear(boolean enemyNear) {
 	this.enemyNear = enemyNear;
     }
 
+    /**
+     *
+     * @param idx
+     */
     public void setIdx(int idx) {
 	this.idx = idx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAttackTime() {
 	return attackTime;
     }

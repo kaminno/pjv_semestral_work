@@ -12,6 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+/**
+ *
+ * @author honzuna
+ */
 public class EquipmentView extends JPanel {
 
     private JLabel title;
@@ -40,6 +44,9 @@ public class EquipmentView extends JPanel {
     private Border itemBorder;
     private boolean shown;
 
+    /**
+     *
+     */
     public EquipmentView() {
 	setLayout(new BorderLayout());
 	shown = false;
@@ -63,6 +70,7 @@ public class EquipmentView extends JPanel {
     }
 
     private void initBottom() {
+	// create labels with model-player info (hp, dmg, armor, speed)
 	panelBottom = new JPanel();
 	panelBottom.setBackground(borderColor);
 	panelBottom.setLayout(new GridLayout(2, 2));
@@ -119,6 +127,7 @@ public class EquipmentView extends JPanel {
     }
 
     private void initTop() {
+	// create the 'character' title
 	panelTop = new JPanel();
 	panelTop.setBackground(borderColor);
 
@@ -131,10 +140,12 @@ public class EquipmentView extends JPanel {
     }
 
     private void initCenter() {
+	// creates the weapons slots and the character image
 	panelCenter = new JPanel();
 	panelCenter.setBackground(borderColor);
 	panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.PAGE_AXIS));
-
+	
+	// create the jlabel with character image of specific size
 	playerImage = new JLabel(new ImageIcon(new ImageIcon("resources/equipment_player_image.png").getImage().getScaledInstance(120, 170, Image.SCALE_DEFAULT)));
 	playerImage.setBackground(itemColor);
 	playerImage.setOpaque(true);
@@ -142,6 +153,7 @@ public class EquipmentView extends JPanel {
 	playerImage.setBorder(BorderFactory.createLineBorder(borderColor, 5));
 	panelCenter.add(playerImage);
 
+	// create labels (slots) for weapons under the character image
 	JPanel pl = new JPanel();
 	pl.setBackground(borderColor);
 	equipmentMainHand = new JLabel(GameIcons.TRANSPARENT.getIcon());
@@ -161,6 +173,7 @@ public class EquipmentView extends JPanel {
     }
 
     private void initLeft() {
+	// create slots for gear
 	panelLeft = new JPanel();
 	panelLeft.setLayout(new BoxLayout(panelLeft, BoxLayout.PAGE_AXIS));
 	panelLeft.setBackground(borderColor);
@@ -198,154 +211,306 @@ public class EquipmentView extends JPanel {
 	add(panelLeft, BorderLayout.WEST);
     }
 
+    /**
+     *
+     * @param shown
+     */
     public void setShown(boolean shown) {
 	this.shown = shown;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isShown() {
 	return shown;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getTitle() {
 	return title;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPlayerImage() {
 	return playerImage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentHelmet() {
 	return equipmentHelmet;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentChest() {
 	return equipmentChest;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentLegs() {
 	return equipmentLegs;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentGloves() {
 	return equipmentGloves;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentBoots() {
 	return equipmentBoots;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentMainHand() {
 	return equipmentMainHand;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getEquipmentSecondHand() {
 	return equipmentSecondHand;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblHealth() {
 	return lblHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblArmor() {
 	return lblArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblDamage() {
 	return lblDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblSpeed() {
 	return lblSpeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPlayerHealth() {
 	return playerHealth;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPlayerArmor() {
 	return playerArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPlayerDamage() {
 	return playerDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPlayerSpeed() {
 	return playerSpeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelTop() {
 	return panelTop;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelLeft() {
 	return panelLeft;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelBottom() {
 	return panelBottom;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelCenter() {
 	return panelCenter;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getItemColor() {
 	return itemColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getBorderColor() {
 	return borderColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Border getItemBorder() {
 	return itemBorder;
     }
 
+    /**
+     *
+     * @param playerImage
+     */
     public void setPlayerImage(JLabel playerImage) {
 	this.playerImage = playerImage;
     }
 
+    /**
+     *
+     * @param equipmentHelmet
+     */
     public void setEquipmentHelmet(JLabel equipmentHelmet) {
 	this.equipmentHelmet = equipmentHelmet;
     }
 
+    /**
+     *
+     * @param equipmentChest
+     */
     public void setEquipmentChest(JLabel equipmentChest) {
 	this.equipmentChest = equipmentChest;
     }
 
+    /**
+     *
+     * @param equipmentLegs
+     */
     public void setEquipmentLegs(JLabel equipmentLegs) {
 	this.equipmentLegs = equipmentLegs;
     }
 
+    /**
+     *
+     * @param equipmentGloves
+     */
     public void setEquipmentGloves(JLabel equipmentGloves) {
 	this.equipmentGloves = equipmentGloves;
     }
 
+    /**
+     *
+     * @param equipmentBoots
+     */
     public void setEquipmentBoots(JLabel equipmentBoots) {
 	this.equipmentBoots = equipmentBoots;
     }
 
+    /**
+     *
+     * @param equipmentMainHand
+     */
     public void setEquipmentMainHand(JLabel equipmentMainHand) {
 	this.equipmentMainHand = equipmentMainHand;
     }
 
+    /**
+     *
+     * @param equipmentSecondHand
+     */
     public void setEquipmentSecondHand(JLabel equipmentSecondHand) {
 	this.equipmentSecondHand = equipmentSecondHand;
     }
 
+    /**
+     *
+     * @param playerHealth
+     */
     public void setPlayerHealth(JLabel playerHealth) {
 	this.playerHealth = playerHealth;
     }
 
+    /**
+     *
+     * @param playerArmor
+     */
     public void setPlayerArmor(JLabel playerArmor) {
 	this.playerArmor = playerArmor;
     }
 
+    /**
+     *
+     * @param playerDamage
+     */
     public void setPlayerDamage(JLabel playerDamage) {
 	this.playerDamage = playerDamage;
     }
 
+    /**
+     *
+     * @param playerSpeed
+     */
     public void setPlayerSpeed(JLabel playerSpeed) {
 	this.playerSpeed = playerSpeed;
     }

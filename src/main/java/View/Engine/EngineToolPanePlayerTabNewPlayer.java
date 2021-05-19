@@ -5,6 +5,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * new player icon with labels for x and y coordinates
+ * @author honzuna
+ */
 public class EngineToolPanePlayerTabNewPlayer extends JPanel {
 
     private JLabel labelNewPlayer;
@@ -14,11 +18,15 @@ public class EngineToolPanePlayerTabNewPlayer extends JPanel {
     private JLabel coorY;
     private JPanel panelCoordinates;
 
+    /**
+     *
+     */
     public EngineToolPanePlayerTabNewPlayer() {
 	init();
     }
 
     private void init() {
+	// layout
 	labelNewPlayer = new JLabel(GameIcons.NEW_PLAYER.getIcon());
 	labelNewPlayer.setToolTipText("Add new player");
 	add(labelNewPlayer);
@@ -40,26 +48,50 @@ public class EngineToolPanePlayerTabNewPlayer extends JPanel {
 	add(panelCoordinates);
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLabelNewPlayer() {
 	return labelNewPlayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLabelX() {
 	return labelX;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLabelY() {
 	return labelY;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelCoordinates() {
 	return panelCoordinates;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getCoorX() {
 	return coorX;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getCoorY() {
 	return coorY;
     }

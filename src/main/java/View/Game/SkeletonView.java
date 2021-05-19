@@ -8,6 +8,10 @@ import java.awt.Image;
 import java.util.Random;
 import javax.swing.JPanel;
 
+/**
+ * skeleton beast class
+ * @author honzuna
+ */
 public class SkeletonView extends FigureView {
 
     private int dx;
@@ -26,6 +30,11 @@ public class SkeletonView extends FigureView {
     private boolean enemyNear = false;
     private int attackTime;
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public SkeletonView(int x, int y) {
 	super(x, y);
 
@@ -39,6 +48,7 @@ public class SkeletonView extends FigureView {
 	moved = true;
 	speed = 1;
 
+	// choose random skeleton moving direction
 	Random rand = new Random();
 	dx = rand.nextInt(2) * speed;
 	if (dx == 0) {
@@ -51,6 +61,11 @@ public class SkeletonView extends FigureView {
 	getImageDimensions();
     }
 
+    /**
+     * draw skeleton on the game board with its hp, armor and damage labels on the right side of the image icon
+     * @param g
+     * @param p
+     */
     public void drawBeast(Graphics g, JPanel p) {
 	if (isVisible()) {
 	    g.drawImage(this.getImage(), this.getX(), this.getY(), p);
@@ -61,6 +76,9 @@ public class SkeletonView extends FigureView {
 	}
     }
 
+    /**
+     * swap icons
+     */
     public void swapIcons() {
 	if (image.equals(skeleton_2)) {
 	    image = skeleton_1;
@@ -95,6 +113,9 @@ public class SkeletonView extends FigureView {
 	dy = tmpDy;
     }
 
+    /**
+     * change skeleton coordinates and stop/continue if the player is enar. Also update the swap and attack counter
+     */
     public void move() {
 	updateSwapTime();
 	updateAttackTime();
@@ -134,114 +155,226 @@ public class SkeletonView extends FigureView {
 	}
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDx() {
 	return dx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDy() {
 	return dy;
     }
 
+    /**
+     *
+     * @return
+     */
     public Image getSkeleton_1() {
 	return skeleton_1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Image getSkeleton_2() {
 	return skeleton_2;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSwapTime() {
 	return swapTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMoved() {
 	return moved;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSpeed() {
 	return speed;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHp() {
 	return hp;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getArm() {
 	return arm;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDmg() {
 	return dmg;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getIdx() {
 	return idx;
     }
 
+    /**
+     *
+     * @param dx
+     */
     public void setDx(int dx) {
 	this.dx = dx;
     }
 
+    /**
+     *
+     * @param dy
+     */
     public void setDy(int dy) {
 	this.dy = dy;
     }
 
+    /**
+     *
+     * @param speed
+     */
     public void setSpeed(int speed) {
 	this.speed = speed;
     }
 
+    /**
+     *
+     * @param hp
+     */
     public void setHp(int hp) {
 	this.hp = hp;
     }
 
+    /**
+     *
+     * @param arm
+     */
     public void setArm(int arm) {
 	this.arm = arm;
     }
 
+    /**
+     *
+     * @param dmg
+     */
     public void setDmg(int dmg) {
 	this.dmg = dmg;
     }
 
+    /**
+     *
+     * @param idx
+     */
     public void setIdx(int idx) {
 	this.idx = idx;
     }
 
+    /**
+     *
+     * @param moved
+     */
     public void setMoved(boolean moved) {
 	this.moved = moved;
     }
 
+    /**
+     *
+     * @param tmpDx
+     */
     public void setTmpDx(int tmpDx) {
 	this.tmpDx = tmpDx;
     }
 
+    /**
+     *
+     * @param tmpDy
+     */
     public void setTmpDy(int tmpDy) {
 	this.tmpDy = tmpDy;
     }
 
+    /**
+     *
+     * @param enemyNear
+     */
     public void setEnemyNear(boolean enemyNear) {
 	this.enemyNear = enemyNear;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTmpDx() {
 	return tmpDx;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTmpDy() {
 	return tmpDy;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnemyNear() {
 	return enemyNear;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAttackTime() {
 	return attackTime;
     }
 
+    /**
+     *
+     * @param swapTime
+     */
     public void setSwapTime(int swapTime) {
 	this.swapTime = swapTime;
     }
 
+    /**
+     *
+     * @param attackTime
+     */
     public void setAttackTime(int attackTime) {
 	this.attackTime = attackTime;
     }

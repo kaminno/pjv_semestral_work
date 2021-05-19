@@ -1,7 +1,19 @@
 package Model.Terrains;
 
+/**
+ *
+ * @author honzuna
+ */
 public enum TerrainSize {
+
+    /**
+     *
+     */
     WIDTH(40),
+
+    /**
+     *
+     */
     HEIGHT(40);
 
     private final int size;
@@ -10,6 +22,10 @@ public enum TerrainSize {
 	this.size = size;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSize() {
 	return size;
     }

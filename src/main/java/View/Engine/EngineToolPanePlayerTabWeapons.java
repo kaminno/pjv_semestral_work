@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * players starting weapons panel
+ * @author honzuna
+ */
 public class EngineToolPanePlayerTabWeapons extends JPanel {
 
     private JLabel iconMainWeapon;
@@ -31,6 +35,9 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
     private GridBagConstraints myConstraints;
     private Color itemBackground;
 
+    /**
+     *
+     */
     public EngineToolPanePlayerTabWeapons() {
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
@@ -41,6 +48,7 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
     }
 
     private void init() {
+	// layout
 	panelLeft = new JPanel();
 	panelRight = new JPanel();
 	panelMainRight = new JPanel();
@@ -120,6 +128,9 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
 	add(panelRight);
     }
 
+    /**
+     * graphics design on main weapon selection
+     */
     public void selectMainWeapon() {
 	iconMainWeapon.setOpaque(true);
 	iconMainWeapon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -128,6 +139,9 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
 	mainSelected = true;
     }
 
+    /**
+     * graphics design on main weapon unselect
+     */
     public void unselectMainWeapon() {
 	iconMainWeapon.setOpaque(false);
 	iconMainWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
@@ -136,6 +150,9 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
 	mainSelected = false;
     }
 
+    /**
+     * graphics design on second weapon selection
+     */
     public void selectSecondWeapon() {
 	iconSecondWeapon.setOpaque(true);
 	iconSecondWeapon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -144,6 +161,9 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
 	secondSelected = true;
     }
 
+    /**
+     * graphics design on second weapon unselect
+     */
     public void unselectSecondWeapon() {
 	iconSecondWeapon.setOpaque(false);
 	iconSecondWeapon.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
@@ -152,82 +172,162 @@ public class EngineToolPanePlayerTabWeapons extends JPanel {
 	secondSelected = false;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getIconMainWeapon() {
 	return iconMainWeapon;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getIconSecondWeapon() {
 	return iconSecondWeapon;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblMainWeaponDamage() {
 	return lblMainWeaponDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblMainWeaponDurability() {
 	return lblMainWeaponDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblSecondWeaponDamage() {
 	return lblSecondWeaponDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblSecondWeaponDurability() {
 	return lblSecondWeaponDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfMainWeaponDamage() {
 	return tfMainWeaponDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfMainWeaponDurability() {
 	return tfMainWeaponDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfSecondWeaponDamage() {
 	return tfSecondWeaponDamage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfSecondWeaponDurability() {
 	return tfSecondWeaponDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelLeft() {
 	return panelLeft;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelRight() {
 	return panelRight;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelMainRight() {
 	return panelMainRight;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelSecondRight() {
 	return panelSecondRight;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagLayout getMyLayout() {
 	return myLayout;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getMyConstraints() {
 	return myConstraints;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMainSelected() {
 	return mainSelected;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSecondSelected() {
 	return secondSelected;
     }
 
+    /**
+     *
+     * @param mainSelected
+     */
     public void setMainSelected(boolean mainSelected) {
 	this.mainSelected = mainSelected;
     }
 
+    /**
+     *
+     * @param secondSelected
+     */
     public void setSecondSelected(boolean secondSelected) {
 	this.secondSelected = secondSelected;
     }

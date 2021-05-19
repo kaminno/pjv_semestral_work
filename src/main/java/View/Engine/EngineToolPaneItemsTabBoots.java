@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * item boots panel
+ * @author honzuna
+ */
 public class EngineToolPaneItemsTabBoots extends JPanel {
 
     private JLabel iconBoots;
@@ -21,6 +25,9 @@ public class EngineToolPaneItemsTabBoots extends JPanel {
     private GridBagLayout myLayout;
     private GridBagConstraints myConstraints;
 
+    /**
+     *
+     */
     public EngineToolPaneItemsTabBoots() {
 	myLayout = new GridBagLayout();
 	setLayout(myLayout);
@@ -30,6 +37,7 @@ public class EngineToolPaneItemsTabBoots extends JPanel {
     }
 
     private void init() {
+	// create layout design
 	iconBoots = new JLabel(GameIcons.ARMOR_BOOTS.getIcon());
 	iconBoots.setToolTipText("Boots");
 	iconBoots.setBackground(new Color(255, 231, 150));
@@ -67,6 +75,9 @@ public class EngineToolPaneItemsTabBoots extends JPanel {
 	add(panelRight);
     }
 
+    /**
+     * graphic visualisation of selecting item
+     */
     public void selectBoots() {
 	iconBoots.setOpaque(true);
 	iconBoots.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -75,6 +86,9 @@ public class EngineToolPaneItemsTabBoots extends JPanel {
 	selected = true;
     }
 
+    /**
+     * set item unselect
+     */
     public void unselectBoots() {
 	iconBoots.setOpaque(false);
 	iconBoots.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
@@ -83,42 +97,82 @@ public class EngineToolPaneItemsTabBoots extends JPanel {
 	selected = false;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getIconBoots() {
 	return iconBoots;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblArmor() {
 	return lblArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLblDurability() {
 	return lblDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfArmor() {
 	return tfArmor;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTfDurability() {
 	return tfDurability;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelRight() {
 	return panelRight;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSelected() {
 	return selected;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagLayout getMyLayout() {
 	return myLayout;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getMyConstraints() {
 	return myConstraints;
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void setSelected(boolean selected) {
 	this.selected = selected;
     }

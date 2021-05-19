@@ -7,6 +7,10 @@ import Model.Terrains.Terrain;
 import Model.Terrains.TerrainType;
 import java.util.ArrayList;
 
+/**
+ * structure to store map terrain and figure data
+ * @author honzuna
+ */
 public class Map {
 
     private static int mapIds = 0;
@@ -16,7 +20,13 @@ public class Map {
     private ArrayList<ArrayList<Terrain>> mapTerrain;
     private ArrayList<ArrayList<Figure>> mapFigures;
 
+    /**
+     * create map. mapHeight and mapWidth are number of rows/cols of fields in the map
+     * @param mapHeight
+     * @param mapWidth
+     */
     public Map(int mapHeight, int mapWidth) {
+	// if map has positive dimension, create it
 	if (mapHeight > 0 && mapWidth > 0) {
 	    this.id = Map.getNewId();
 	    this.mapHeight = mapHeight;
@@ -36,6 +46,14 @@ public class Map {
 	}
     }
 
+    /**
+     * set the terrain of whole map to the same one. Some terrains could have a specific bonus velocity for player
+     * @param name
+     * @param terrainType
+     * @param xVel
+     * @param yVel
+     * @throws WrongTerrainType
+     */
     public void fillTheMapWithGround(String name, TerrainType terrainType, int xVel, int yVel) throws WrongTerrainType {
 	for (int h = 0; h < this.mapHeight; h++) {
 	    for (int w = 0; w < this.mapWidth; w++) {
@@ -44,16 +62,31 @@ public class Map {
 	}
     }
 
+    /**
+     * add new terrain on a specific position
+     * @param h
+     * @param w
+     * @param terrain
+     */
     public void addTerrain(int h, int w, Terrain terrain) {
 	mapTerrain.get(h).remove(w);
 	mapTerrain.get(h).add(w, terrain);
     }
 
+    /**
+     * add new figure to a specific position
+     * @param h
+     * @param w
+     * @param figure
+     */
     public void addFigure(int h, int w, Figure figure) {
 	mapFigures.get(h).remove(w);
 	mapFigures.get(h).add(w, figure);
     }
 
+    /**
+     * print the map terrain
+     */
     public void printMapTerrain() {
 	for (int h = 0; h < this.mapHeight + 2; h++) {
 	    for (int w = 0; w < this.mapWidth; w++) {
@@ -86,6 +119,9 @@ public class Map {
 	}
     }
 
+    /**
+     * print map figures
+     */
     public void printMapFigures() {
 	for (int h = 0; h < this.mapHeight + 2; h++) {
 	    for (int w = 0; w < this.mapWidth; w++) {
@@ -132,22 +168,42 @@ public class Map {
 	mapIds += 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
 	return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMapHeight() {
 	return mapHeight;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMapWidth() {
 	return mapWidth;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<ArrayList<Terrain>> getMapTerrain() {
 	return mapTerrain;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<ArrayList<Figure>> getMapFigures() {
 	return mapFigures;
     }

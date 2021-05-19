@@ -1,6 +1,14 @@
 package Model.Map;
 
+/**
+ *
+ * @author honzuna
+ */
 public enum MapSize {
+
+    /**
+     *
+     */
     SIZE(1000, 600);
 
     private final int width;
@@ -11,14 +19,26 @@ public enum MapSize {
 	this.height = height;
     }
 
+    /**
+     *
+     * @return
+     */
     public static MapSize getSIZE() {
 	return SIZE;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWidth() {
 	return width;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHeight() {
 	return height;
     }

@@ -3,6 +3,10 @@ package View.Engine;
 import java.io.IOException;
 import javax.swing.JTabbedPane;
 
+/**
+ * tabbed pane with specific items
+ * @author honzuna
+ */
 public class EngineToolPane extends JTabbedPane {
 
     private EngineToolPaneTerrainTab terrainTab;
@@ -10,6 +14,9 @@ public class EngineToolPane extends JTabbedPane {
     private EngineToolPaneItemsTab itemsTab;
     private EngineToolPaneBeastTab beastTab;
 
+    /**
+     *
+     */
     public EngineToolPane() {
 	init();
     }
@@ -32,18 +39,34 @@ public class EngineToolPane extends JTabbedPane {
 	addTab("Beasts", beastTab);
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneTerrainTab getTerrainTab() {
 	return terrainTab;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPanePlayerTab getPlayerTab() {
 	return playerTab;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTab getItemsTab() {
 	return itemsTab;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneBeastTab getBeastTab() {
 	return beastTab;
     }

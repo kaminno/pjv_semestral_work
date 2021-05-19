@@ -40,6 +40,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * main engine window with all listeners and components adding
+ *
+ * @author honzuna
+ */
 public class EngineMainWindow extends JFrame {
 
     private EngineController controller;
@@ -51,6 +56,12 @@ public class EngineMainWindow extends JFrame {
     private EngineBottomPanel bottomPanel;
     Map map = null;
 
+    /**
+     *
+     * @param title
+     * @param controller
+     * @throws HeadlessException
+     */
     public EngineMainWindow(String title, EngineController controller) throws HeadlessException {
 	super(title);
 	this.controller = controller;
@@ -64,6 +75,7 @@ public class EngineMainWindow extends JFrame {
 	setActions();
 	this.setVisible(true);
 
+	// remove the map picture on program closing
 	this.addWindowListener(new WindowAdapter() {
 	    public void windowClosing(WindowEvent e) {
 		File f = new File("resources/current.map.png");
@@ -79,6 +91,7 @@ public class EngineMainWindow extends JFrame {
 	Image icon = Toolkit.getDefaultToolkit().getImage("resources/helmet_icon.jpg");
 	setIconImage(icon);
 
+	// add components
 	bottomPanel = new EngineBottomPanel();
 	pane.add(bottomPanel, BorderLayout.SOUTH);
 	toolPane = new EngineToolPane();
@@ -88,7 +101,7 @@ public class EngineMainWindow extends JFrame {
     }
 
     private void setActions() {
-
+	// create new map on click on specific icon
 	toolPane.getTerrainTab().getPanelNewMap().getLabelNewMap().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
 		// set number of icons/game fields as height and width
@@ -142,6 +155,7 @@ public class EngineMainWindow extends JFrame {
 		    mainPanel.revalidate();
 		    mainPanel.repaint();
 
+		    // add listener to make possible to change terrain on specific icon click
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			    int x = e.getX();
@@ -164,6 +178,7 @@ public class EngineMainWindow extends JFrame {
 				int sx = (x - x % 40) / 40;
 				int sy = (y - y % 40) / 40;
 
+				// add terrain to the specific position on map
 				// TODO - adding ground with bonus velocity
 				map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
 				mainPanel.getCurrentMap().removeTerrain(sx, sy);
@@ -175,15 +190,18 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// remove map on click on specific icon
 	toolPane.getTerrainTab().getPanelNewMap().getLabelRemoveMap().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
 		if (mainPanel.getCurrentMap() != null) {
+		    // asking dialogue
 		    int n = JOptionPane.showConfirmDialog(
 			    mainPanel,
 			    "Do you really want to remove this map?",
 			    "Remove Map?",
 			    JOptionPane.YES_NO_OPTION);
 		    if (n == 0) {
+			// remove map and set specific menu items to enable=false
 			mainPanel.getCurrentMap().saveImage("moje_mapa", "png");
 			mainPanel.removeMap(mainPanel.getCurrentMap().getId());
 			menu.getMenuRun().getRun().setEnabled(false);
@@ -193,6 +211,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// set hide tab to false
 	menu.getMenuTools().getToolHideTabPane().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		toolPane.setVisible(false);
@@ -201,6 +220,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// save current map as image on click in menu-edit-export
 	menu.getMenuEdit().getExport().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
@@ -208,9 +228,9 @@ public class EngineMainWindow extends JFrame {
 
 		int userSelection = fileChooser.showSaveDialog(pane);
 
+		// if dialogue is confirm, save image
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 		    File fileToSave = fileChooser.getSelectedFile();
-		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 		    String[] spl = fileToSave.getAbsolutePath().split("\\.");
 		    mainPanel.getCurrentMap().saveImage(spl[0],
 			    spl[spl.length - 1]);
@@ -218,6 +238,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// show tool pane
 	menu.getMenuTools().getToolShowTabPane().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		toolPane.setVisible(true);
@@ -226,11 +247,14 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// exit program on click on specific item in menu-file
 	menu.getMenuFile().getMenuItemExit().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		System.exit(0);
 	    }
 	});
+
+	// create new map on click on item in menu-file
 	menu.getMenuFile().getMenuItemNewMap().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
@@ -282,6 +306,7 @@ public class EngineMainWindow extends JFrame {
 		    mainPanel.revalidate();
 		    mainPanel.repaint();
 
+		    // add listener to make terrain changes on click possible
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			    int x = e.getX();
@@ -304,6 +329,7 @@ public class EngineMainWindow extends JFrame {
 				int sx = (x - x % 40) / 40;
 				int sy = (y - y % 40) / 40;
 
+				// change terrain
 				map.addTerrain(sy, sx, new Terrain(currentTerrainType.getName(), currentTerrainType));
 				mainPanel.getCurrentMap().removeTerrain(sx, sy);
 				mainPanel.getCurrentMap().addTerrain(new JLabel(icon), (x - x % 40) / 40, (y - y % 40) / 40);
@@ -314,6 +340,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// load item list from file
 	menu.getMenuFile().getMenuItemLoadItems().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
@@ -321,8 +348,10 @@ public class EngineMainWindow extends JFrame {
 			"PJV files", "pjv");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(pane);
+		// if dialogue is accepted
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    File fileItemsToLoad = chooser.getSelectedFile();
+		    // split on . and check if the file has corresponding format
 		    String[] spl = fileItemsToLoad.getAbsolutePath().split("\\.");
 		    if (!spl[spl.length - 1].equals("pjv")) {
 			JOptionPane.showMessageDialog(mainPanel,
@@ -337,6 +366,7 @@ public class EngineMainWindow extends JFrame {
 				JOptionPane.WARNING_MESSAGE);
 			return;
 		    } else {
+			// if file format is correct, try to parse it correctly
 			try {
 			    Scanner myScan = new Scanner(fileItemsToLoad);
 			    int counter = 0;
@@ -349,10 +379,12 @@ public class EngineMainWindow extends JFrame {
 				    return;
 				}
 				String line = myScan.nextLine();
+				// split each line on ,
 				String[] splitLine = line.split("\\,");
 				if (splitLine.length != 3) {
 				    throw new IllegalArgumentException("Wrong data length");
 				}
+				// for corresponding number at the beggining of line set the item as equiped
 				if (splitLine[0].equals("0")) {
 				    int ar = Integer.parseUnsignedInt(splitLine[1]);
 				    int du = Integer.parseUnsignedInt(splitLine[2]);
@@ -418,6 +450,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// save current items to file
 	menu.getMenuFile().getMenuItemSaveItems().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
@@ -430,6 +463,7 @@ public class EngineMainWindow extends JFrame {
 		    try {
 			String[] spl = fileToSave.getAbsolutePath().split("\\.");
 			FileWriter writer = new FileWriter(spl[0] + ".items.pjv");
+			// for each selected item save its values
 			if (toolPane.getItemsTab().getPanelHelmet().isSelected()) {
 			    writer.write(0 + "," + toolPane.getItemsTab().getPanelHelmet().getTfArmor().getText() + "," + toolPane.getItemsTab().getPanelHelmet().getTfDurability().getText() + "\n");
 			}
@@ -465,6 +499,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// load map info from file
 	menu.getMenuFile().getMenuItemLoadMap().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
@@ -474,7 +509,9 @@ public class EngineMainWindow extends JFrame {
 		int returnVal = chooser.showOpenDialog(pane);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    File fileItemsToLoad = chooser.getSelectedFile();
+		    // split file name on .
 		    String[] spl = fileItemsToLoad.getAbsolutePath().split("\\.");
+		    // check the correct file name format
 		    if (!spl[spl.length - 1].equals("pjv")) {
 			JOptionPane.showMessageDialog(mainPanel,
 				"Wrong file extension",
@@ -489,16 +526,19 @@ public class EngineMainWindow extends JFrame {
 				JOptionPane.WARNING_MESSAGE);
 			return;
 		    } else {
+			// if the name format is correct, try to parse its content
 			try {
 			    Scanner mapScan = new Scanner(fileItemsToLoad);
 			    int counter = 0;
 			    int mapHeight = MapSize.getSIZE().getHeight() / 40;
 			    int mapWidth = MapSize.getSIZE().getWidth() / 40;
+			    // create new map and new mapview
 			    Map tmpMap = new Map(mapHeight, mapWidth);
 			    EngineMapPanel newMap = new EngineMapPanel(mapWidth, mapHeight);
 			    newMap.fillTheMapWithGround(TerrainType.BLANC);
 			    ImageIcon icon = GameIcons.BLANC.getIcon();
 
+			    // iterate through the file to fill the map
 			    for (int h = 0; h < mapHeight; h++) {
 				String line = mapScan.nextLine();
 				String[] terrainTypes = line.split(",");
@@ -524,6 +564,7 @@ public class EngineMainWindow extends JFrame {
 				    throw new WrongTerrainType();
 				}
 			    }
+			    // set the created map to the current map
 			    map = tmpMap;
 			    tmpMap.printMapTerrain();
 			    if (mainPanel.getCurrentMap() != null) {
@@ -537,6 +578,7 @@ public class EngineMainWindow extends JFrame {
 			    mainPanel.revalidate();
 			    mainPanel.repaint();
 
+			    // add listener to change the map terrain on click
 			    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 				    int x = e.getX();
@@ -585,6 +627,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// same current map to file
 	menu.getMenuFile().getMenuItemSaveMap().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
@@ -597,6 +640,7 @@ public class EngineMainWindow extends JFrame {
 		    try {
 			String[] spl = fileToSave.getAbsolutePath().split("\\.");
 			FileWriter writer = new FileWriter(spl[0] + ".map.pjv");
+			// go through the current map and save all lines
 			for (int h = 0; h < map.getMapHeight(); h++) {
 			    String s = map.getMapTerrain().get(h).get(0).getName();
 			    for (int w = 1; w < map.getMapWidth(); w++) {
@@ -617,6 +661,7 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// set current terrain type according to the icon clicked
 	toolPane.getTerrainTab().getPanelGround().getLabelGrass().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
 		currentTerrainType = TerrainType.GRASS;
@@ -665,17 +710,21 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// make possible to set players coordinates
 	toolPane.getPlayerTab().getPanelNewPlayer().getLabelNewPlayer().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
+		// map must be created
 		if (mainPanel.getCurrentMap() != null) {
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			    if (toolPane.getSelectedIndex() == 1) {
+				// set player coordinates based on mouse click on the map board
 				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
 				int width = MapSize.SIZE.getWidth() / TerrainSize.WIDTH.getSize();
 				int x = e.getX();
 				int y = e.getY();
 
+				// set player in the map figures list and remove it from the old position it was
 				if (map != null && controller.hasPlayerCorrectCoordinates(map, x, y)) {
 				    ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
 				    for (int i = 0; i < height; i++) {
@@ -697,23 +746,27 @@ public class EngineMainWindow extends JFrame {
 			}
 		    ;
 		}
+
 	    
 	);
 	}
-	    }  
+	    }
 	});
 	
+	// make possible to change boss coordinates on click on the map board
 	toolPane.getBeastTab().getPanelBosses().getWarPigIcon().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
 		if (mainPanel.getCurrentMap() != null) {
 		    mainPanel.getCurrentMap().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			    if (toolPane.getSelectedIndex() == 3) {
+				// set boss coordinates by click on the map
 				int height = MapSize.SIZE.getHeight() / TerrainSize.HEIGHT.getSize();
 				int width = MapSize.SIZE.getWidth() / TerrainSize.WIDTH.getSize();
 				int x = e.getX();
 				int y = e.getY();
 
+				// add boss to the map figures list
 				if (map != null && controller.hasBeastCorrectCoordinates(x, y, map)) {
 				    ArrayList<ArrayList<Figure>> figures = map.getMapFigures();
 				    for (int i = 0; i < height; i++) {
@@ -735,11 +788,13 @@ public class EngineMainWindow extends JFrame {
 			}
 		    ;
 		}
+
 	    
 	);
 	}}
 	});
 	
+	// set items/weapon as selected/unselected by the clicking on their icons
 	toolPane.getPlayerTab().getPanelWeapons().getIconMainWeapon().addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
 		if (toolPane.getPlayerTab().getPanelWeapons().isMainSelected()) {
@@ -824,10 +879,12 @@ public class EngineMainWindow extends JFrame {
 	    }
 	});
 
+	// run the game if all data are correct
 	menu.getMenuRun().getRun().addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		mainPanel.getCurrentMap().saveImage("resources/current.map", "png");
 
+		// check the player data and create the player instance
 		try {
 		    int health = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseHealth().getText());
 		    int armor = Integer.parseInt(toolPane.getPlayerTab().getPanelAttributes().getTfBaseArmor().getText());
@@ -853,6 +910,7 @@ public class EngineMainWindow extends JFrame {
 		    return;
 		}
 
+		// check the boss data and create a boss instance
 		try {
 		    int bossHealth = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfHealth().getText());
 		    int bossArmor = Integer.parseInt(toolPane.getBeastTab().getPanelBosses().getWarPigTfArmor().getText());
@@ -876,6 +934,7 @@ public class EngineMainWindow extends JFrame {
 		    return;
 		}
 
+		// some item is selectid, check its attribures values and then create new instance of it and add it to the model
 		if (toolPane.getItemsTab().getPanelHelmet().isSelected()) {
 		    try {
 			int armor = Integer.parseInt(toolPane.getItemsTab().getPanelHelmet().getTfArmor().getText());
@@ -1018,6 +1077,7 @@ public class EngineMainWindow extends JFrame {
 		    }
 		}
 
+		// checks if the bat values are correct and create its instances
 		try {
 		    int count = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getBatTfCount().getText());
 		    if (count < 0 || count > controller.mapFreeSpaceForBeasts(map)) {
@@ -1038,6 +1098,8 @@ public class EngineMainWindow extends JFrame {
 			    JOptionPane.WARNING_MESSAGE);
 		    return;
 		}
+		
+		// check if the skeleton values are correct and create its instances
 		try {
 		    int count = Integer.parseInt(toolPane.getBeastTab().getPanelWeakBeasts().getSkeletonTfCount().getText());
 		    if (count < 0 || count > controller.mapFreeSpaceForBeasts(map)) {
@@ -1059,39 +1121,69 @@ public class EngineMainWindow extends JFrame {
 		    return;
 		}
 
+		// create new map
 		controller.createNewMap(map);
 
 		controller.equipItems();
 
+		// run the game
 		controller.runGame();
 	    }
 	});
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPane getToolPane() {
 	return toolPane;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMainWorkingPanel getMainPanel() {
 	return mainPanel;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMenu getMenu() {
 	return menu;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineController getController() {
 	return controller;
     }
 
+    /**
+     *
+     * @return
+     */
     public Container getPane() {
 	return pane;
     }
 
+    /**
+     *
+     * @return
+     */
     public TerrainType getCurrentTerrainType() {
 	return currentTerrainType;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map getMap() {
 	return map;
     }

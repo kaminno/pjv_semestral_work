@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+/**
+ * tabbed pane item contains player's items
+ * @author honzuna
+ */
 public class EngineToolPaneItemsTab extends JPanel {
 
     private EngineToolPaneItemsTabHelmet panelHelmet;
@@ -14,12 +18,16 @@ public class EngineToolPaneItemsTab extends JPanel {
     private EngineToolPaneItemsTabGloves panelGloves;
     private EngineToolPaneItemsTabBoots panelBoots;
 
+    /**
+     *
+     */
     public EngineToolPaneItemsTab() {
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
     }
 
     private void init() {
+	// create items layout design
 	JPanel jp1 = new JPanel();
 	JLabel jl1 = new JLabel("Helmet");
 	jl1.setAlignmentX(CENTER_ALIGNMENT);
@@ -74,22 +82,42 @@ public class EngineToolPaneItemsTab extends JPanel {
 	add(jp5);
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTabHelmet getPanelHelmet() {
 	return panelHelmet;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTabChest getPanelChest() {
 	return panelChest;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTabLegs getPanelLegs() {
 	return panelLegs;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTabGloves getPanelGloves() {
 	return panelGloves;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPaneItemsTabBoots getPanelBoots() {
 	return panelBoots;
     }

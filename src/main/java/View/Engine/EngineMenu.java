@@ -2,6 +2,10 @@ package View.Engine;
 
 import javax.swing.JMenuBar;
 
+/**
+ * create engine menu
+ * @author honzuna
+ */
 public class EngineMenu extends JMenuBar {
 
     private EngineMenuFile menuFile;
@@ -9,6 +13,9 @@ public class EngineMenu extends JMenuBar {
     private EngineMenuTools menuTools;
     private EngineMenuRun menuRun;
 
+    /**
+     *
+     */
     public EngineMenu() {
 	initMenu();
     }
@@ -40,18 +47,34 @@ public class EngineMenu extends JMenuBar {
 	add(menuRun);
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMenuFile getMenuFile() {
 	return menuFile;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMenuTools getMenuTools() {
 	return menuTools;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMenuEdit getMenuEdit() {
 	return menuEdit;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineMenuRun getMenuRun() {
 	return menuRun;
     }

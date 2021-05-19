@@ -1,10 +1,34 @@
 package Model.Terrains;
 
+/**
+ *
+ * @author honzuna
+ */
 public enum GroundType {
+
+    /**
+     *
+     */
     GRASS("grass"),
+
+    /**
+     *
+     */
     LOAM("loam"),
+
+    /**
+     *
+     */
     SAND("sand"),
+
+    /**
+     *
+     */
     WATER("water"),
+
+    /**
+     *
+     */
     BLANC("blanc");
 
     private final String name;
@@ -13,6 +37,10 @@ public enum GroundType {
 	this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
 	return name;
     }

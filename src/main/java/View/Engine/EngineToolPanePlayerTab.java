@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * @author honzuna
+ */
 public class EngineToolPanePlayerTab extends JPanel {
 
     private EngineToolPanePlayerTabNewPlayer panelNewPlayer;
@@ -13,12 +17,16 @@ public class EngineToolPanePlayerTab extends JPanel {
     private EngineToolPanePlayerTabInventory panelInventory;
     private EngineToolPanePlayerTabWeapons panelWeapons;
 
+    /**
+     *
+     */
     public EngineToolPanePlayerTab() {
 	setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	init();
     }
 
     private void init() {
+	// player tabbed pane panel design
 	JPanel jp1 = new JPanel();
 	JLabel jl1 = new JLabel("New Player");
 	jl1.setAlignmentX(CENTER_ALIGNMENT);
@@ -62,18 +70,34 @@ public class EngineToolPanePlayerTab extends JPanel {
 	add(jp4);
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPanePlayerTabNewPlayer getPanelNewPlayer() {
 	return panelNewPlayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPanePlayerTabAttributes getPanelAttributes() {
 	return panelAttributes;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPanePlayerTabInventory getPanelInventory() {
 	return panelInventory;
     }
 
+    /**
+     *
+     * @return
+     */
     public EngineToolPanePlayerTabWeapons getPanelWeapons() {
 	return panelWeapons;
     }

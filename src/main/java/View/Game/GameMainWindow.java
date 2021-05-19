@@ -14,16 +14,29 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.swing.JFrame;
 
+/**
+ * main game window
+ * @author honzuna
+ */
 public class GameMainWindow extends JFrame{
     private Container pane;
     private GameBoard gameBoard;
     private GameMenu gameMenu;
     GameController controller;
     
+    /**
+     *
+     * @param title
+     * @param controller
+     * @param pl
+     * @throws HeadlessException
+     * @throws IOException
+     */
     public GameMainWindow(String title, GameController controller, Player pl) throws HeadlessException, IOException {
 	super(title);
 	this.controller = controller;
 	
+	// set window icon
 	Image icon = Toolkit.getDefaultToolkit().getImage("resources/helmet_icon.jpg");
 	setIconImage(icon);
 	
@@ -39,6 +52,7 @@ public class GameMainWindow extends JFrame{
 	pane.add(gameBoard);
 	this.setVisible(true);
 	
+	// clear data on close
 	this.addWindowListener(new WindowAdapter() {
 	    public void windowClosing(WindowEvent e) {
 		controller.clearData();

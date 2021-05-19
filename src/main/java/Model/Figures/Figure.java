@@ -1,17 +1,34 @@
 package Model.Figures;
 
 /**
- *
+ * figure class
  * @author honzuna
  */
 public abstract class Figure {
 
+    /**
+     *
+     */
     protected final String name;
+
+    /**
+     *
+     */
     protected int maxHealth;
+
+    /**
+     *
+     */
     protected int currentHealth;
 
+    /**
+     *
+     * @param name
+     * @param health
+     */
     public Figure(String name, int health) {
 	this.name = name;
+	// checks if the health is positive
 	if (health <= 0) {
 	    throw new IllegalArgumentException("Health must be a positive number!");
 	}
@@ -19,10 +36,22 @@ public abstract class Figure {
 	this.currentHealth = health;
     }
 
+    /**
+     * methods that has to be implemented by childs
+     * @param enemy
+     */
     public abstract void attack(Figure enemy);
 
+    /**
+     *
+     * @param damage
+     */
     public abstract void defend(int damage);
 
+    /**
+     *
+     * @return
+     */
     public abstract boolean isAlive();
 
     /**
@@ -33,6 +62,10 @@ public abstract class Figure {
 	return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMaxHealth() {
 	return maxHealth;
     }
